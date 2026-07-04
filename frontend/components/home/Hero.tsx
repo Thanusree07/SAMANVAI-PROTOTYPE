@@ -47,7 +47,7 @@ export default function Hero() {
             width={851}
             height={547}
             priority
-            className="mx-auto h-auto w-[min(56vw,430px)] object-contain drop-shadow-[0_18px_42px_rgba(0,0,0,.34)] sm:w-[min(58vw,520px)] lg:w-[470px]"
+            className="mx-auto h-auto w-[min(56vw,430px)] -translate-x-2 object-contain drop-shadow-[0_18px_42px_rgba(0,0,0,.34)] sm:w-[min(58vw,520px)] sm:-translate-x-3 lg:w-[470px] lg:-translate-x-4"
           />
           <p className="mt-5 text-xl font-medium text-white sm:text-[1.65rem]">Where Government Information Converges</p>
 

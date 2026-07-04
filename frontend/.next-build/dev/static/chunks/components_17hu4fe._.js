@@ -483,7 +483,7 @@ function Hero() {
                                 width: 851,
                                 height: 547,
                                 priority: true,
-                                className: "mx-auto h-auto w-[min(56vw,430px)] object-contain drop-shadow-[0_18px_42px_rgba(0,0,0,.34)] sm:w-[min(58vw,520px)] lg:w-[470px]"
+                                className: "mx-auto h-auto w-[min(56vw,430px)] -translate-x-2 object-contain drop-shadow-[0_18px_42px_rgba(0,0,0,.34)] sm:w-[min(58vw,520px)] sm:-translate-x-3 lg:w-[470px] lg:-translate-x-4"
                             }, void 0, false, {
                                 fileName: "[project]/components/home/Hero.tsx",
                                 lineNumber: 44,
