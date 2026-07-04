@@ -113,7 +113,7 @@ function Footer() {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "mx-auto max-w-[1200px] px-4 py-12 sm:px-6",
+                className: "mx-auto max-w-[1585px] px-4 py-12 sm:px-6",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "grid gap-10 lg:grid-cols-[1.2fr_.8fr]",
@@ -144,7 +144,7 @@ function Footer() {
                                         children: "Designed, developed and maintained by the National Informatics Centre, Ministry of Electronics & Information Technology, Government of India."
                                     }, void 0, false, {
                                         fileName: "[project]/components/layout/Footer.tsx",
-                                        lineNumber: 14,
+                                        lineNumber: 16,
                                         columnNumber: 13
                                     }, this)
                                 ]
@@ -161,7 +161,7 @@ function Footer() {
                                         children: "Follow the National Portal"
                                     }, void 0, false, {
                                         fileName: "[project]/components/layout/Footer.tsx",
-                                        lineNumber: 17,
+                                        lineNumber: 21,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -169,8 +169,8 @@ function Footer() {
                                         children: [
                                             "f",
                                             "X",
-                                            "▶",
-                                            "◎",
+                                            "YT",
+                                            "IG",
                                             "in"
                                         ].map((mark, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                 type: "button",
@@ -179,27 +179,27 @@ function Footer() {
                                                 children: mark
                                             }, mark, false, {
                                                 fileName: "[project]/components/layout/Footer.tsx",
-                                                lineNumber: 19,
-                                                columnNumber: 64
+                                                lineNumber: 24,
+                                                columnNumber: 17
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/components/layout/Footer.tsx",
-                                        lineNumber: 18,
+                                        lineNumber: 22,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                         href: "#samanvai",
                                         className: "mt-7 inline-block text-sm font-bold text-[#ffb65c] hover:text-white",
-                                        children: "SAMANVAI · From Need to Service"
+                                        children: "SAMANVAI - From Need to Service"
                                     }, void 0, false, {
                                         fileName: "[project]/components/layout/Footer.tsx",
-                                        lineNumber: 21,
+                                        lineNumber: 29,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/layout/Footer.tsx",
-                                lineNumber: 16,
+                                lineNumber: 20,
                                 columnNumber: 11
                             }, this)
                         ]
@@ -217,12 +217,12 @@ function Footer() {
                                 children: link
                             }, link, false, {
                                 fileName: "[project]/components/layout/Footer.tsx",
-                                lineNumber: 25,
-                                columnNumber: 32
+                                lineNumber: 36,
+                                columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/components/layout/Footer.tsx",
-                        lineNumber: 24,
+                        lineNumber: 34,
                         columnNumber: 9
                     }, this)
                 ]
@@ -234,35 +234,35 @@ function Footer() {
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "border-t border-white/10 bg-[#051636]",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "mx-auto flex max-w-[1200px] flex-col justify-between gap-2 px-4 py-4 text-[11px] text-white/45 sm:flex-row sm:px-6",
+                    className: "mx-auto flex max-w-[1585px] flex-col justify-between gap-2 px-4 py-4 text-[11px] text-white/45 sm:flex-row sm:px-6",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             children: [
-                                "© ",
+                                "(c) ",
                                 new Date().getFullYear(),
-                                " National Portal of India · SAMANVAI Prototype"
+                                " National Portal of India - SAMANVAI Prototype"
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/layout/Footer.tsx",
-                            lineNumber: 30,
+                            lineNumber: 44,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             children: "Last reviewed and updated: 04 July 2026"
                         }, void 0, false, {
                             fileName: "[project]/components/layout/Footer.tsx",
-                            lineNumber: 31,
+                            lineNumber: 45,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/layout/Footer.tsx",
-                    lineNumber: 29,
+                    lineNumber: 43,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/layout/Footer.tsx",
-                lineNumber: 28,
+                lineNumber: 42,
                 columnNumber: 7
             }, this)
         ]
@@ -469,21 +469,9 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.js [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$briefcase$2d$business$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__BriefcaseBusiness$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/briefcase-business.mjs [app-rsc] (ecmascript) <export default as BriefcaseBusiness>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/building-2.mjs [app-rsc] (ecmascript) <export default as Building2>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$car$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Car$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/car.mjs [app-rsc] (ecmascript) <export default as Car>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$dollar$2d$sign$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__CircleDollarSign$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-dollar-sign.mjs [app-rsc] (ecmascript) <export default as CircleDollarSign>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$graduation$2d$cap$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__GraduationCap$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/graduation-cap.mjs [app-rsc] (ecmascript) <export default as GraduationCap>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$heart$2d$pulse$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartPulse$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/heart-pulse.mjs [app-rsc] (ecmascript) <export default as HeartPulse>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$house$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Home$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/house.mjs [app-rsc] (ecmascript) <export default as Home>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$landmark$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Landmark$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/landmark.mjs [app-rsc] (ecmascript) <export default as Landmark>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$leaf$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Leaf$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/leaf.mjs [app-rsc] (ecmascript) <export default as Leaf>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$megaphone$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Megaphone$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/megaphone.mjs [app-rsc] (ecmascript) <export default as Megaphone>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$scale$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Scale$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/scale.mjs [app-rsc] (ecmascript) <export default as Scale>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2d$check$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__ShieldCheck$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/shield-check.mjs [app-rsc] (ecmascript) <export default as ShieldCheck>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$sprout$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Sprout$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/sprout.mjs [app-rsc] (ecmascript) <export default as Sprout>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$stethoscope$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Stethoscope$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/stethoscope.mjs [app-rsc] (ecmascript) <export default as Stethoscope>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$tram$2d$front$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Train$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/tram-front.mjs [app-rsc] (ecmascript) <export default as Train>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2d$round$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__UsersRound$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/users-round.mjs [app-rsc] (ecmascript) <export default as UsersRound>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$vote$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Vote$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/vote.mjs [app-rsc] (ecmascript) <export default as Vote>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$wheat$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Wheat$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/wheat.mjs [app-rsc] (ecmascript) <export default as Wheat>");
 ;
 ;
@@ -493,90 +481,42 @@ const categories = [
         icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$wheat$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Wheat$3e$__["Wheat"]
     },
     {
-        label: "Art & Culture",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$landmark$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Landmark$3e$__["Landmark"]
-    },
-    {
-        label: "Commerce",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$dollar$2d$sign$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__CircleDollarSign$3e$__["CircleDollarSign"]
-    },
-    {
-        label: "Defence",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2d$check$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__ShieldCheck$3e$__["ShieldCheck"]
-    },
-    {
         label: "Education",
         icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$graduation$2d$cap$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__GraduationCap$3e$__["GraduationCap"]
-    },
-    {
-        label: "Employment",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$briefcase$2d$business$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__BriefcaseBusiness$3e$__["BriefcaseBusiness"]
-    },
-    {
-        label: "Environment",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$leaf$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Leaf$3e$__["Leaf"]
-    },
-    {
-        label: "Governance",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__["Building2"]
     },
     {
         label: "Health",
         icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$heart$2d$pulse$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartPulse$3e$__["HeartPulse"]
     },
     {
-        label: "Housing",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$house$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Home$3e$__["Home"]
-    },
-    {
-        label: "Law & Justice",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$scale$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Scale$3e$__["Scale"]
-    },
-    {
-        label: "Rural",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$sprout$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Sprout$3e$__["Sprout"]
+        label: "Governance",
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__["Building2"]
     },
     {
         label: "Social Welfare",
         icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2d$round$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__UsersRound$3e$__["UsersRound"]
     },
     {
-        label: "Transport",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$tram$2d$front$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Train$3e$__["Train"]
-    },
-    {
-        label: "Travel & Tourism",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$car$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Car$3e$__["Car"]
-    },
-    {
-        label: "Voting & Elections",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$vote$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Vote$3e$__["Vote"]
-    },
-    {
-        label: "Public Grievance",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$megaphone$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Megaphone$3e$__["Megaphone"]
-    },
-    {
-        label: "Medical Care",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$stethoscope$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Stethoscope$3e$__["Stethoscope"]
+        label: "Employment",
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$briefcase$2d$business$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__BriefcaseBusiness$3e$__["BriefcaseBusiness"]
     }
 ];
 function InformationCategories() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         id: "citizen-engagement",
-        className: "bg-white py-16 sm:py-20",
+        className: "bg-white py-20 sm:py-24",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "mx-auto max-w-[1585px] px-4 sm:px-6",
+            className: "mx-auto max-w-[1320px] px-4 sm:px-6",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "mb-11 text-center",
+                    className: "mb-12 text-center",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                             className: "section-heading section-heading-center",
                             children: "Information Categories"
                         }, void 0, false, {
                             fileName: "[project]/components/home/InformationCategories.tsx",
-                            lineNumber: 48,
+                            lineNumber: 24,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -584,80 +524,80 @@ function InformationCategories() {
                             children: "Access government information by topic, aligned with the National Portal structure."
                         }, void 0, false, {
                             fileName: "[project]/components/home/InformationCategories.tsx",
-                            lineNumber: 49,
+                            lineNumber: 25,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/home/InformationCategories.tsx",
-                    lineNumber: 47,
+                    lineNumber: 23,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6 lg:grid-cols-9",
+                    className: "grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6",
                     children: categories.map(({ label, icon: Icon })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             type: "button",
-                            className: "group flex min-h-[145px] flex-col items-center justify-center rounded-md border border-slate-200 bg-white px-3 py-5 text-center shadow-[0_4px_14px_rgba(15,23,42,.05)] transition duration-300 hover:-translate-y-1 hover:border-[#ed1b2f]/40 hover:shadow-[0_14px_34px_rgba(15,23,42,.12)]",
+                            className: "group flex min-h-[154px] flex-col items-center justify-center rounded-md border border-slate-200 bg-white px-4 py-6 text-center shadow-[0_6px_18px_rgba(15,23,42,.055)] transition duration-300 hover:-translate-y-1 hover:border-[#0a2a6e]/25 hover:shadow-[0_14px_30px_rgba(15,23,42,.1)]",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "flex h-[62px] w-[62px] items-center justify-center rounded-full border border-[#ed1b2f]/20 bg-[#fff5f6] text-[#ed1b2f] transition duration-300 group-hover:bg-[#ed1b2f] group-hover:text-white",
+                                    className: "flex h-14 w-14 items-center justify-center rounded-full border border-[#ed1b2f]/15 bg-[#fff6f7] text-[#d7192a] transition duration-300 group-hover:bg-[#0a2a6e] group-hover:text-white",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(Icon, {
-                                        size: 30,
+                                        size: 25,
                                         strokeWidth: 1.7
                                     }, void 0, false, {
                                         fileName: "[project]/components/home/InformationCategories.tsx",
-                                        lineNumber: 58,
+                                        lineNumber: 34,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/home/InformationCategories.tsx",
-                                    lineNumber: 57,
+                                    lineNumber: 33,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "mt-4 text-[13px] font-bold leading-snug text-slate-800 sm:text-sm",
+                                    className: "mt-4 text-sm font-bold leading-snug text-slate-800",
                                     children: label
                                 }, void 0, false, {
                                     fileName: "[project]/components/home/InformationCategories.tsx",
-                                    lineNumber: 60,
+                                    lineNumber: 36,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, label, true, {
                             fileName: "[project]/components/home/InformationCategories.tsx",
-                            lineNumber: 56,
+                            lineNumber: 32,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/home/InformationCategories.tsx",
-                    lineNumber: 54,
+                    lineNumber: 30,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "mt-10 text-center",
+                    className: "mt-12 text-center",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         type: "button",
-                        className: "rounded-full border border-slate-300 px-8 py-3 text-sm font-bold text-slate-700 transition hover:border-[#0a2a6e] hover:text-[#0a2a6e]",
+                        className: "rounded-full border border-slate-300 bg-white px-8 py-3 text-sm font-bold text-slate-700 shadow-[0_8px_20px_rgba(15,23,42,.06)] transition hover:border-[#0a2a6e] hover:text-[#0a2a6e]",
                         children: "View All Categories"
                     }, void 0, false, {
                         fileName: "[project]/components/home/InformationCategories.tsx",
-                        lineNumber: 66,
+                        lineNumber: 42,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/home/InformationCategories.tsx",
-                    lineNumber: 65,
+                    lineNumber: 41,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/home/InformationCategories.tsx",
-            lineNumber: 46,
+            lineNumber: 22,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/home/InformationCategories.tsx",
-        lineNumber: 45,
+        lineNumber: 21,
         columnNumber: 5
     }, this);
 }
@@ -670,267 +610,238 @@ __turbopack_context__.s([
     ()=>NewsSection
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.js [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/image.js [app-rsc] (ecmascript)");
+;
 ;
 const newsSources = [
     {
         name: "Press Information Bureau",
         abbr: "PIB",
-        color: "from-[#0a2a6e] to-[#1a4080]"
+        tone: "bg-[#0a2a6e]"
     },
     {
         name: "Doordarshan News",
         abbr: "DD",
-        color: "from-[#e31e24] to-[#c9191f]"
+        tone: "bg-[#ed1b2f]"
     },
     {
         name: "News on Air",
         abbr: "AIR",
-        color: "from-[#138808] to-[#0d6b06]"
+        tone: "bg-[#138808]"
     }
 ];
 const spotlightItems = [
     {
+        month: "July 2026",
+        title: "Pradhan Mantri Anusuchit Jaati Abhyuday Yojana",
+        image: "/images/hero/Hero1.webp"
+    },
+    {
         month: "June 2026",
-        title: "Gyan Bharatam Mission"
+        title: "Gyan Bharatam Mission",
+        image: "/images/hero/Hero2.webp"
     },
     {
         month: "May 2026",
-        title: "Census of India 2027"
-    },
-    {
-        month: "April 2026",
-        title: "Pradhan Mantri Viksit Bharat Rozgar Yojana"
-    },
-    {
-        month: "March 2026",
-        title: "Bal Vivah Mukt Bharat"
+        title: "Census of India 2027",
+        image: "/images/hero/Hero3.jpg"
     }
 ];
 function NewsSection() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         id: "news",
-        className: "bg-[#f4f6f9] py-14 sm:py-20",
+        className: "bg-[linear-gradient(180deg,#ffffff_0%,#f6f8fc_100%)] py-20 sm:py-24",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "mx-auto max-w-[1200px] px-4 sm:px-6",
+            className: "mx-auto max-w-[1320px] px-4 sm:px-6",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "grid gap-12 lg:grid-cols-2 lg:gap-10",
+                className: "grid gap-12 lg:grid-cols-[.82fr_1.18fr] lg:gap-16",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                className: "text-2xl font-bold text-gray-900 sm:text-[1.75rem]",
+                                className: "section-heading",
                                 children: "News / Press Release"
                             }, void 0, false, {
                                 fileName: "[project]/components/home/NewsSection.tsx",
-                                lineNumber: 44,
+                                lineNumber: 33,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "mt-1 text-sm text-gray-500 sm:text-[15px]",
-                                children: "Your Gateway to Authentic News"
+                                className: "mt-6 text-base text-slate-500",
+                                children: "Your gateway to authentic Government of India news."
                             }, void 0, false, {
                                 fileName: "[project]/components/home/NewsSection.tsx",
-                                lineNumber: 47,
+                                lineNumber: 34,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "mt-8 grid gap-4 sm:grid-cols-3",
+                                className: "mt-8 grid gap-4 sm:grid-cols-3 lg:grid-cols-1",
                                 children: newsSources.map((source)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("article", {
-                                        className: "group cursor-pointer overflow-hidden rounded-xl border border-gray-100 bg-[#eef0f3] transition-all duration-300 hover:-translate-y-1 hover:shadow-md",
+                                        className: "group flex items-center gap-5 rounded-md border border-slate-200/80 bg-white/90 p-4 shadow-[0_8px_24px_rgba(15,23,42,.06)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-[#0a2a6e]/20 hover:shadow-[0_16px_36px_rgba(15,23,42,.11)]",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: `flex h-28 items-center justify-center bg-gradient-to-br ${source.color} sm:h-32`,
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "text-2xl font-bold tracking-wider text-white",
-                                                    children: source.abbr
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/home/NewsSection.tsx",
-                                                    lineNumber: 60,
-                                                    columnNumber: 21
-                                                }, this)
+                                                className: `flex h-20 w-24 shrink-0 items-center justify-center rounded-md ${source.tone} text-xl font-black tracking-wider text-white shadow-[inset_0_1px_0_rgba(255,255,255,.22)]`,
+                                                children: source.abbr
                                             }, void 0, false, {
                                                 fileName: "[project]/components/home/NewsSection.tsx",
-                                                lineNumber: 57,
+                                                lineNumber: 38,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "px-3 py-4 text-center",
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                    className: "text-xs font-bold leading-snug text-gray-900 sm:text-[13px]",
-                                                    children: source.name
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/home/NewsSection.tsx",
-                                                    lineNumber: 65,
-                                                    columnNumber: 21
-                                                }, this)
-                                            }, void 0, false, {
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                        className: "text-lg font-bold text-slate-900",
+                                                        children: source.name
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/home/NewsSection.tsx",
+                                                        lineNumber: 42,
+                                                        columnNumber: 21
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                        className: "mt-1 text-sm text-slate-500",
+                                                        children: "Latest official updates"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/home/NewsSection.tsx",
+                                                        lineNumber: 43,
+                                                        columnNumber: 21
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
                                                 fileName: "[project]/components/home/NewsSection.tsx",
-                                                lineNumber: 64,
+                                                lineNumber: 41,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, source.name, true, {
                                         fileName: "[project]/components/home/NewsSection.tsx",
-                                        lineNumber: 53,
+                                        lineNumber: 37,
                                         columnNumber: 17
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/components/home/NewsSection.tsx",
-                                lineNumber: 51,
+                                lineNumber: 35,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/home/NewsSection.tsx",
-                        lineNumber: 43,
+                        lineNumber: 32,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                className: "text-2xl font-bold text-gray-900 sm:text-[1.75rem]",
+                                className: "section-heading",
                                 children: "Spotlight"
                             }, void 0, false, {
                                 fileName: "[project]/components/home/NewsSection.tsx",
-                                lineNumber: 75,
+                                lineNumber: 51,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "mt-1 text-sm text-gray-500 sm:text-[15px]",
-                                children: "Stories from the Core of Our Nation"
+                                className: "mt-6 text-base text-slate-500",
+                                children: "Stories from the core of our nation."
                             }, void 0, false, {
                                 fileName: "[project]/components/home/NewsSection.tsx",
-                                lineNumber: 78,
+                                lineNumber: 52,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "mt-8 grid gap-6 lg:grid-cols-[1fr_1fr]",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("article", {
-                                        className: "overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm",
+                                className: "mt-8 grid gap-6 md:grid-cols-3",
+                                children: spotlightItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("article", {
+                                        className: "group overflow-hidden rounded-md border border-white/80 bg-white/88 shadow-[0_12px_34px_rgba(15,23,42,.09)] backdrop-blur-md transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_48px_rgba(15,23,42,.14)]",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "relative flex h-44 items-end bg-gradient-to-br from-[#0a2a6e] to-[#2b5ea8] p-5 sm:h-48",
+                                                className: "relative aspect-[1.35/1] overflow-hidden",
                                                 children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "absolute right-4 top-4 h-12 w-12 rounded-full border border-white/30 bg-white/10",
-                                                        "aria-hidden": "true"
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
+                                                        src: item.image,
+                                                        alt: "",
+                                                        fill: true,
+                                                        sizes: "(max-width: 768px) 100vw, 25vw",
+                                                        className: "object-cover transition-transform duration-500 group-hover:scale-105"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/home/NewsSection.tsx",
-                                                        lineNumber: 85,
-                                                        columnNumber: 19
+                                                        lineNumber: 57,
+                                                        columnNumber: 21
                                                     }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "relative text-xs font-medium uppercase tracking-wider text-white/70",
-                                                        children: "Ministry of Social Justice & Empowerment"
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "absolute inset-0 bg-gradient-to-t from-black/38 via-transparent to-transparent"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/home/NewsSection.tsx",
-                                                        lineNumber: 86,
-                                                        columnNumber: 19
+                                                        lineNumber: 58,
+                                                        columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/home/NewsSection.tsx",
-                                                lineNumber: 84,
-                                                columnNumber: 17
+                                                lineNumber: 56,
+                                                columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "bg-[#e31e24] p-5 text-white",
+                                                className: "p-6",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-sm font-semibold",
-                                                        children: "July 2026"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/components/home/NewsSection.tsx",
-                                                        lineNumber: 91,
-                                                        columnNumber: 19
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                        className: "mt-2 text-sm font-bold leading-snug sm:text-[15px]",
-                                                        children: "Pradhan Mantri Anusuchit Jaati Abhyuday Yojana (PM-AJAY)"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/components/home/NewsSection.tsx",
-                                                        lineNumber: 92,
-                                                        columnNumber: 19
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "mt-2 text-xs leading-relaxed text-white/85",
-                                                        children: "Comprehensive development programme for Scheduled Castes."
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/components/home/NewsSection.tsx",
-                                                        lineNumber: 95,
-                                                        columnNumber: 19
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/components/home/NewsSection.tsx",
-                                                lineNumber: 90,
-                                                columnNumber: 17
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/components/home/NewsSection.tsx",
-                                        lineNumber: 83,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "divide-y divide-gray-100 rounded-xl border border-gray-100 bg-white shadow-sm",
-                                        children: spotlightItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("article", {
-                                                className: "group cursor-pointer px-5 py-4 transition-colors hover:bg-gray-50",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-xs text-gray-400",
+                                                        className: "text-xs font-black uppercase tracking-[.18em] text-[#ed1b2f]",
                                                         children: item.month
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/home/NewsSection.tsx",
-                                                        lineNumber: 107,
+                                                        lineNumber: 61,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                        className: "mt-1 text-sm font-bold text-gray-900 transition-colors group-hover:text-[#0a2a6e] sm:text-[15px]",
+                                                        className: "mt-3 text-xl font-bold leading-snug text-slate-900 transition-colors group-hover:text-[#0a2a6e]",
                                                         children: item.title
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/home/NewsSection.tsx",
-                                                        lineNumber: 108,
+                                                        lineNumber: 62,
+                                                        columnNumber: 21
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                        className: "mt-4 text-sm leading-6 text-slate-500",
+                                                        children: "Explore key national initiatives and updates through a clean, citizen-focused view."
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/home/NewsSection.tsx",
+                                                        lineNumber: 65,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
-                                            }, item.title, true, {
+                                            }, void 0, true, {
                                                 fileName: "[project]/components/home/NewsSection.tsx",
-                                                lineNumber: 103,
+                                                lineNumber: 60,
                                                 columnNumber: 19
-                                            }, this))
-                                    }, void 0, false, {
+                                            }, this)
+                                        ]
+                                    }, item.title, true, {
                                         fileName: "[project]/components/home/NewsSection.tsx",
-                                        lineNumber: 101,
-                                        columnNumber: 15
-                                    }, this)
-                                ]
-                            }, void 0, true, {
+                                        lineNumber: 55,
+                                        columnNumber: 17
+                                    }, this))
+                            }, void 0, false, {
                                 fileName: "[project]/components/home/NewsSection.tsx",
-                                lineNumber: 82,
+                                lineNumber: 53,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/home/NewsSection.tsx",
-                        lineNumber: 74,
+                        lineNumber: 50,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/home/NewsSection.tsx",
-                lineNumber: 42,
+                lineNumber: 31,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/home/NewsSection.tsx",
-            lineNumber: 41,
+            lineNumber: 30,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/home/NewsSection.tsx",
-        lineNumber: 40,
+        lineNumber: 29,
         columnNumber: 5
     }, this);
 }

@@ -1,16 +1,2 @@
-{"timestamp":"00:00:01.063","source":"Server","level":"LOG","message":""}
-{"timestamp":"00:00:11.632","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
-{"timestamp":"00:03:10.257","source":"Server","level":"LOG","message":"✓ Compiled in 553ms"}
-{"timestamp":"00:03:17.385","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
-{"timestamp":"00:04:52.801","source":"Server","level":"LOG","message":"✓ Compiled in 181ms"}
-{"timestamp":"00:21:35.056","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
-{"timestamp":"00:25:42.063","source":"Server","level":"LOG","message":"✓ Compiled in 205ms"}
-{"timestamp":"00:27:57.691","source":"Server","level":"LOG","message":"✓ Compiled in 146ms"}
-{"timestamp":"00:28:44.153","source":"Server","level":"LOG","message":"✓ Compiled in 163ms"}
-{"timestamp":"00:29:18.609","source":"Server","level":"LOG","message":"✓ Compiled in 215ms"}
-{"timestamp":"00:29:24.771","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
-{"timestamp":"00:29:55.645","source":"Server","level":"LOG","message":"✓ Compiled in 153ms"}
-{"timestamp":"00:30:15.807","source":"Server","level":"LOG","message":"✓ Compiled in 156ms"}
-{"timestamp":"00:33:23.422","source":"Server","level":"LOG","message":"✓ Compiled in 156ms"}
-{"timestamp":"00:34:09.954","source":"Server","level":"LOG","message":"✓ Compiled in 166ms"}
-{"timestamp":"00:34:27.012","source":"Server","level":"LOG","message":"✓ Compiled in 208ms"}
+{"timestamp":"00:00:02.986","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:13.383","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
