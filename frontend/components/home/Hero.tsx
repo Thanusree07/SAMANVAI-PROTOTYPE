@@ -1,5 +1,6 @@
-"use client";
 
+"use client";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ChevronDown, MessageSquare, Palette, Search, Share2, CalendarDays } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -14,6 +15,7 @@ const trendingSearches = ["Apply Aadhaar", "DigiLocker", "New Voter Registration
 
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     const timer = window.setInterval(() => setCurrentSlide((value) => (value + 1) % heroSlides.length), 7000);
@@ -37,9 +39,8 @@ export default function Hero() {
           aria-hidden="true"
         />
       ))}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(2,8,28,.72)_0%,rgba(2,8,28,.5)_24%,rgba(2,27,82,.2)_46%,transparent_68%),linear-gradient(90deg,rgba(2,27,82,.78),rgba(41,31,96,.52)_48%,rgba(15,61,124,.64)),linear-gradient(180deg,rgba(2,8,28,.18),rgba(31,19,70,.68))]" />
-
-      <div className="relative mx-auto flex min-h-[calc(100vh-10px)] max-w-[1440px] flex-col items-center justify-center px-4 pb-28 pt-8 text-center sm:px-6 lg:pb-32 lg:pt-28">
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(2,8,28,.72)_0%,rgba(2,8,28,.5)_24%,rgba(2,27,82,.2)_46%,transparent_68%),linear-gradient(90deg,rgba(2,27,82,.78),rgba(41,31,96,.52)_48%,rgba(15,61,124,.64)),linear-gradient(180deg,rgba(2,8,28,.18),rgba(31,19,70,.68))]" />
+      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-10px)] max-w-[1440px] flex-col items-center justify-center px-4 pb-28 pt-8 text-center sm:px-6 lg:pb-32 lg:pt-28">
         <div className="mx-auto flex w-full max-w-[980px] flex-col items-center justify-center text-center">
           <Image
             src="/images/image.png"
@@ -64,9 +65,12 @@ export default function Hero() {
               </select>
               <ChevronDown size={20} className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-slate-700" />
             </div>
-            <button type="button" className="h-[56px] bg-[#ed1b2f] px-11 text-xl font-bold text-white transition hover:bg-[#cf1626] sm:h-[72px] sm:text-2xl">
-              Search
-            </button>
+                          <button
+               onClick={() => {
+  console.log("clicked");
+  router.push("/dashboard");
+}}>
+</button>
           </div>
 
 

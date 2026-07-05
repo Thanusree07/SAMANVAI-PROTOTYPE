@@ -996,7 +996,7 @@ function SamanvAISection() {
                                 className: "mt-9 flex flex-wrap items-center justify-center gap-4",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                        href: "#services",
+                                        href: "/dashboard",
                                         className: "group inline-flex items-center gap-2 rounded-md bg-[linear-gradient(135deg,#ffb35c,#ff8a1d_48%,#e95d12)] px-8 py-4 text-sm font-black uppercase tracking-wide text-[#071d49] shadow-[0_18px_46px_rgba(255,138,29,.32),inset_0_1px_0_rgba(255,255,255,.52)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_58px_rgba(255,138,29,.42),inset_0_1px_0_rgba(255,255,255,.62)]",
                                         children: [
                                             "Start with SAMANVAI",

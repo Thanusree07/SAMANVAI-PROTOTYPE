@@ -104,7 +104,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "C:\\Users\\Thanusree\\OneDrive\\Desktop\\SAMANV AI PROTOTYPE\\frontend",
+    "outputFileTracingRoot": "C:\\Users\\kadiy\\OneDrive\\Desktop\\SAMANVAI-PROTOTYPE\\frontend",
     "cacheComponents": false,
     "cacheLife": {
       "default": {
@@ -166,7 +166,7 @@
       "proxyPrefetch": "flexible",
       "optimisticClientCache": true,
       "manualClientBasePath": false,
-      "cpus": 15,
+      "cpus": 11,
       "memoryBasedWorkersCount": false,
       "imgOptConcurrency": null,
       "imgOptTimeoutInSeconds": 7,
@@ -304,11 +304,11 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts",
     "turbopack": {
-      "root": "C:\\Users\\Thanusree\\OneDrive\\Desktop\\SAMANV AI PROTOTYPE\\frontend"
+      "root": "C:\\Users\\kadiy\\OneDrive\\Desktop\\SAMANVAI-PROTOTYPE\\frontend"
     },
     "distDirRoot": ".next-build"
   },
-  "appDir": "C:\\Users\\Thanusree\\OneDrive\\Desktop\\SAMANV AI PROTOTYPE\\frontend",
+  "appDir": "C:\\Users\\kadiy\\OneDrive\\Desktop\\SAMANVAI-PROTOTYPE\\frontend",
   "relativeAppDir": "",
   "files": [
     ".next-build\\package.json",

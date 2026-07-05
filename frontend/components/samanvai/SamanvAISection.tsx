@@ -27,7 +27,7 @@ export default function SamanvAISection() {
             scheme, and application—through one intelligent platform.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-            <a href="#services" className="group inline-flex items-center gap-2 rounded-md bg-[linear-gradient(135deg,#ffb35c,#ff8a1d_48%,#e95d12)] px-8 py-4 text-sm font-black uppercase tracking-wide text-[#071d49] shadow-[0_18px_46px_rgba(255,138,29,.32),inset_0_1px_0_rgba(255,255,255,.52)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_58px_rgba(255,138,29,.42),inset_0_1px_0_rgba(255,255,255,.62)]">
+            <a href="/dashboard" className="group inline-flex items-center gap-2 rounded-md bg-[linear-gradient(135deg,#ffb35c,#ff8a1d_48%,#e95d12)] px-8 py-4 text-sm font-black uppercase tracking-wide text-[#071d49] shadow-[0_18px_46px_rgba(255,138,29,.32),inset_0_1px_0_rgba(255,255,255,.52)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_58px_rgba(255,138,29,.42),inset_0_1px_0_rgba(255,255,255,.62)]">
               Start with SAMANVAI
               <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
             </a>
