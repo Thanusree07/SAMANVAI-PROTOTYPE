@@ -15,11 +15,11 @@
   },
   {
     "route": "/dashboard",
-    "firstLoadUncompressedJsBytes": 546945,
+    "firstLoadUncompressedJsBytes": 548136,
     "firstLoadChunkPaths": [
       ".next-build\\static\\chunks\\05-c3ty_6dwfk.js",
       ".next-build\\static\\chunks\\14mrh2-p_w84d.js",
-      ".next-build\\static\\chunks\\3d_qpp0kf1ffc.js",
+      ".next-build\\static\\chunks\\3czt_uodov9--.js",
       ".next-build\\static\\chunks\\3jvkbm-wxvaor.js",
       ".next-build\\static\\chunks\\10muk0s002m9w.js",
       ".next-build\\static\\chunks\\0iec5q4ack_04.js",

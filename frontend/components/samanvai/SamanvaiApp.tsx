@@ -9,7 +9,6 @@ import {
   Clock3,
   FileCheck2,
   FileText,
-  Globe2,
   History,
   Home,
   Keyboard,
@@ -31,8 +30,8 @@ type FlowStep = "pin" | "language" | "dashboard";
 const accessPin = "2026";
 
 const languages: Array<{ code: LanguageCode; label: string; nativeName: string }> = [
-  { code: "en", label: "English", nativeName: "English" },
   { code: "te", label: "Telugu", nativeName: "తెలుగు" },
+  { code: "en", label: "English", nativeName: "English" },
   { code: "hi", label: "Hindi", nativeName: "हिन्दी" },
   { code: "ta", label: "Tamil", nativeName: "தமிழ்" },
   { code: "kn", label: "Kannada", nativeName: "ಕನ್ನಡ" },
@@ -94,7 +93,7 @@ const copy = {
     quickAccess: "త్వరిత ప్రవేశం",
     checkStatus: "స్థితి తనిఖీ",
     checkEligibility: "అర్హత తనిఖీ",
-    bookAppointment: "అపాయింట్మెంట్ బుక్ చేయండి",
+    bookAppointment: "అపాయింట్‌మెంట్ బుక్ చేయండి",
     latestUpdates: "తాజా సమాచారం",
     home: "హోమ్",
     history: "చరిత్ర",
@@ -275,12 +274,7 @@ export default function SamanvaiApp() {
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState<LanguageCode>(() => {
-    if (typeof window === "undefined") {
-      return "en";
-    }
-
-    const savedLanguage = window.localStorage.getItem("samanvai-language") as LanguageCode | null;
-    return savedLanguage && copy[savedLanguage] ? savedLanguage : "en";
+    return "te";
   });
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -311,18 +305,18 @@ export default function SamanvaiApp() {
     setError(t.invalidPin);
   }
 
-  function chooseLanguage(code: LanguageCode) {
-    window.localStorage.setItem("samanvai-language", code);
-    setSelectedLanguage(code);
+  function chooseLanguage() {
+    window.localStorage.setItem("samanvai-language", "te");
+    setSelectedLanguage("te");
     setStep("dashboard");
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[linear-gradient(135deg,#fafdff_0%,#edf7ff_42%,#dceeff_100%)] text-slate-950">
+    <main className="relative min-h-screen overflow-hidden bg-[linear-gradient(135deg,#f8fbff_0%,#eef7ff_38%,#d9ecff_100%)] text-slate-950">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,.82),rgba(224,240,255,.56)_44%,rgba(247,252,255,.72)),repeating-linear-gradient(0deg,rgba(6,31,85,.018)_0,rgba(6,31,85,.018)_1px,transparent_1px,transparent_24px)]" />
-      <div className="pointer-events-none absolute left-[16%] top-[-6%] h-[48rem] w-[82rem] -rotate-6 rounded-full bg-[radial-gradient(ellipse,rgba(255,255,255,.98)_0%,rgba(255,255,255,.78)_34%,rgba(210,232,255,.3)_58%,transparent_76%)] blur-2xl" />
-      <div className="pointer-events-none absolute left-[20%] top-[42%] h-32 w-[68rem] -rotate-6 rounded-full border-t border-white/80 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.6),rgba(199,225,255,.34),transparent)] blur-md" />
-      <div className="pointer-events-none absolute left-[17%] top-[53%] h-20 w-[60rem] -rotate-6 rounded-full border-t border-white/55 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.32),transparent)] blur-lg" />
+      <div className="pointer-events-none absolute left-1/2 top-[-8%] h-[54rem] w-[88rem] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(255,255,255,.98)_0%,rgba(255,255,255,.78)_34%,rgba(210,232,255,.3)_58%,transparent_76%)] blur-2xl" />
+      <div className="pointer-events-none absolute left-1/2 top-[34%] h-52 w-[74rem] -translate-x-1/2 -rotate-3 rounded-full border-t border-white/80 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.6),rgba(199,225,255,.34),transparent)] blur-md" />
+      <div className="pointer-events-none absolute left-1/2 top-[53%] h-24 w-[60rem] -translate-x-1/2 -rotate-3 rounded-full border-t border-white/55 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.32),transparent)] blur-lg" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,rgba(255,153,51,.52),rgba(255,255,255,.8),rgba(19,136,8,.48))]" />
 
       {step === "pin" && (
@@ -382,7 +376,7 @@ export default function SamanvaiApp() {
                 <button
                   key={language.code}
                   type="button"
-                  onClick={() => chooseLanguage(language.code)}
+                  onClick={chooseLanguage}
                   className="group rounded-2xl border border-white/80 bg-white/70 p-5 text-left shadow-[0_14px_38px_rgba(15,76,129,.08)] transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-[0_22px_54px_rgba(15,76,129,.14)]"
                 >
                   <span className="block text-xl font-black text-slate-950">{language.nativeName}</span>
@@ -408,7 +402,7 @@ export default function SamanvaiApp() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-2xl font-black tracking-[.08em] text-[#08245d]">SAMANVAI</p>
-                <p className="mt-1 text-[0.68rem] font-bold uppercase tracking-[.34em] text-slate-500">Digital India</p>
+                <p className="mt-1 text-[0.78rem] font-bold tracking-normal text-slate-500">డిజిటల్ ఇండియా</p>
               </div>
               <button
                 type="button"
@@ -451,7 +445,7 @@ export default function SamanvaiApp() {
           ) : null}
 
           <div className="lg:pl-[19rem]">
-            <header className="mx-auto flex max-w-6xl items-center justify-between px-1 py-1 sm:px-2">
+            <div className="fixed inset-x-4 top-4 z-20 flex items-center justify-between lg:left-[20rem]">
               <button
                 type="button"
                 aria-label={t.menu}
@@ -460,28 +454,15 @@ export default function SamanvaiApp() {
               >
                 <Menu size={20} />
               </button>
-
               <div className="flex items-center gap-2">
-                <select
-                  value={selectedLanguage}
-                  aria-label={t.language}
-                  onChange={(event) => chooseLanguage(event.target.value as LanguageCode)}
-                  className="h-11 rounded-2xl border border-white/80 bg-white/72 px-3 text-sm font-bold text-slate-700 shadow-sm outline-none backdrop-blur-xl transition duration-300 hover:bg-white focus:shadow-[0_0_0_5px_rgba(37,99,235,.1)]"
-                >
-                  {languages.map((language) => (
-                    <option key={language.code} value={language.code}>
-                      {language.nativeName}
-                    </option>
-                  ))}
-                </select>
-                <IconButton label={t.language} icon={Globe2} />
-                <IconButton label={t.accessibility} icon={Accessibility} />
-                <IconButton label={t.profile} icon={User} />
+                <TopIconButton label={t.accessibility} icon={Accessibility} />
+                <TopIconButton label={t.profile} icon={User} />
               </div>
-            </header>
+            </div>
 
-            <div className="relative mx-auto flex min-h-[calc(100vh-3rem)] max-w-6xl flex-col items-center justify-center pb-5 pt-2 text-center">
-              <div className="pointer-events-none absolute left-1/2 top-[2%] h-[30rem] w-[min(62rem,92vw)] -translate-x-1/2 rounded-full bg-white/90 blur-3xl" />
+            <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center pb-5 pt-2 text-center">
+              <div className="pointer-events-none absolute left-1/2 top-[1%] h-[34rem] w-[min(68rem,94vw)] -translate-x-1/2 rounded-full bg-white/95 blur-3xl" />
+              <div className="pointer-events-none absolute left-1/2 top-[20%] h-[18rem] w-[min(48rem,78vw)] -translate-x-1/2 rounded-full border border-white/75 bg-[radial-gradient(ellipse,rgba(255,255,255,.94)_0%,rgba(232,244,255,.55)_50%,transparent_74%)] blur-xl" />
 
               <h1 className="relative mt-1 text-5xl font-black leading-none tracking-[.14em] text-[#061f55] drop-shadow-[0_14px_24px_rgba(10,42,110,.18)] sm:text-6xl lg:text-[4.8rem]">
                 SAMANVAI
@@ -497,17 +478,19 @@ export default function SamanvaiApp() {
               <div className="relative mt-7 grid w-full max-w-[34rem] grid-cols-1 gap-6 sm:grid-cols-2">
                 <button
                   type="button"
-                  className="group flex aspect-square min-h-44 flex-col items-center justify-center rounded-[2rem] border border-white/95 bg-[linear-gradient(145deg,rgba(255,255,255,.58),rgba(225,241,255,.36))] p-7 text-[#061f55] shadow-[0_34px_86px_rgba(36,86,142,.18),inset_0_1px_0_rgba(255,255,255,1),inset_0_0_34px_rgba(255,255,255,.46),inset_0_-1px_0_rgba(150,198,247,.3)] backdrop-blur-[34px] transition duration-300 hover:-translate-y-1 hover:bg-white/62 hover:shadow-[0_42px_105px_rgba(36,86,142,.23),inset_0_1px_0_rgba(255,255,255,1)]"
+                  className="group relative flex aspect-square min-h-44 flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-white/95 bg-[radial-gradient(circle_at_50%_36%,rgba(255,255,255,1)_0%,rgba(255,255,255,.96)_22%,rgba(230,244,255,.62)_50%,rgba(255,255,255,.5)_100%)] p-7 text-[#061f55] shadow-[0_0_0_1px_rgba(255,255,255,.9),0_34px_84px_rgba(14,96,185,.2),0_0_130px_rgba(255,255,255,1),0_0_70px_rgba(66,153,225,.18),inset_0_1px_0_rgba(255,255,255,1),inset_0_0_72px_rgba(255,255,255,.92),inset_0_-1px_0_rgba(150,198,247,.4)] backdrop-blur-[34px] transition duration-300 hover:-translate-y-1 hover:bg-white/75 hover:shadow-[0_0_0_1px_rgba(255,255,255,.95),0_42px_104px_rgba(14,96,185,.26),0_0_150px_rgba(255,255,255,1),0_0_92px_rgba(66,153,225,.22),inset_0_1px_0_rgba(255,255,255,1)]"
                 >
-                  <Keyboard className="drop-shadow-[0_10px_18px_rgba(12,91,216,.22)] transition duration-300 group-hover:scale-105" size={72} strokeWidth={2.4} />
-                  <span className="mt-5 text-3xl font-medium tracking-tight">Type</span>
+                  <span className="pointer-events-none absolute inset-5 rounded-[1.55rem] bg-[radial-gradient(circle,rgba(255,255,255,.94)_0%,rgba(255,255,255,.54)_44%,transparent_72%)] blur-sm" />
+                  <Keyboard className="relative drop-shadow-[0_0_32px_rgba(9,83,190,.34)] transition duration-300 group-hover:scale-105" size={72} strokeWidth={2.4} />
+                  <span className="sr-only">{selectedLanguage === "te" ? "టైప్ చేయండి" : "Type"}</span>
                 </button>
                 <button
                   type="button"
-                  className="group flex aspect-square min-h-44 flex-col items-center justify-center rounded-[2rem] border border-white/95 bg-[linear-gradient(145deg,rgba(255,255,255,.58),rgba(225,241,255,.36))] p-7 text-[#075dd6] shadow-[0_34px_86px_rgba(36,86,142,.18),inset_0_1px_0_rgba(255,255,255,1),inset_0_0_34px_rgba(255,255,255,.46),inset_0_-1px_0_rgba(150,198,247,.3)] backdrop-blur-[34px] transition duration-300 hover:-translate-y-1 hover:bg-white/62 hover:shadow-[0_42px_105px_rgba(36,86,142,.23),inset_0_1px_0_rgba(255,255,255,1)]"
+                  className="group relative flex aspect-square min-h-44 flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-white/95 bg-[radial-gradient(circle_at_50%_36%,rgba(255,255,255,1)_0%,rgba(255,255,255,.96)_22%,rgba(230,244,255,.62)_50%,rgba(255,255,255,.5)_100%)] p-7 text-[#075dd6] shadow-[0_0_0_1px_rgba(255,255,255,.9),0_34px_84px_rgba(14,96,185,.2),0_0_130px_rgba(255,255,255,1),0_0_70px_rgba(66,153,225,.18),inset_0_1px_0_rgba(255,255,255,1),inset_0_0_72px_rgba(255,255,255,.92),inset_0_-1px_0_rgba(150,198,247,.4)] backdrop-blur-[34px] transition duration-300 hover:-translate-y-1 hover:bg-white/75 hover:shadow-[0_0_0_1px_rgba(255,255,255,.95),0_42px_104px_rgba(14,96,185,.26),0_0_150px_rgba(255,255,255,1),0_0_92px_rgba(66,153,225,.22),inset_0_1px_0_rgba(255,255,255,1)]"
                 >
-                  <Mic className="drop-shadow-[0_10px_18px_rgba(12,91,216,.24)] transition duration-300 group-hover:scale-105" size={82} strokeWidth={2.5} />
-                  <span className="mt-4 text-3xl font-medium tracking-tight text-[#061f55]">Speak</span>
+                  <span className="pointer-events-none absolute inset-5 rounded-[1.55rem] bg-[radial-gradient(circle,rgba(255,255,255,.94)_0%,rgba(255,255,255,.54)_44%,transparent_72%)] blur-sm" />
+                  <Mic className="relative drop-shadow-[0_0_36px_rgba(9,83,190,.38)] transition duration-300 group-hover:scale-105" size={82} strokeWidth={2.5} />
+                  <span className="sr-only">{selectedLanguage === "te" ? "మాట్లాడండి" : "Speak"}</span>
                 </button>
               </div>
 
@@ -548,13 +531,13 @@ export default function SamanvaiApp() {
   );
 }
 
-function IconButton({ label, icon: Icon }: { label: string; icon: typeof Globe2 }) {
+function TopIconButton({ label, icon: Icon }: { label: string; icon: typeof User }) {
   return (
     <button
       type="button"
       aria-label={label}
       title={label}
-      className="hidden h-11 w-11 items-center justify-center rounded-2xl border border-white/80 bg-white/68 text-slate-700 shadow-sm backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:text-[#08245d] hover:shadow-[0_12px_28px_rgba(18,65,110,.1)] sm:flex"
+      className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/80 bg-white/72 text-slate-700 shadow-sm backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:text-[#08245d] hover:shadow-[0_12px_28px_rgba(18,65,110,.1)]"
     >
       <Icon size={19} />
     </button>
