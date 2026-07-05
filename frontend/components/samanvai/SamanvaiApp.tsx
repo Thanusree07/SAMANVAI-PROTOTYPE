@@ -318,10 +318,11 @@ export default function SamanvaiApp() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[linear-gradient(135deg,#fbfdff_0%,#eef7ff_46%,#e8f4ff_100%)] text-slate-950">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,.74),rgba(232,244,255,.48)_44%,rgba(255,255,255,.62)),repeating-linear-gradient(0deg,rgba(10,42,110,.022)_0,rgba(10,42,110,.022)_1px,transparent_1px,transparent_26px)]" />
-      <div className="pointer-events-none absolute left-[22%] top-[8%] h-[42rem] w-[74rem] -rotate-6 rounded-full bg-[radial-gradient(ellipse,rgba(255,255,255,.92)_0%,rgba(255,255,255,.68)_35%,rgba(219,238,255,.18)_58%,transparent_72%)] blur-2xl" />
-      <div className="pointer-events-none absolute left-[23%] top-[43%] h-28 w-[62rem] -rotate-6 rounded-full border-t border-white/70 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.42),rgba(214,234,255,.24),transparent)] blur-md" />
+    <main className="relative min-h-screen overflow-hidden bg-[linear-gradient(135deg,#fafdff_0%,#edf7ff_42%,#dceeff_100%)] text-slate-950">
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,.82),rgba(224,240,255,.56)_44%,rgba(247,252,255,.72)),repeating-linear-gradient(0deg,rgba(6,31,85,.018)_0,rgba(6,31,85,.018)_1px,transparent_1px,transparent_24px)]" />
+      <div className="pointer-events-none absolute left-[16%] top-[-6%] h-[48rem] w-[82rem] -rotate-6 rounded-full bg-[radial-gradient(ellipse,rgba(255,255,255,.98)_0%,rgba(255,255,255,.78)_34%,rgba(210,232,255,.3)_58%,transparent_76%)] blur-2xl" />
+      <div className="pointer-events-none absolute left-[20%] top-[42%] h-32 w-[68rem] -rotate-6 rounded-full border-t border-white/80 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.6),rgba(199,225,255,.34),transparent)] blur-md" />
+      <div className="pointer-events-none absolute left-[17%] top-[53%] h-20 w-[60rem] -rotate-6 rounded-full border-t border-white/55 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.32),transparent)] blur-lg" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,rgba(255,153,51,.52),rgba(255,255,255,.8),rgba(19,136,8,.48))]" />
 
       {step === "pin" && (
@@ -400,7 +401,7 @@ export default function SamanvaiApp() {
       {step === "dashboard" && (
         <section className="relative min-h-screen px-4 py-3 sm:px-5 lg:px-6">
           <aside
-            className={`fixed inset-y-0 left-0 z-30 m-2 w-72 rounded-[2rem] border border-white/80 bg-white/42 p-6 shadow-[0_32px_100px_rgba(18,65,110,.16),inset_0_1px_0_rgba(255,255,255,.88),inset_0_-1px_0_rgba(255,255,255,.38)] backdrop-blur-3xl transition duration-300 lg:translate-x-0 ${
+            className={`fixed inset-y-0 left-0 z-30 m-2 w-72 rounded-[2rem] border border-white/90 bg-[linear-gradient(145deg,rgba(255,255,255,.54),rgba(224,240,255,.34))] p-6 shadow-[0_34px_110px_rgba(36,86,142,.18),inset_0_1px_0_rgba(255,255,255,.98),inset_0_0_34px_rgba(255,255,255,.38),inset_0_-1px_0_rgba(173,211,250,.28)] backdrop-blur-[34px] transition duration-300 lg:translate-x-0 ${
               sidebarOpen ? "translate-x-0" : "-translate-x-full"
             }`}
           >
@@ -428,8 +429,8 @@ export default function SamanvaiApp() {
                     type="button"
                     className={`flex w-full items-center gap-3 rounded-[1.15rem] px-4 py-3.5 text-left text-sm font-semibold transition duration-300 ${
                       index === 0
-                        ? "border border-white/85 bg-[linear-gradient(135deg,rgba(255,255,255,.76),rgba(203,226,255,.58))] text-[#08245d] shadow-[0_18px_44px_rgba(37,99,235,.2),inset_0_1px_0_rgba(255,255,255,.95)]"
-                        : "text-slate-700 hover:-translate-y-0.5 hover:bg-white/56 hover:text-[#08245d] hover:shadow-[0_12px_28px_rgba(18,65,110,.08)]"
+                        ? "border border-white/95 bg-[linear-gradient(145deg,rgba(255,255,255,.72),rgba(199,224,255,.56))] text-[#08245d] shadow-[0_18px_46px_rgba(54,116,194,.22),inset_0_1px_0_rgba(255,255,255,1),inset_0_-1px_0_rgba(143,190,242,.3)]"
+                        : "text-slate-700 hover:-translate-y-0.5 hover:bg-white/52 hover:text-[#08245d] hover:shadow-[0_12px_30px_rgba(36,86,142,.1),inset_0_1px_0_rgba(255,255,255,.86)]"
                     }`}
                   >
                     <Icon size={19} className={index === 0 ? "text-blue-700" : "text-slate-600"} />
@@ -480,7 +481,7 @@ export default function SamanvaiApp() {
             </header>
 
             <div className="relative mx-auto flex min-h-[calc(100vh-3rem)] max-w-6xl flex-col items-center justify-center pb-5 pt-2 text-center">
-              <div className="pointer-events-none absolute left-1/2 top-[4%] h-[27rem] w-[min(58rem,90vw)] -translate-x-1/2 rounded-full bg-white/86 blur-3xl" />
+              <div className="pointer-events-none absolute left-1/2 top-[2%] h-[30rem] w-[min(62rem,92vw)] -translate-x-1/2 rounded-full bg-white/90 blur-3xl" />
 
               <h1 className="relative mt-1 text-5xl font-black leading-none tracking-[.14em] text-[#061f55] drop-shadow-[0_14px_24px_rgba(10,42,110,.18)] sm:text-6xl lg:text-[4.8rem]">
                 SAMANVAI
@@ -496,14 +497,14 @@ export default function SamanvaiApp() {
               <div className="relative mt-7 grid w-full max-w-[34rem] grid-cols-1 gap-6 sm:grid-cols-2">
                 <button
                   type="button"
-                  className="group flex aspect-square min-h-44 flex-col items-center justify-center rounded-[2rem] border border-white/85 bg-white/44 p-7 text-[#061f55] shadow-[0_30px_78px_rgba(18,65,110,.16),inset_0_1px_0_rgba(255,255,255,.94),inset_0_-1px_0_rgba(255,255,255,.42)] backdrop-blur-3xl transition duration-300 hover:-translate-y-1 hover:bg-white/66 hover:shadow-[0_38px_92px_rgba(18,65,110,.2),inset_0_1px_0_rgba(255,255,255,.98)]"
+                  className="group flex aspect-square min-h-44 flex-col items-center justify-center rounded-[2rem] border border-white/95 bg-[linear-gradient(145deg,rgba(255,255,255,.58),rgba(225,241,255,.36))] p-7 text-[#061f55] shadow-[0_34px_86px_rgba(36,86,142,.18),inset_0_1px_0_rgba(255,255,255,1),inset_0_0_34px_rgba(255,255,255,.46),inset_0_-1px_0_rgba(150,198,247,.3)] backdrop-blur-[34px] transition duration-300 hover:-translate-y-1 hover:bg-white/62 hover:shadow-[0_42px_105px_rgba(36,86,142,.23),inset_0_1px_0_rgba(255,255,255,1)]"
                 >
                   <Keyboard className="drop-shadow-[0_10px_18px_rgba(12,91,216,.22)] transition duration-300 group-hover:scale-105" size={72} strokeWidth={2.4} />
                   <span className="mt-5 text-3xl font-medium tracking-tight">Type</span>
                 </button>
                 <button
                   type="button"
-                  className="group flex aspect-square min-h-44 flex-col items-center justify-center rounded-[2rem] border border-white/85 bg-white/44 p-7 text-[#075dd6] shadow-[0_30px_78px_rgba(18,65,110,.16),inset_0_1px_0_rgba(255,255,255,.94),inset_0_-1px_0_rgba(255,255,255,.42)] backdrop-blur-3xl transition duration-300 hover:-translate-y-1 hover:bg-white/66 hover:shadow-[0_38px_92px_rgba(18,65,110,.2),inset_0_1px_0_rgba(255,255,255,.98)]"
+                  className="group flex aspect-square min-h-44 flex-col items-center justify-center rounded-[2rem] border border-white/95 bg-[linear-gradient(145deg,rgba(255,255,255,.58),rgba(225,241,255,.36))] p-7 text-[#075dd6] shadow-[0_34px_86px_rgba(36,86,142,.18),inset_0_1px_0_rgba(255,255,255,1),inset_0_0_34px_rgba(255,255,255,.46),inset_0_-1px_0_rgba(150,198,247,.3)] backdrop-blur-[34px] transition duration-300 hover:-translate-y-1 hover:bg-white/62 hover:shadow-[0_42px_105px_rgba(36,86,142,.23),inset_0_1px_0_rgba(255,255,255,1)]"
                 >
                   <Mic className="drop-shadow-[0_10px_18px_rgba(12,91,216,.24)] transition duration-300 group-hover:scale-105" size={82} strokeWidth={2.5} />
                   <span className="mt-4 text-3xl font-medium tracking-tight text-[#061f55]">Speak</span>
@@ -528,9 +529,9 @@ export default function SamanvaiApp() {
                     <button
                       key={action.label}
                       type="button"
-                      className="group flex min-h-28 items-center gap-4 rounded-[1.35rem] border border-white/85 bg-white/44 p-4 text-left shadow-[0_20px_56px_rgba(18,65,110,.1),inset_0_1px_0_rgba(255,255,255,.88),inset_0_-1px_0_rgba(255,255,255,.34)] backdrop-blur-3xl transition duration-300 hover:-translate-y-1 hover:bg-white/66 hover:shadow-[0_30px_76px_rgba(18,65,110,.16),inset_0_1px_0_rgba(255,255,255,.96)]"
+                      className="group flex min-h-28 items-center gap-4 rounded-[1.35rem] border border-white/95 bg-[linear-gradient(145deg,rgba(255,255,255,.56),rgba(225,241,255,.34))] p-4 text-left shadow-[0_22px_62px_rgba(36,86,142,.12),inset_0_1px_0_rgba(255,255,255,.96),inset_0_0_26px_rgba(255,255,255,.34),inset_0_-1px_0_rgba(150,198,247,.24)] backdrop-blur-[32px] transition duration-300 hover:-translate-y-1 hover:bg-white/64 hover:shadow-[0_32px_82px_rgba(36,86,142,.18),inset_0_1px_0_rgba(255,255,255,1)]"
                     >
-                      <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${action.accent} text-white shadow-[0_14px_30px_rgba(37,99,235,.18),inset_0_1px_0_rgba(255,255,255,.35)] transition duration-300 group-hover:scale-105`}>
+                      <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-white/90 bg-[linear-gradient(145deg,rgba(255,255,255,.78),rgba(213,234,255,.48))] text-[#075dd6] shadow-[0_14px_30px_rgba(36,86,142,.14),inset_0_1px_0_rgba(255,255,255,1),inset_0_-1px_0_rgba(150,198,247,.22)] transition duration-300 group-hover:scale-105">
                         <action.icon size={21} />
                       </span>
                       <span className="min-w-0 flex-1 text-base font-semibold leading-6 text-slate-900">{action.label}</span>
