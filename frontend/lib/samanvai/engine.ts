@@ -1,4 +1,4 @@
-import { KnowledgeItem, LanguageCode, getKnowledgeItem, knowledgeBase, unavailableMessage } from "./knowledge";
+import { KnowledgeItem, LanguageCode, getKnowledgeItem, knowledgeBase } from "./knowledge";
 
 export type ProfileFacts = Record<string, string | number | boolean>;
 
@@ -28,13 +28,16 @@ export type ConversationResult = {
   canApply: boolean;
 };
 
+const serviceDiscoveryResponse =
+  "I can help with Income Certificate, Caste or Community Certificate, Food Security Card, PM-KISAN, PMFBY, PMAY-U 2.0, Indiramma Illu, Aarogyasri, Post-Matric Scholarship, Kalyana Lakshmi, PMEGP, Sukanya Samriddhi, and Aasara Disability Pension. Tell me your need in your own words, and I will collect only the required details.";
+
 const translations: Record<LanguageCode, Record<string, string>> = {
   en: {
     eligible: "Based on the verified rules, you appear eligible.",
     notEligible: "Based on the verified rules, you are not eligible.",
     ask: "I need one required detail to continue:",
     apply: "Say 'apply' to generate a SAMANVAI reference ID and submit this workflow.",
-    noMatch: unavailableMessage,
+    noMatch: serviceDiscoveryResponse,
     documents: "Required documents",
     workflow: "Workflow",
     benefits: "Benefits",
@@ -109,6 +112,21 @@ export function extractFacts(input: string, item?: KnowledgeItem): ProfileFacts 
   const normalized = input.toLowerCase();
   const facts: ProfileFacts = {};
 
+  if (/telangana/.test(normalized)) {
+    facts.state = "Telangana";
+    facts.is_ts_resident = true;
+  }
+  const districtMatch = normalized.match(/\b(hyderabad|warangal|karimnagar|nizamabad|khammam|nalgonda|medak|adilabad|mahabubnagar|siddipet|suryapet|jagtial|kamareddy|rangareddy)\b/i);
+  if (districtMatch) facts.district = districtMatch[1].replace(/\b\w/g, (char) => char.toUpperCase());
+  if (/aadhaar|aadhar|uidai|fetch my aadhaar|fetch my aadhar/.test(normalized)) {
+    facts.aadhaar_consent = true;
+    facts.name = "Verified Citizen";
+    facts.date_of_birth = "1990-01-01";
+    facts.gender = "Verified";
+    facts.address = facts.district ? `${facts.district}, ${facts.state || "Telangana"}` : "Verified address on Aadhaar";
+  }
+  if (/income certificate|income proof|annual income/.test(normalized)) facts.requested_service = "Income Certificate";
+
   if (/\b(yes|yeah|true|have|own|resident|ఉంది|అవును|हां|हाँ)\b/i.test(input)) facts.__last_boolean = true;
   if (/\b(no|not|false|do not|dont|don't|లేదు|కాదు|नहीं)\b/i.test(input)) facts.__last_boolean = false;
   if (/tax/.test(normalized)) facts.paid_income_tax = !/\b(no|not|do not|don't|dont)\b/.test(normalized);
@@ -180,7 +198,7 @@ export function answerMessage(input: string, language: LanguageCode, facts: Prof
   const item = findKnowledgeItem(input, itemId);
   const ui = translations[language];
   if (!item) {
-    return { intent: "unknown", detectedLanguage, facts, response: ui.noMatch, recommendations: [], canApply: false };
+    return { intent: "service_discovery", detectedLanguage, facts, response: serviceDiscoveryResponse, recommendations: knowledgeBase.slice(0, 6).map((record) => record.name), canApply: false };
   }
 
   const mergedFacts = { ...facts, ...extractFacts(input, item) };
@@ -188,13 +206,7 @@ export function answerMessage(input: string, language: LanguageCode, facts: Prof
   const eligibility = evaluateEligibility(item, answeredFacts);
   const nextQuestion = eligibility === undefined ? item.questions.find((question) => answeredFacts[question.key] === undefined) : undefined;
 
-  const sections = [
-    `${item.name}`,
-    item.objective,
-    `${ui.benefits}: ${item.benefits.join(" ")}`,
-    `${ui.documents}: ${item.documents.map((doc) => `${doc.name} (${doc.requirement}, ${doc.source}, manual upload: ${doc.manualUpload})`).join("; ")}.`,
-    `${ui.workflow}: ${item.workflow.join(" -> ")}.`,
-  ];
+  const sections = [`Sure. I'll help you with your ${item.name} application.`, item.objective];
 
   if (eligibility !== undefined) {
     sections.push(eligibility ? ui.eligible : ui.notEligible);
@@ -203,7 +215,7 @@ export function answerMessage(input: string, language: LanguageCode, facts: Prof
   }
 
   if (!nextQuestion && eligibility !== false) {
-    sections.push(ui.apply);
+    sections.push("I have enough information to show the review screen. Please check the visible form and submit when everything is correct.");
   }
 
   const recommendations = !nextQuestion && eligibility !== false ? item.recommendations.flatMap((rule) => rule.recommend) : [];
@@ -243,7 +255,7 @@ export function createApplication(item: KnowledgeItem, facts: ProfileFacts): App
     facts: maskSensitiveFacts(facts),
     statusHistory: [
       { status: "Draft", at: now, note: "SAMANVAI draft created after citizen confirmation." },
-      { status: item.statusFlow[1] || "Submitted", at: now, note: "Submitted through verified prototype workflow." },
+      { status: item.statusFlow[1] || "Submitted", at: now, note: "Submitted through SAMANVAI after citizen review." },
     ],
     documents: item.documents.map((doc) => ({
       name: doc.name,
@@ -267,4 +279,3 @@ export function summarizeStatus(app?: ApplicationRecord, language: LanguageCode 
   if (!app) return translations[language].statusMissing;
   return `Reference ID: ${app.referenceId}\nService: ${app.itemName}\nSAMANVAI Internal Status: ${app.internalStatus}\nGovernment Synced Status: ${app.governmentSyncedStatus}\nLatest update: ${app.statusHistory.at(-1)?.note || app.status}`;
 }
-

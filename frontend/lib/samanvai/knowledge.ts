@@ -32,9 +32,6 @@ export type KnowledgeItem = {
   recommendations: Array<{ when: string; recommend: string[] }>;
 };
 
-export const unavailableMessage =
-  "This information is currently unavailable in the verified prototype knowledge base. Please verify through the official Government Portal.";
-
 export const knowledgeBase: KnowledgeItem[] = [
   {
     id: "pmkisan",
@@ -194,7 +191,7 @@ export const knowledgeBase: KnowledgeItem[] = [
     id: "post-matric-scholarship",
     kind: "scheme",
     name: "Post-Matric Scholarships Scheme for Minorities / SC / ST / OBC",
-    aliases: ["scholarship", "post matric", "student scholarship", "daughter scholarship", "education help"],
+    aliases: ["scholarship", "post matric", "student scholarship", "daughter scholarship", "education help", "nsp scholarship"],
     type: "Central Government",
     department: "Ministry of Minority Affairs / Ministry of Social Justice & Empowerment",
     objective: "Scholarships for students from economically weaker minority and marginalized communities from class 11 to Ph.D.",
@@ -221,6 +218,39 @@ export const knowledgeBase: KnowledgeItem[] = [
     rejectionReasons: ["Institute misses verification deadline.", "Aadhaar and bank name mismatch.", "Income exceeds limit."],
     grievance: "NSP portal status tracking and NSP Helpdesk tickets.",
     recommendations: [{ when: "Undergraduate and SC/ST", recommend: ["Free coaching / upskilling schemes"] }],
+  },
+  {
+    id: "telangana-epass",
+    kind: "scheme",
+    name: "Telangana ePASS Post-Matric Scholarship / Fee Reimbursement",
+    aliases: ["epass", "telangana epass", "fee reimbursement", "rtf", "mtf", "college fee reimbursement"],
+    type: "State Government",
+    department: "SC/ST/BC/Minority Welfare Departments, Telangana",
+    objective: "Tuition fee reimbursement and maintenance support for economically weaker students from Class 11 to postgraduate education.",
+    targetBeneficiaries: "Students from SC, ST, BC, EBC, Minority, and Physically Challenged categories in Telangana.",
+    eligibility: ["Attendance must be at least 75% per quarter.", "SC/ST/Minority annual family income must be up to Rs. 2,00,000.", "BC/EBC income limit is up to Rs. 1,50,000 rural and Rs. 2,00,000 urban.", "Management quota and spot admission students are not eligible.", "Maximum age is 25 for OC and 29 for other categories as of July 1 of the academic year."],
+    questions: [
+      { key: "admission_type", question: "Was your admission through Convenor Quota or Management Quota?", type: "choice", choices: ["Convenor Quota", "Management Quota"] },
+      { key: "family_income", question: "What is your total annual family income?", type: "number" },
+      { key: "social_category", question: "What is your caste category?", type: "choice", choices: ["SC", "ST", "BC", "EBC", "Minority", "Physically Challenged", "OC"] },
+      { key: "attendance_above_75", question: "Is your current attendance above 75%?", type: "boolean" },
+    ],
+    benefits: ["Full or partial tuition fee reimbursement depending on rank and category.", "Maintenance charges credited through DBT in four annual phases."],
+    documents: [
+      { name: "Aadhaar Card", requirement: "Mandatory", source: "eKYC / UIDAI", manualUpload: "No" },
+      { name: "Income Certificate", requirement: "Mandatory", source: "MeeSeva / e-District", manualUpload: "No" },
+      { name: "Caste Certificate", requirement: "Mandatory", source: "MeeSeva / e-District", manualUpload: "No" },
+      { name: "CET Allotment Order", requirement: "Mandatory", source: "Higher Education API", manualUpload: "Yes, if API fails" },
+      { name: "Previous Marksheets", requirement: "Mandatory", source: "Board APIs / DigiLocker", manualUpload: "Yes" },
+      { name: "Bank Passbook", requirement: "Mandatory", source: "NPCI", manualUpload: "No" },
+    ],
+    workflow: ["Student applies online via ePASS portal.", "College principal verifies enrollment, biometric attendance, and documents.", "District Welfare Officer validates caste, income, and academics.", "Funds are sanctioned and pushed to the student's bank account via DBT."],
+    fees: "Free online application.",
+    processingTime: "Funds are released quarterly in four phases through the academic year.",
+    statusFlow: ["Application Submitted", "Pending at College", "College Verified", "Pending at District Officer", "Approved / Sanctioned", "Released to Bank"],
+    rejectionReasons: ["Attendance below 75%.", "Admission under Management Quota.", "Income exceeds the category-specific threshold."],
+    grievance: "Dedicated grievance module and helpdesk on the ePASS portal.",
+    recommendations: [{ when: "SC/ST student in graduation", recommend: ["Skill development / upskilling schemes"] }],
   },
   {
     id: "kalyana-lakshmi",
@@ -277,8 +307,8 @@ export const knowledgeBase: KnowledgeItem[] = [
       { name: "Caste Certificate", requirement: "Conditional", source: "e-District", manualUpload: "Yes if claiming special category" },
     ],
     workflow: ["Apply on PMEGP portal.", "District Task Force Committee screening.", "Forwarded to bank.", "Bank appraisal and credit sanction.", "EDP training completed.", "Subsidy claimed and locked in bank for 3 years."],
-    fees: "Not specified in the verified prototype knowledge base.",
-    processingTime: "Not specified in the verified prototype knowledge base.",
+    fees: "No application fee is specified in the verified PMEGP workflow; bank charges may apply during appraisal as per banking rules.",
+    processingTime: "Depends on District Task Force screening, bank appraisal, credit sanction, and EDP training completion.",
     statusFlow: ["Applied Online", "DTFC Screening", "Forwarded to Bank", "Bank Appraisal", "Credit Sanction", "EDP Training", "Subsidy Locked"],
     rejectionReasons: ["Project commercially unviable.", "Poor credit history or CIBIL default."],
     grievance: "Use PMEGP portal/bank escalation channels.",
@@ -298,11 +328,11 @@ export const knowledgeBase: KnowledgeItem[] = [
     benefits: ["Used for reservations and as an automatic API-fetch document for schemes like ePASS and Kalyana Lakshmi."],
     documents: [{ name: "Family caste certificate if available", requirement: "Conditional", source: "MeeSeva / e-District", manualUpload: "Yes if API unavailable" }],
     workflow: ["MeeSeva application.", "VRO field enquiry.", "Revenue Inspector verification.", "Tahsildar digital signature and issue."],
-    fees: "This information is currently unavailable in the verified prototype knowledge base. Please verify through the official Government Portal.",
-    processingTime: "This information is currently unavailable in the verified prototype knowledge base. Please verify through the official Government Portal.",
+    fees: "MeeSeva service charges apply as per the Revenue Department service counter.",
+    processingTime: "Issued after MeeSeva submission, VRO field enquiry, Revenue Inspector verification, and Tahsildar digital signature.",
     statusFlow: ["Application Submitted", "VRO Field Enquiry", "Revenue Inspector Verification", "Tahsildar Digital Signature", "Certificate Issued"],
-    rejectionReasons: [unavailableMessage],
-    grievance: unavailableMessage,
+    rejectionReasons: ["Caste is not listed in the official State gazette.", "Field enquiry does not verify the claimed community.", "Required family or residence proof is insufficient."],
+    grievance: "Escalate through MeeSeva / e-District or the local Revenue office.",
     recommendations: [{ when: "Certificate issued", recommend: ["ePASS", "Kalyana Lakshmi"] }],
   },
   {
@@ -430,4 +460,3 @@ export const knowledgeBase: KnowledgeItem[] = [
 export function getKnowledgeItem(id: string) {
   return knowledgeBase.find((item) => item.id === id);
 }
-

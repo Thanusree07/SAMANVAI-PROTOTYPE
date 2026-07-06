@@ -42,12 +42,25 @@ type ApplicationRecord = {
   internalStatus: string;
   governmentSyncedStatus: string;
   createdAt: string;
+  facts: Record<string, string | number | boolean>;
   documents: Array<{ name: string; status: string; source: string; manualUpload: string }>;
   statusHistory: Array<{ status: string; at: string; note: string }>;
 };
 
+type FormQuestion = { key: string; question: string; type: "boolean" | "number" | "text" | "choice" | "date"; choices?: string[] };
+type KnowledgeSummary = {
+  id: string;
+  name: string;
+  department: string;
+  questions: FormQuestion[];
+  documents: Array<{ name: string; requirement: string; source: string; manualUpload: string }>;
+  workflow: string[];
+  fees: string;
+  processingTime: string;
+};
+
 type AssistantResult = {
-  item?: { id: string; name: string };
+  item?: KnowledgeSummary;
   facts: Record<string, string | number | boolean>;
   response: string;
   nextQuestion?: { key: string; question: string };
@@ -74,8 +87,8 @@ const copy = {
     pinSubtitle: "Verify your portal session to open your SAMANVAI workspace.",
     pinPlaceholder: "4-digit PIN",
     verify: "Verify PIN",
-    pinHint: "Prototype PIN: 2026",
-    invalidPin: "Enter the valid 4-digit prototype PIN.",
+    pinHint: "Citizen PIN: 2026",
+    invalidPin: "Enter the valid 4-digit citizen PIN.",
     languageTitle: "Choose Your Preferred Language",
     languageSubtitle: "Government Portal language remains separate. SAMANVAI will continue in the selected language.",
     chooseLanguage: "Continue",
@@ -115,8 +128,8 @@ const copy = {
     pinSubtitle: "మీ SAMANVAI కార్యస్థలాన్ని తెరవడానికి పోర్టల్ సెషన్‌ను ధృవీకరించండి.",
     pinPlaceholder: "4 అంకెల PIN",
     verify: "PIN ధృవీకరించండి",
-    pinHint: "Prototype PIN: 2026",
-    invalidPin: "సరైన 4 అంకెల prototype PIN నమోదు చేయండి.",
+    pinHint: "Citizen PIN: 2026",
+    invalidPin: "సరైన 4 అంకెల citizen PIN నమోదు చేయండి.",
     languageTitle: "మీకు ఇష్టమైన భాషను ఎంచుకోండి",
     languageSubtitle: "Government Portal భాష వేరు. SAMANVAI ఎంచుకున్న భాషలో కొనసాగుతుంది.",
     chooseLanguage: "కొనసాగించండి",
@@ -156,8 +169,8 @@ const copy = {
     pinSubtitle: "SAMANVAI workspace खोलने के लिए portal session verify करें.",
     pinPlaceholder: "4-digit PIN",
     verify: "PIN Verify करें",
-    pinHint: "Prototype PIN: 2026",
-    invalidPin: "सही 4-digit prototype PIN दर्ज करें.",
+    pinHint: "Citizen PIN: 2026",
+    invalidPin: "सही 4-digit citizen PIN दर्ज करें.",
     languageTitle: "अपनी पसंदीदा भाषा चुनें",
     languageSubtitle: "Government Portal भाषा अलग रहती है. SAMANVAI चुनी हुई भाषा में चलेगा.",
     chooseLanguage: "जारी रखें",
@@ -221,6 +234,8 @@ export default function SamanvaiApp() {
   const [assistantMode, setAssistantMode] = useState<"text" | "voice">("text");
   const [message, setMessage] = useState("");
   const [assistant, setAssistant] = useState<AssistantResult | null>(null);
+  const [draftFacts, setDraftFacts] = useState<Record<string, string | number | boolean>>({});
+  const [reviewOpen, setReviewOpen] = useState(false);
   const [conversation, setConversation] = useState<Array<{ role: "citizen" | "assistant"; text: string }>>([]);
   const [applications, setApplications] = useState<ApplicationRecord[]>([]);
   const [notifications, setNotifications] = useState<Array<{ id: string; title: string; body: string; at: string }>>([]);
@@ -239,8 +254,8 @@ export default function SamanvaiApp() {
 
   const quickActions = [
     { label: t.checkStatus, icon: Clock3, action: () => setActiveView("applications") },
-    { label: t.checkEligibility, icon: ShieldCheck, action: () => openAssistant("text", "I want to check eligibility") },
-    { label: t.bookAppointment, icon: CalendarCheck, action: () => openAssistant("text", "I need appointment guidance") },
+    { label: t.checkEligibility, icon: ShieldCheck, action: () => openAssistant("text", "I want to check eligibility for Income Certificate") },
+    { label: t.bookAppointment, icon: CalendarCheck, action: () => openAssistant("text", "I need help with Income Certificate appointment and application steps") },
     { label: t.latestUpdates, icon: Bell, action: () => setActiveView("notifications") },
   ];
 
@@ -313,6 +328,8 @@ export default function SamanvaiApp() {
     });
     const result = (await response.json()) as AssistantResult;
     setAssistant(result);
+    setDraftFacts(result.facts || {});
+    setReviewOpen(Boolean(result.canApply));
     setConversation((items) => [...items, { role: "assistant", text: result.response }]);
     speak(result.response);
     await refreshData();
@@ -323,12 +340,13 @@ export default function SamanvaiApp() {
     const response = await fetch("/api/samanvai", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ type: "apply", language: selectedLanguage, itemId: assistant.item.id, facts: assistant.facts }),
+      body: JSON.stringify({ type: "apply", language: selectedLanguage, itemId: assistant.item.id, facts: draftFacts }),
     });
     const data = await response.json();
     setConversation((items) => [...items, { role: "assistant", text: data.response }]);
     speak(data.response);
     await refreshData();
+    setReviewOpen(false);
     setActiveView("applications");
   }
 
@@ -340,6 +358,10 @@ export default function SamanvaiApp() {
     });
     const data = await response.json();
     setStatusText(data.response);
+  }
+
+  function updateDraftFact(key: string, value: string) {
+    setDraftFacts((current) => ({ ...current, [key]: value }));
   }
 
   function startVoice() {
@@ -517,35 +539,32 @@ export default function SamanvaiApp() {
                   </div>
 
                   {assistantOpen ? (
-                    <div className="relative mt-6 w-full max-w-3xl rounded-[1.35rem] border border-white/95 bg-white/70 p-4 text-left shadow-[0_22px_62px_rgba(36,86,142,.12)] backdrop-blur-[32px]">
-                      <div className="max-h-72 space-y-3 overflow-auto pr-2">
-                        {conversation.map((entry, index) => (
-                          <div key={`${entry.role}-${index}`} className={`rounded-2xl px-4 py-3 text-sm leading-6 ${entry.role === "citizen" ? "ml-auto max-w-[84%] bg-[#0a2a6e] text-white" : "mr-auto max-w-[92%] bg-white text-slate-800 shadow-sm"}`}>
-                            {entry.text}
-                          </div>
-                        ))}
+                    <div className="relative mt-6 grid w-full max-w-6xl gap-4 text-left lg:grid-cols-[1fr_24rem]">
+                      <div className="rounded-[1.35rem] border border-white/95 bg-white/70 p-4 shadow-[0_22px_62px_rgba(36,86,142,.12)] backdrop-blur-[32px]">
+                        <div className="max-h-72 space-y-3 overflow-auto pr-2">
+                          {conversation.map((entry, index) => (
+                            <div key={`${entry.role}-${index}`} className={`rounded-2xl px-4 py-3 text-sm leading-6 ${entry.role === "citizen" ? "ml-auto max-w-[84%] bg-[#0a2a6e] text-white" : "mr-auto max-w-[92%] bg-white text-slate-800 shadow-sm"}`}>
+                              {entry.text}
+                            </div>
+                          ))}
+                        </div>
+                        <form
+                          onSubmit={(event) => {
+                            event.preventDefault();
+                            void sendAssistantMessage();
+                          }}
+                          className="mt-4 flex gap-2"
+                        >
+                          <input value={message} onChange={(event) => setMessage(event.target.value)} placeholder={assistantMode === "voice" ? t.voicePrompt : t.typePrompt} className="h-12 min-w-0 flex-1 rounded-2xl border border-white/80 bg-white/80 px-4 text-sm font-semibold outline-none focus:border-sky-300" />
+                          <button type="submit" aria-label={t.send} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0a2a6e] text-white">
+                            <Send size={18} />
+                          </button>
+                          <button type="button" aria-label={t.voicePrompt} onClick={startVoice} className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/80 bg-white/80 text-[#075dd6]">
+                            <Mic size={18} />
+                          </button>
+                        </form>
                       </div>
-                      <form
-                        onSubmit={(event) => {
-                          event.preventDefault();
-                          void sendAssistantMessage();
-                        }}
-                        className="mt-4 flex gap-2"
-                      >
-                        <input value={message} onChange={(event) => setMessage(event.target.value)} placeholder={assistantMode === "voice" ? t.voicePrompt : t.typePrompt} className="h-12 min-w-0 flex-1 rounded-2xl border border-white/80 bg-white/80 px-4 text-sm font-semibold outline-none focus:border-sky-300" />
-                        <button type="submit" aria-label={t.send} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0a2a6e] text-white">
-                          <Send size={18} />
-                        </button>
-                        <button type="button" aria-label={t.voicePrompt} onClick={startVoice} className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/80 bg-white/80 text-[#075dd6]">
-                          <Mic size={18} />
-                        </button>
-                      </form>
-                      {assistant?.canApply ? (
-                        <button type="button" onClick={applyForService} className="mt-3 inline-flex items-center gap-2 rounded-2xl bg-[#138808] px-5 py-3 text-sm font-black uppercase tracking-wide text-white">
-                          {t.apply}
-                          <ChevronRight size={18} />
-                        </button>
-                      ) : null}
+                      <LiveApplicationForm assistant={assistant} facts={draftFacts} reviewOpen={reviewOpen} updateFact={updateDraftFact} openReview={() => setReviewOpen(true)} submitApplication={applyForService} applyLabel={t.apply} />
                     </div>
                   ) : null}
 
@@ -584,6 +603,89 @@ export default function SamanvaiApp() {
         </section>
       )}
     </main>
+  );
+}
+
+function LiveApplicationForm({
+  assistant,
+  facts,
+  reviewOpen,
+  updateFact,
+  openReview,
+  submitApplication,
+  applyLabel,
+}: {
+  assistant: AssistantResult | null;
+  facts: Record<string, string | number | boolean>;
+  reviewOpen: boolean;
+  updateFact: (key: string, value: string) => void;
+  openReview: () => void;
+  submitApplication: () => void;
+  applyLabel: string;
+}) {
+  const item = assistant?.item;
+  const baseFields: FormQuestion[] = [
+    { key: "state", question: "State", type: "text" },
+    { key: "district", question: "District", type: "text" },
+    { key: "name", question: "Name", type: "text" },
+    { key: "date_of_birth", question: "Date of Birth", type: "date" },
+    { key: "gender", question: "Gender", type: "text" },
+    { key: "address", question: "Address", type: "text" },
+  ];
+  const dynamicFields = item?.questions || [];
+  const fields = [...baseFields, ...dynamicFields].filter((field, index, all) => all.findIndex((candidate) => candidate.key === field.key) === index);
+  const hasWorkflow = Boolean(item);
+
+  return (
+    <aside className="rounded-[1.35rem] border border-white/95 bg-white/78 p-4 shadow-[0_22px_62px_rgba(36,86,142,.12)] backdrop-blur-[32px]">
+      <div className="flex items-start gap-3">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0a2a6e] text-white">
+          <FileCheck2 size={19} />
+        </span>
+        <div className="min-w-0">
+          <p className="text-xs font-black uppercase tracking-wide text-sky-700">Live Application Form</p>
+          <h2 className="mt-1 text-lg font-black leading-6 text-slate-950">{item?.name || "Waiting for service"}</h2>
+          {item ? <p className="mt-1 text-xs font-semibold leading-5 text-slate-500">{item.department}</p> : null}
+        </div>
+      </div>
+
+      <div className="mt-4 space-y-2">
+        {fields.map((field) => {
+          const value = facts[field.key];
+          const filled = value !== undefined && value !== "";
+          return (
+            <label key={field.key} className="block rounded-2xl border border-white/90 bg-white/72 p-3">
+              <span className="flex items-center justify-between gap-2 text-xs font-black uppercase tracking-wide text-slate-500">
+                {field.question}
+                <span className={filled ? "text-[#138808]" : "text-slate-400"}>{filled ? "Verified" : "Pending"}</span>
+              </span>
+              {reviewOpen ? (
+                <input value={String(value ?? "")} onChange={(event) => updateFact(field.key, event.target.value)} className="mt-2 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-800 outline-none focus:border-sky-300" />
+              ) : (
+                <p className="mt-2 min-h-6 text-sm font-semibold text-slate-800">{filled ? String(value) : "SAMANVAI will fill this during the conversation"}</p>
+              )}
+            </label>
+          );
+        })}
+      </div>
+
+      {item ? (
+        <div className="mt-4 rounded-2xl bg-white/72 p-3 text-xs font-semibold leading-5 text-slate-600">
+          <p><strong>Fees:</strong> {item.fees}</p>
+          <p className="mt-1"><strong>Processing:</strong> {item.processingTime}</p>
+        </div>
+      ) : null}
+
+      <div className="mt-4 flex flex-col gap-2">
+        <button type="button" disabled={!assistant?.canApply} onClick={openReview} className="rounded-2xl border border-white/90 bg-white px-4 py-3 text-sm font-black text-[#08245d] disabled:cursor-not-allowed disabled:opacity-50">
+          Review Application
+        </button>
+        <button type="button" disabled={!hasWorkflow || !assistant?.canApply || !reviewOpen} onClick={submitApplication} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#138808] px-4 py-3 text-sm font-black uppercase tracking-wide text-white disabled:cursor-not-allowed disabled:opacity-50">
+          {applyLabel}
+          <ChevronRight size={18} />
+        </button>
+      </div>
+    </aside>
   );
 }
 
@@ -635,7 +737,7 @@ function DashboardPanel({
             <button type="button" onClick={checkStatus} className="rounded-2xl bg-[#0a2a6e] px-5 py-3 text-sm font-black uppercase text-white">{labels.checkStatus}</button>
           </div>
           {statusText ? <pre className="whitespace-pre-wrap rounded-2xl bg-white p-4 text-sm leading-6 text-slate-700">{statusText}</pre> : null}
-          {applications.length ? applications.map((app) => <RecordCard key={app.referenceId} title={app.itemName} lines={[app.referenceId, `SAMANVAI: ${app.internalStatus}`, `Government: ${app.governmentSyncedStatus}`]} />) : <p className="text-sm font-semibold text-slate-600">{labels.noApplications}</p>}
+          {applications.length ? applications.map((app) => <RecordCard key={app.referenceId} title={app.itemName} lines={[app.referenceId, `SAMANVAI: ${app.internalStatus}`, `Government: ${app.governmentSyncedStatus}`, ...Object.entries(app.facts || {}).slice(0, 8).map(([key, value]) => `${formatFactLabel(key)}: ${String(value)}`)]} />) : <p className="text-sm font-semibold text-slate-600">{labels.noApplications}</p>}
         </div>
       ) : null}
       {view === "documents" ? (
@@ -646,7 +748,7 @@ function DashboardPanel({
       ) : null}
       {view === "notifications" ? <div className="mt-4 space-y-3">{notifications.map((item) => <RecordCard key={item.id} title={item.title} lines={[item.body, new Date(item.at).toLocaleString()]} />)}</div> : null}
       {view === "history" ? <div className="mt-4 space-y-3">{history.map((item) => <RecordCard key={item.id} title={item.input} lines={[item.response, new Date(item.at).toLocaleString()]} />)}</div> : null}
-      {view === "support" ? <RecordCard title={labels.support} lines={["SAMANVAI uses only the verified prototype knowledge base.", "For unavailable information, it directs citizens back to the official Government Portal.", labels.consent]} /> : null}
+      {view === "support" ? <RecordCard title={labels.support} lines={["SAMANVAI uses the verified research-backed government knowledge base.", "Every application is reviewed before submission and tracked with a SAMANVAI reference ID.", labels.consent]} /> : null}
       {view === "settings" ? (
         <div className="mt-4 space-y-4">
           <RecordCard title={labels.settings} lines={["Government Portal language and SAMANVAI language are independent.", labels.consent]} />
@@ -675,6 +777,10 @@ function RecordCard({ title, lines }: { title: string; lines: string[] }) {
       </div>
     </article>
   );
+}
+
+function formatFactLabel(key: string) {
+  return key.replace(/^__/, "").replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
 function TopIconButton({ label, icon: Icon, onClick }: { label: string; icon: typeof User; onClick: () => void }) {

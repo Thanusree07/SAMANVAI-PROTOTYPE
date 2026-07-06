@@ -25,6 +25,42 @@
   ],
   "history": [
     {
+      "id": "22a84b85-f833-463c-a9ba-1cb87863a1a9",
+      "input": "infinix chapter",
+      "response": "I can help with Income Certificate, Caste or Community Certificate, Food Security Card, PM-KISAN, PMFBY, PMAY-U 2.0, Indiramma Illu, Aarogyasri, Post-Matric Scholarship, Kalyana Lakshmi, PMEGP, Sukanya Samriddhi, and Aasara Disability Pension. Tell me your need in your own words, and I will collect only the required details.",
+      "at": "2026-07-06T14:14:08.873Z"
+    },
+    {
+      "id": "a7e7bc39-f779-4735-9fdc-ad3b25f12037",
+      "input": "hello",
+      "response": "I can help with Income Certificate, Caste or Community Certificate, Food Security Card, PM-KISAN, PMFBY, PMAY-U 2.0, Indiramma Illu, Aarogyasri, Post-Matric Scholarship, Kalyana Lakshmi, PMEGP, Sukanya Samriddhi, and Aasara Disability Pension. Tell me your need in your own words, and I will collect only the required details.",
+      "at": "2026-07-06T14:13:58.230Z"
+    },
+    {
+      "id": "fd64dfa5-e22d-4049-ada1-09d9b96b4af6",
+      "input": "Nenu indramma illustration",
+      "response": "Sure. I'll help you with your Food Security Card / Ration Card application.\n\nSubsidized food grains under PDS and core BPL identification.\n\nI need one required detail to continue: What is your total annual family income?",
+      "at": "2026-07-06T14:09:01.828Z"
+    },
+    {
+      "id": "6d6fd42f-f0f7-4254-b711-533edbaf7cce",
+      "input": "hello",
+      "response": "I can help with Income Certificate, Caste or Community Certificate, Food Security Card, PM-KISAN, PMFBY, PMAY-U 2.0, Indiramma Illu, Aarogyasri, Post-Matric Scholarship, Kalyana Lakshmi, PMEGP, Sukanya Samriddhi, and Aasara Disability Pension. Tell me your need in your own words, and I will collect only the required details.",
+      "at": "2026-07-06T14:08:18.418Z"
+    },
+    {
+      "id": "6d2efd46-8f29-4e69-9e72-134e15e7728a",
+      "input": "I want to check eligibility",
+      "response": "I can help with Income Certificate, Caste or Community Certificate, Food Security Card, PM-KISAN, PMFBY, PMAY-U 2.0, Indiramma Illu, Aarogyasri, Post-Matric Scholarship, Kalyana Lakshmi, PMEGP, Sukanya Samriddhi, and Aasara Disability Pension. Tell me your need in your own words, and I will collect only the required details.",
+      "at": "2026-07-06T14:08:01.451Z"
+    },
+    {
+      "id": "ab6fc6da-9d47-4069-8375-e71ee3d52a0f",
+      "input": "I want to check eligibility",
+      "response": "This information is currently unavailable in the verified prototype knowledge base. Please verify through the official Government Portal.",
+      "at": "2026-07-06T10:17:07.297Z"
+    },
+    {
       "id": "52fcb654-ea73-437c-96fd-4a06fcc3d45e",
       "input": "I want to check eligibility",
       "response": "This information is currently unavailable in the verified prototype knowledge base. Please verify through the official Government Portal.",
@@ -39,6 +75,60 @@
   ],
   "profileFacts": {},
   "auditLogs": [
+    {
+      "id": "7ea99127-4394-490e-abaf-a134d1e5f744",
+      "action": "assistant_message",
+      "at": "2026-07-06T14:14:08.873Z",
+      "metadata": {
+        "intent": "service_discovery",
+        "itemId": "unknown"
+      }
+    },
+    {
+      "id": "5b95a8d7-1e58-495f-a63a-c3c7260b89d2",
+      "action": "assistant_message",
+      "at": "2026-07-06T14:13:58.230Z",
+      "metadata": {
+        "intent": "service_discovery",
+        "itemId": "unknown"
+      }
+    },
+    {
+      "id": "2e5a3dac-6247-47d1-afa4-4911ed44f677",
+      "action": "assistant_message",
+      "at": "2026-07-06T14:09:01.828Z",
+      "metadata": {
+        "intent": "service",
+        "itemId": "ration-card"
+      }
+    },
+    {
+      "id": "fbf9226a-c502-4ed2-95bf-879dc05ce271",
+      "action": "assistant_message",
+      "at": "2026-07-06T14:08:18.418Z",
+      "metadata": {
+        "intent": "service_discovery",
+        "itemId": "unknown"
+      }
+    },
+    {
+      "id": "b127febf-d13d-4e37-aa34-5dcc6558039e",
+      "action": "assistant_message",
+      "at": "2026-07-06T14:08:01.451Z",
+      "metadata": {
+        "intent": "service_discovery",
+        "itemId": "unknown"
+      }
+    },
+    {
+      "id": "244dab54-c36b-4704-a741-321db4d63238",
+      "action": "assistant_message",
+      "at": "2026-07-06T10:17:07.297Z",
+      "metadata": {
+        "intent": "unknown",
+        "itemId": "unknown"
+      }
+    },
     {
       "id": "b0ed8a1a-047c-4224-b15a-087611fefac9",
       "action": "assistant_message",

@@ -1,0 +1,847 @@
+
+
+--- PAGE 1 ---
+Namaskaram! Building a comprehensive and dynamic rule engine for SAMANVAI requires a highly
+structured approach. Prathi scheme ki data attributes exact ga map avali so that the eligibility logic
+and the recommendation systems function flawlessly.
+To establish the blueprint, here is the complete end-to-end research dossier for two major flagship
+schemes (one Central, one State) and one core citizen service. This exact structure can be translated
+directly into your system's database tables and API schemas.
+1. PM-KISAN (Agriculture - Central)
+1. Basic Information
+UMANG
+ Scheme Name: Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)
+UMANG
+ Type: Central Government
+ Department: Ministry of Agriculture & Farmers Welfare
+ Objective: To provide income support to landholding farmers to supplement their financial
+needs for agricultural inputs.
+ Target Beneficiaries: All landholding farmer families across the country.
+UMANG
+2. Eligibility
+UMANG
+ Occupation: Must be a landholding farmer family with cultivable land in their name.
+UMANG
+ Exclusions: Institutional landholders are not eligible.
+PM Kisan Samman Nidhi
+ Income/Employment Exclusions: Former and present holders of constitutional posts,
+ministers, mayors, and chairpersons of District Panchayats are excluded. Serving or retired
+government employees (excluding Class IV/Group D) are excluded. Superannuated/retired
+pensioners whose monthly pension is ₹10,000 or more are excluded. Persons who paid
+Income Tax in the last assessment year are excluded. Registered professionals like Doctors,
+Engineers, Lawyers, Chartered Accountants, and Architects are excluded.
+PM Kisan Samman Nidhi
+3. Dynamic Eligibility Questions (System Logic)
+ Do you or your family own cultivable agricultural land? (Maps to boolean:
+owns_cultivable_land)
+ Is the land owned by an institution? (Maps to boolean: is_institutional_land)
+ Did anyone in your family pay income tax in the previous year? (Maps to boolean:
+paid_income_tax)
+ Does anyone in your family receive a government pension of ₹10,000 or more? (Maps to
+boolean: pension_over_10k)
+ Are you a registered Doctor, Engineer, Lawyer, CA, or Architect? (Maps to boolean:
+is_registered_professional)
+4. Benefits
+UMANG
+ Financial Assistance: ₹6,000 per annum per family.
+UMANG
+ Disbursement: Payable in three equal installments of ₹2,000 each, every four months via
+Direct Benefit Transfer (DBT).
+UMANG
+5. Required Documents
+Manual
+Document Name Requirement Source/Platform
+Upload?
+Aadhaar Card Mandatory eKYC / UIDAI verification No
+Landholding Papers State Land Records
+Mandatory Yes (if API fails)
+(Khasra/Khatauni) (Dharani/Bhulekh)
+Aadhaar-linked Bank Account Mandatory NPCI Mapper No
+RTI Wiki
+6. Application Procedure
+1. Application: Beneficiary details entered via VLE/CSC or Self-Registration portal.
+UMANG
+
+--- PAGE 2 ---
+2. Document Verification: State/UT governments verify land ownership and Aadhaar details.
+UMANG
+3. Approval: Beneficiary data is uploaded to the PM-KISAN portal.
+UMANG
+4. Benefit Issued: Funds are transferred via DBT into Aadhaar-seeded accounts.
+ClearTax
+7. Fees & 8. Processing Time
+RTI Wiki
+ Fees: Free for self-registration. OTP-based eKYC is free; Biometric authentication at CSC
+costs ₹15-₹50.
+RTI Wiki
+ Processing Time: Varies strictly based on State Government field verification schedules.
+ClearTax
+9. Status Flow Draft → Submitted → Pending State Verification → Aadhaar Authenticated → NPCI
+Mapped → Approved for Payment → Installment Credited.
+ClearTax
+10. Rejection Reasons
+ClearTax
+ e-KYC not completed.
+ClearTax
+ Aadhaar number mismatch or not linked to the bank account.
+ClearTax
+ Land record verification pending or mismatched.
+ClearTax
+ Applicant falls under an exclusion category (e.g., paid income tax).
+ClearTax
+11. Grievance Process
+PM-Kisan Samman Nidhi
+ Beneficiaries can approach the District Level Grievance Redressal Monitoring Committee.
+PM-Kisan Samman Nidhi
+ Online helpdesk and Farmers' Corner on the PM-KISAN portal for tracking and queries.
+PM-Kisan Samman Nidhi
+12. Related Schemes (SAMANVAI Logic)
+ If owns_cultivable_land == TRUE AND PM-KISAN == Approved → Trigger PM Fasal Bima
+Yojana (Crop Insurance) and Kisan Credit Card (KCC) recommendations.
+2. Indiramma Illu (Housing - Telangana State)
+1. Basic Information
+Bajaj Finserv
+ Scheme Name: Indiramma Illu (Indiramma Indlu) Housing Scheme.
+Bajaj Finserv
+ Type: State Government.
+Bajaj Finserv
+ Department: Telangana State Housing Department.
+Bajaj Finserv
+ Objective: To provide financial assistance and land for constructing pucca houses for
+economically weaker sections to reduce homelessness.
+Bajaj Finserv
+ Target Beneficiaries: Homeless, landless citizens, and EWS/BPL families in Telangana.
+Bajaj Finserv
+2. Eligibility
+Telangana NavaNirmana Sena - RSSing.com
+ Residence: Must be a permanent resident of Telangana.
+Telangana NavaNirmana Sena - RSSing.com
+ Income: Must belong to the Below Poverty Line (BPL) or Economically Weaker Section
+(EWS) category.
+Scribd
+ Housing Status: Must not already own a pucca (permanent) house. Families living in kutcha
+or semi-pucca houses are eligible.
+The Times of India+ 1
+
+--- PAGE 3 ---
+ Prior Benefits: Must not have received housing under any government scheme post-1995.
+Telangana NavaNirmana Sena - RSSing.com
+ Category Priority: Preference is given to SC, ST, OBC, minority communities, widows, and
+disabled persons.
+Bajaj Finserv
+3. Dynamic Eligibility Questions (System Logic)
+ Are you a permanent resident of Telangana? (Maps to boolean: is_ts_resident)
+ Do you have a BPL or White Ration Card? (Maps to boolean: has_bpl_card)
+ Do you currently own a permanent (RCC roof) house? (Maps to boolean:
+owns_pucca_house)
+ Have you received a government house after 1995? (Maps to boolean:
+received_prior_housing)
+ Do you own a plot of land for construction? (Maps to boolean: owns_plot)
+4. Benefits
+Telangana NavaNirmana Sena - RSSing.com
+ Financial Assistance: ₹5,00,000 for general category applicants.
+Telangana NavaNirmana Sena - RSSing.com
+ Special Assistance: ₹6,00,000 for SC/ST applicants.
+Telangana NavaNirmana Sena - RSSing.com
+ Land Provision: Free plot of land allotted to eligible landless beneficiaries.
+The Times of India
+ Disbursement: Funds are released in stages (foundation, plinth, roof level, completion) via
+DBT.
+Grihum Housing Finance
+5. Required Documents
+Document Name Requirement Source/Platform Manual Upload?
+Aadhaar Card Mandatory eKYC / UIDAI No
+BPL / Ration Card Mandatory State Civil Supplies API No
+Income & Caste Certificate Mandatory MeeSeva / e-District No
+Land Ownership Proof Situational Dharani Portal Yes (if API fails)
+Bajaj Finserv
+6. Application Procedure
+1. Application: Submit online via the official portal or offline at Gram Panchayats/Municipal
+Offices.
+Bajaj Finserv
+2. Document Verification: Officials verify revenue records and uploaded documents.
+Grihum Housing Finance
+3. Field Survey: Local authorities conduct physical verification of current housing and land
+conditions.
+Grihum Housing Finance
+4. Approval: Beneficiary is shortlisted and funds are released after satisfactory stage-wise
+inspections.
+Grihum Housing Finance
+7. Fees & 8. Processing Time
+ Fees: Application is completely free.
+ Processing Time: Heavily dependent on government survey phases and budget allocations.
+Telangana NavaNirmana Sena - RSSing.com
+9. Status Flow Application Submitted → Survey Pending → Field Inspection Completed →
+Approved/Waitlisted → Stage 1 Sanctioned → Stage 1 Paid → Completed.
+Grihum Housing Finance
+10. Rejection Reasons
+Scribd
+ Applicant exceeds BPL income limits.
+Scribd
+ Applicant is not a resident of Telangana.
+Scribd
+ Applicant already owns a permanent pucca house.
+Telangana NavaNirmana Sena - RSSing.com
+
+--- PAGE 4 ---
+ Applicant previously benefited from a housing scheme post-1995.
+Telangana NavaNirmana Sena - RSSing.com
+11. Grievance Process
+Scribd
+ Discrepancies identified during Gram Sabha meetings or via the official portal login can be
+escalated to municipal officers or the local Tahsildar.
+Scribd
+12. Related Schemes (SAMANVAI Logic)
+ If is_ts_resident == TRUE AND has_bpl_card == TRUE AND Age > 57 → Trigger Aasara
+Pension checks.
+3. Income Certificate (Government Service Pattern)
+(Note: As this is a standard infrastructural service, the workflow is highly deterministic across most e-
+District platforms).
+1. Basic Information: State Revenue Department. Objective: To certify the annual income of a family
+for educational or welfare purposes. 2. Eligibility: Any citizen can apply. The calculated income must
+reflect the true earnings of the household. 3. Dynamic Questions: What is your primary source of
+income? (Agriculture/Salary/Business), Do you have a current salary slip or IT return? 4. Benefits:
+Provides the foundational credential (Certificate) required for schemes like Fee Reimbursement and
+Housing. 5. Required Documents: Aadhaar (Verified), Ration Card/EPIC (Verified), Salary Certificate
+/ IT Returns / Affidavit (Manual Upload). 6. Application Procedure: Citizen applies via MeeSeva/e-
+District → Forwarded to VRO/RI → Physical Enquiry (if required) → Tahsildar Approval → Digital
+Certificate Issued. 7. Fees & Processing Time: Typically ₹35 to ₹50 service charge at MeeSeva.
+SLA is usually 7 to 15 working days. 8. Status Flow: Submitted → Assigned to VRO → VRO
+Approved → Assigned to Tahsildar → Digitally Signed & Issued. 9. Rejection Reasons: Incomplete
+documents, mismatch between declared income and field inquiry, fake affidavits. 10. Related
+Entities: If Income Certificate issued < ₹2,00,000 → Unlocks Education Scholarships and Health
+Schemes.
+Designing the SAMANVAI Database Logic
+For SAMANVAI to intelligently route citizens, the Natural Language Processing layer will need to
+extract entities from user queries (e.g., "I am a farmer from Warangal") and map them to a relational
+database schema containing these distinct flags (occupation = 'farmer', district = 'Warangal'). Once
+these attributes are stored, your system can run a simple SQL query or rule script to instantly filter the
+20+ schemes and output the exact requirements and status flows outlined above.
+To ensure the technical architecture for this NLP and recommendation pipeline is perfectly aligned,
+which specific category (e.g., Health, Education, Pensions) would you like to map out the exact
+schema and eligibility logic for next?
+7. PM Awas Yojana Urban 2.0 (Housing - Central)
+1. Basic Information
+ Scheme Name: Pradhan Mantri Awas Yojana Urban 2.0 (PMAY-U 2.0).
+ Type: Central Government.
+ Department: Ministry of Housing and Urban Affairs (MoHUA).
+ Objective: To ensure every eligible urban household has access to a permanent "pucca"
+house with basic amenities.
+ Target Beneficiaries: Economically Weaker Sections (EWS), Lower Income Groups (LIG),
+and Middle Income Groups (MIG).
+2. Eligibility
+ Income Limits: EWS (Up to ₹3 lakh/year), LIG (₹3 lakh to ₹6 lakh/year), MIG (₹6 lakh to ₹9
+lakh/year).
+ Property Ownership: The applicant or any family member must not own a pucca house
+anywhere in India.
+ Gender: Female ownership or joint ownership with the female head is mandatory for EWS
+and LIG categories.
+ Prior Benefits: Must not have received housing benefits under any government scheme in
+the last 20 years.
+3. Dynamic Eligibility Questions (System Logic)
+ What is your total annual household income? (Maps to enum: income_category)
+ Does anyone in your family own a pucca house in India? (Maps to boolean:
+owns_pucca_house)
+
+--- PAGE 5 ---
+ Have you received any government housing benefits previously? (Maps to boolean:
+received_prior_housing)
+ Is the house being registered in the name of a female family member? (Maps to boolean:
+is_female_owner)
+4. Benefits
+ Financial Assistance/Subsidy: Central assistance up to ₹2.5 lakh for EWS and up to ₹1.5
+lakh for LIG.
+ Maximum Loan: Eligible for a maximum housing loan of ₹25 lakh (in non-metro centers).
+5. Required Documents
+Manual
+Document Name Requirement Source/Platform
+Upload?
+Aadhaar Card (All adults) Mandatory eKYC / UIDAI No
+Current year from Tehsildar / Yes (if API
+Income Certificate Mandatory
+e-District fails)
+Self-Declaration (No
+Mandatory Affidavit Yes
+pucca house)
+Land/Property State Land Records (For
+Conditional Yes
+Documents BLC vertical)
+6. Application Procedure
+1. Application: Citizen registers demand through the unified web portal (pmaymis.gov.in).
+2. Verification: Urban Local Body (ULB) conducts verification within 30-60 days.
+3. Geo-tagging: Property is geo-tagged before installments are released.
+4. Approval & Credit: Subsidy is credited directly to the borrower's home loan account.
+7. Fees & 8. Processing Time
+ Fees: Online application via the portal is free.
+ Processing Time: Typically 3 to 6 months for bank technical sanction and ULB approval.
+9. Status Flow
+Application Submitted → ULB Verification Pending → Geo-tagging Initiated → Bank Technical
+Sanction → Approved → Subsidy Credited.
+10. Rejection Reasons
+ Combined household income exceeds category limits.
+ Income certificate is older than 1 year.
+ Applicant already owns a pucca house.
+11. Grievance Process
+ National toll-free helpline (1800-11-6163) and PG Portal.
+12. Related Schemes (SAMANVAI Logic)
+ If income_category == 'EWS' → Trigger PM Ujjwala Yojana (Gas connection) and Ayushman
+Bharat checks.
+8. Rajiv Aarogyasri / Cheyutha (Health - Telangana State)
+1. Basic Information
+ Scheme Name: Rajiv Aarogyasri (upgraded under the Cheyutha initiative).
+ Type: State Government.
+ Department: Rajiv Aarogyasri Health Care Trust, Dept. of Health, Telangana.
+ Objective: To provide financial protection and free corporate medical treatment to
+economically backward sections.
+ Target Beneficiaries: Below Poverty Line (BPL) families in Telangana.
+2. Eligibility
+ Residence: Must be a resident of Telangana.
+ Income Status: Must hold a valid White Ration Card / Food Security Card from the Civil
+Supplies Department.
+ Coverage: Covers the head of the family, spouse, dependent children, and dependent
+parents (no age restriction).
+
+--- PAGE 6 ---
+3. Dynamic Eligibility Questions (System Logic)
+ Do you have a valid White Ration Card issued by Telangana? (Maps to boolean:
+has_white_ration_card)
+ Is the required medical procedure covered under the scheme's listed packages? (Maps to
+boolean: is_covered_procedure)
+4. Benefits
+ Financial Coverage: Up to ₹10 lakh per family per year for major surgeries and
+hospitalizations.
+ Procedures: Covers over 1,672 to 1,835 specific procedures across various specialties,
+including organ transplants and post-treatment care.
+ Cashless Treatment: Completely cashless transactions at government and empanelled
+private hospitals.
+5. Required Documents
+Document Name Requirement Source/Platform Manual Upload?
+White Ration Card Mandatory State Civil Supplies API No
+Aadhaar Card Mandatory eKYC / UIDAI No
+Aarogyasri Card Resulting Doc Generated by Aarogyasri Trust N/A
+6. Application Procedure
+1. Identification: Beneficiary arrives at an empanelled hospital or PHC.
+2. Verification: Aarogya Mithra (help desk staff) verifies eligibility using the White Ration Card
+and Aadhaar.
+3. Approval: Hospital submits diagnosis to scheme authorities for pre-authorization.
+4. Treatment: Patient is admitted and treated without out-of-pocket payment.
+7. Fees & 8. Processing Time
+ Fees: Free enrollment and treatment.
+ Processing Time: Pre-authorization is usually quick to allow immediate treatment.
+9. Status Flow (Treatment)
+Admitted → Eligibility Verified → Pre-Authorization Requested → Treatment Approved → Discharged
+→ Claim Settled to Hospital.
+10. Rejection Reasons
+ Patient does not possess a White Ration Card.
+ The required procedure is cosmetic, elective, or an outpatient department (OPD) consultation
+without hospitalization.
+11. Grievance Process
+ Assistance from Aarogya Mithras stationed at hospitals, or through the official Aarogyasri
+portal/helpline.
+12. Related Schemes (SAMANVAI Logic)
+ If has_white_ration_card == TRUE AND medical expenses exceed ₹10 Lakh → Trigger
+Rashtriya Arogya Nidhi recommendations.
+9. Post-Matric Scholarship (Education - Central via NSP)
+1. Basic Information
+ Scheme Name: Post-Matric Scholarships Scheme for Minorities / SC / ST / OBC.
+ Type: Central Government (Managed via National Scholarship Portal - NSP).
+ Department: Ministry of Minority Affairs / Ministry of Social Justice & Empowerment.
+ Objective: To award scholarships to meritorious students belonging to economically weaker
+sections of minority/marginalized communities to pursue higher education from class 11 to
+Ph.D.
+ Target Beneficiaries: Students belonging to SC, ST, OBC, or Minority communities studying
+in recognized institutions.
+2. Eligibility
+ Academic Performance: Must have secured not less than 50% marks in the previous final
+examination.
+ Income Limit: Annual family income must not exceed ₹2.5 lakh (for SC/ST/OBC) or ₹2 lakh
+(for Minorities).
+
+--- PAGE 7 ---
+ Category: Must belong to the respective reserved category and possess a valid
+caste/community certificate.
+3. Dynamic Eligibility Questions (System Logic)
+ What is your current education level? (Maps to enum: education_level)
+ What was your percentage in the previous academic year? (Maps to float:
+previous_marks_percentage)
+ What is your family's annual income? (Maps to integer: family_income)
+ What is your social category? (Maps to enum: social_category)
+4. Benefits
+ Financial Assistance: Covers admission fees, tuition fees, and a monthly maintenance
+allowance directly credited to the student's bank account via DBT.
+5. Required Documents
+Document Name Requirement Source/Platform Manual Upload?
+Aadhaar Card Mandatory eKYC / UIDAI No
+No (if API available) /
+Income Certificate Mandatory e-District
+Yes
+No (if API available) /
+Caste Certificate Mandatory e-District
+Yes
+Previous Year DigiLocker / Board
+Mandatory Yes (if API fails)
+Marksheet APIs
+Fee Receipt Mandatory Institute Yes
+6. Application Procedure
+1. Application: Student registers and applies on the NSP portal.
+2. Institute Verification: The educational institution verifies the student's enrollment and fee
+details online.
+3. District/State Node Verification: Local officers verify the caste and income validity.
+4. Approval & DBT: Ministry sanctions the amount and PFMS routes the money to the Aadhaar-
+seeded bank account.
+7. Fees & 8. Processing Time
+ Fees: Zero application fee.
+ Processing Time: Follows the annual academic calendar (usually opens in August, funds
+disbursed by March).
+9. Status Flow
+Application Submitted → Institute Verification Pending → Institute Approved → State/District Nodal
+Officer Verified → Sent to PFMS for Payment → Payment Success.
+10. Rejection Reasons
+ Institute fails to verify the application before the portal deadline.
+ Mismatch in Aadhaar demographic data and bank account names.
+ Income exceeds the prescribed limit.
+11. Grievance Process
+ Students can track their exact status on the NSP portal and raise tickets via the NSP
+Helpdesk.
+12. Related Schemes (SAMANVAI Logic)
+ If education_level == 'Undergraduate' AND social_category == 'SC/ST' → Trigger free
+coaching/skill development scheme checks.
+10. Telangana ePASS Scholarship & Fee Reimbursement (Education - State)
+1. Basic Information
+ Scheme Name: Telangana ePASS Post-Matric Scholarship (RTF - Reimbursement of Tuition
+Fee / MTF - Maintenance Fee).
+ Type: State Government (with some Central funding for SC/ST).
+ Department: SC/ST/BC/Minority/Welfare Departments.
+
+--- PAGE 8 ---
+ Objective: To provide tuition fee reimbursement and maintenance allowances to
+economically weaker students pursuing higher education (Class 11 to PG).
+ Target Beneficiaries: Students from SC, ST, BC, EBC, Minority, and Physically Challenged
+categories.
+2. Eligibility
+ Attendance: Must maintain a minimum of 75% attendance per quarter.
+ Income Limits:
+o SC/ST/Minorities: Annual family income up to ₹2,00,000.
+o BC/EBC: Up to ₹1,50,000 (Rural) and ₹2,00,000 (Urban).
+ Admission Type: Students admitted under Management Quota or spot admissions are
+explicitly NOT eligible.
+ Age Limit: Maximum age is 25 for OC and 29 for other categories (as of July 1st of the
+academic year).
+3. Dynamic Eligibility Questions (System Logic)
+ Was your admission through the Convenor Quota (Regular) or Management Quota? (Maps to
+enum: admission_type)
+ What is your total annual family income? (Maps to integer: family_income)
+ What is your caste category? (Maps to enum: social_category)
+ Is your current attendance above 75%? (Maps to boolean: attendance_above_75)
+4. Benefits
+ Financial Assistance: Full or partial tuition fee reimbursement (RTF) depending on EAPCET
+rank (e.g., Rank < 10,000 gets full fee for BC/EBC) and category. Maintenance charges
+(MTF) are also provided.
+ Disbursement: Shifted to a Direct Benefit Transfer (DBT) system, crediting funds directly to
+the student's bank account in four annual phases.
+5. Required Documents
+Document Name Requirement Source/Platform Manual Upload?
+Aadhaar Card Mandatory eKYC / UIDAI No
+Income Certificate Mandatory MeeSeva / e-District No (API fetch)
+Caste Certificate Mandatory MeeSeva / e-District No (API fetch)
+CET Allotment Order Mandatory Higher Ed API Yes (if API fails)
+Previous Marksheets Mandatory Board APIs / DigiLocker Yes
+Bank Passbook Mandatory NPCI No
+6. Application Procedure
+1. Application: Student applies online via the ePASS portal.
+2. College Verification: The college principal verifies enrollment, biometric attendance, and
+documents.
+3. District Verification: Welfare Officer validates caste, income, and academics.
+4. Sanction: Funds are sanctioned and pushed to the student's bank account via DBT.
+7. Fees & 8. Processing Time
+ Fees: Free online application.
+ Processing Time: Funds are released quarterly (in 4 phases) throughout the academic year.
+9. Status Flow
+Application Submitted → Pending at College → College Verified → Pending at District Officer →
+Approved / Sanctioned → Released to Bank.
+10. Rejection Reasons
+ Attendance falls below 75%.
+ Admitted under Management Quota.
+ Income exceeds the category-specific threshold.
+11. Grievance Process
+
+--- PAGE 9 ---
+ Dedicated grievance module and helpdesk on the ePASS portal.
+12. Related Schemes (SAMANVAI Logic)
+ If social_category == 'SC/ST' AND education_level == 'Graduation' → Trigger skill
+development/upskilling schemes.
+11. Kalyana Lakshmi / Shaadi Mubarak (Women & Child - State)
+1. Basic Information
+ Scheme Name: Kalyana Lakshmi (SC/ST/BC/EBC) and Shaadi Mubarak (Minorities).
+ Type: State Government.
+ Department: BC/SC/ST/Minority Welfare Departments.
+ Objective: To alleviate financial distress in poor families by providing financial assistance to
+unmarried girls at the time of marriage.
+ Target Beneficiaries: BPL families of SC, ST, BC, EBC, and Minority communities.
+2. Eligibility
+ Age: The bride must be strictly 18 years or above, and the groom 21 years or above at the
+time of marriage.
+ Income Limit:
+o SC/ST/Minority: Up to ₹2,00,000 per annum.
+o BC/EBC: Up to ₹1,50,000 (Rural) and ₹2,00,000 (Urban).
+ Timeframe: Application must be submitted within 6 months of the marriage.
+ Exclusions: No government employee or income tax payer in the family.
+3. Dynamic Eligibility Questions (System Logic)
+ What is the bride's exact age on the date of marriage? (Maps to integer: bride_age)
+ What is the total annual income of the bride's parents? (Maps to integer: parents_income)
+ Is anyone in your immediate family a government employee? (Maps to boolean:
+has_govt_employee)
+ Has the marriage already occurred? If yes, what was the date? (Maps to date: marriage_date
+- used to calculate the 6-month window).
+4. Benefits
+ Financial Assistance: A one-time grant of ₹1,00,116 directly credited to the bride's bank
+account. Disabled brides are eligible for an enhanced amount of ₹1,25,145.
+5. Required Documents
+Document Name Requirement Source/Platform Manual Upload?
+Bride's Aadhaar &
+Mandatory UIDAI / SSC Board No (if API)
+Age Proof
+Caste & Income Certs Mandatory MeeSeva No (if API)
+Marriage Certificate / Gram Panchayat /
+Mandatory Yes
+Card Registration
+Yes (for age
+Groom's Aadhaar Mandatory UIDAI
+verification)
+Bride & Mother Bank
+Mandatory NPCI No
+Acc
+6. Application Procedure
+1. Application: Submit online via the ePASS portal (before or within 6 months of marriage).
+2. Field Verification: VRO (Village Revenue Officer) and MRO (Mandal Revenue Officer)
+conduct physical verification of the marriage and economic status.
+3. Approval: District Welfare Officer/RDO approves the file.
+4. Disbursement: Cheque is printed or directly transferred (DBT) to the bride's account.
+7. Fees & Processing Time
+ Fees: Free application.
+ Processing Time: Usually 1 to 3 months depending on budget releases and field verification
+speed.
+
+--- PAGE 10 ---
+9. Status Flow
+Submitted → Pending at VRO/MRO → Revenue Verification Complete → Pending at RDO/Welfare
+Officer → Approved → Cheque Printed/Amount Credited.
+10. Rejection Reasons
+ Bride is under 18 or groom is under 21.
+ Income limits exceeded or fake income certificates.
+ Application filed after 6 months from the date of marriage.
+11. Grievance Process
+ Issues can be escalated to the local RDO or through the ePASS grievance mechanism.
+12. Related Schemes (SAMANVAI Logic)
+ If Kalyana_Lakshmi_Status == 'Approved' → Wait 9 months → Trigger KCR Kit / Maternity
+Scheme awareness alerts.
+12. PMEGP (Employment - Central)
+1. Basic Information
+ Scheme Name: Prime Minister's Employment Generation Programme (PMEGP).
+ Type: Central Government (MSME).
+ Department: Khadi and Village Industries Commission (KVIC) as the nodal agency.
+ Objective: To generate employment opportunities in rural and urban areas by setting up new
+self-employment ventures/micro-enterprises.
+ Target Beneficiaries: Unemployed youth, traditional artisans.
+2. Eligibility
+ Age: Minimum 18 years.
+ Education: For setting up a manufacturing unit above ₹10 lakh or a service unit above ₹5
+lakh, the applicant must have passed at least Class VIII.
+ Prior Benefits: Must not have availed margin money subsidy under any other Central/State
+scheme.
+3. Dynamic Eligibility Questions (System Logic)
+ What type of business are you starting? (Manufacturing/Service) (Maps to enum: sector_type)
+ What is the total estimated project cost? (Maps to float: project_cost)
+ What is your highest educational qualification? (Maps to enum: education_level)
+4. Benefits
+ Subsidy: The government provides a margin money subsidy ranging from 15% to 35% of the
+project cost, depending on location (Urban/Rural) and social category (General/Special).
+ Loan: The bank sanctions the remaining amount as a term loan.
+5. Required Documents
+ Aadhaar, Project Report (DPR), Education/Skill Certificates, Caste Certificate (if claiming
+special category subsidy). (Most DPRs require manual upload).
+6. Application Procedure & Workflow
+Apply Online on PMEGP Portal → Screened by District Task Force Committee (DTFC) → Forwarded
+to Bank → Bank Appraisal & Credit Sanction → EDP Training Completed by Applicant → Subsidy
+Claimed and Locked in Bank for 3 years.
+7. Rejection Reasons
+ Project deemed commercially unviable by the bank.
+ Applicant has a poor credit history (CIBIL default).
+8. Related Schemes (SAMANVAI Logic)
+ If PMEGP_Loan is active AND business is expanding → Trigger Mudra Loan or PM
+Vishwakarma logic.
+13. Caste / Community Certificate (Government Services)
+1. Basic Information
+ Department: Revenue Department, Telangana.
+ Objective: To officially certify an individual's social category (SC, ST, BC) for availing
+reservations and government benefits.
+2. Eligibility & Dynamic Questions
+ Eligibility: Must belong to a caste listed in the official State gazette.
+ Do any of your immediate family members (parents/siblings) already hold a digital caste
+certificate? (Maps to boolean: has_family_caste_cert - this drastically speeds up the
+workflow).
+3. Application Workflow & APIs
+ Platform: MeeSeva / e-District.
+
+--- PAGE 11 ---
+ Workflow: MeeSeva Application → VRO Field Enquiry → Revenue Inspector Verification →
+Tahsildar Digital Signature & Issue.
+ Interoperability: Once generated, this certificate's ID must be saved in SAMANVAI's user
+profile. It serves as an automatic "No Upload Required" API fetch for schemes like ePASS
+and Kalyana Lakshmi.
+Let me know if you are ready to complete the final batch (PM Fasal Bima Yojana, Sukanya Samriddhi,
+Ration Card, etc.) to round out the 20+ list!
+For more visual insights on the recent DBT changes in Telangana's RTF, you can check this out:
+Telangana Fee Reimbursement 2026-27 Updates. This video breaks down the income limits and
+application process clearly.
+14. PM Fasal Bima Yojana (Agriculture - Central)
+1. Basic Information
+ Scheme Name: Pradhan Mantri Fasal Bima Yojana (PMFBY)
+ Type: Central Government (Implemented with State partnership)
+ Department: Ministry of Agriculture & Farmers Welfare
+ Objective: To provide insurance coverage and financial support to farmers in the event of
+failure of any notified crop as a result of natural calamities, pests, or diseases.
+ Target Beneficiaries: All farmers growing notified crops in notified areas, including
+sharecroppers and tenant farmers.
+2. Eligibility
+ Crops: Must be cultivating notified crops (Food crops, Oilseeds, Annual
+Commercial/Horticultural crops).
+ Loan Status: Voluntary for both loanee and non-loanee farmers.
+ Exclusions: Preventable risks (e.g., theft, grazed by animals) are not covered.
+3. Dynamic Eligibility Questions (System Logic)
+ Are you cultivating a crop notified by the state government for this season? (Maps to boolean:
+is_notified_crop)
+ Are you a loanee farmer (have a Kisan Credit Card)? (Maps to boolean: is_loanee_farmer -
+determines if auto-enrollment happens at the bank).
+ Do you have the sowing certificate or land record proof? (Maps to boolean:
+has_sowing_proof)
+4. Benefits
+ Insurance Cover: Financial compensation for yield losses, prevented sowing, and post-
+harvest losses due to localized calamities.
+5. Required Documents
+Document Name Requirement Source/Platform Manual Upload?
+Aadhaar Card Mandatory eKYC / UIDAI No
+Land Records (Pahani/Adangal) Mandatory State Land Records Yes (if API fails)
+Sowing Certificate / Self-Declaration Mandatory VRO/Panchayat Yes
+Bank Account Details Mandatory NPCI No
+6. Application Procedure
+1. Application: Non-loanee farmers apply via CSC (Common Service Centre) or PMFBY portal.
+Loanee farmers are often processed directly by their bank.
+2. Document Verification: CSC/Bank verifies land and sowing details.
+3. Premium Payment: Farmer pays their share of the premium.
+4. Approval: Insurance company issues the policy.
+7. Fees & 8. Processing Time
+ Fees (Premium Share): Maximum 2% for Kharif crops, 1.5% for Rabi crops, and 5% for
+Annual Commercial/Horticultural crops.
+ Processing Time: Coverage begins immediately after premium payment. Claim settlement
+depends on state crop cutting experiments (CCE).
+9. Status Flow Application Submitted → Premium Paid → Bank/CSC Verified → Policy Generated →
+Claim Raised (if crop loss) → Survey Completed → Claim Settled.
+10. Rejection Reasons
+ Mismatch in crop sown and crop insured.
+ Application submitted after the seasonal cut-off date.
+11. Grievance Process
+
+--- PAGE 12 ---
+ Farmers can raise complaints via the National Crop Insurance Portal (NCIP) or the PMFBY
+app.
+12. Related Schemes (SAMANVAI Logic)
+ If PMFBY_Claim == 'Settled' → Trigger PM-KISAN database update checks to ensure
+continuous DBT linkages.
+15. Sukanya Samriddhi Yojana (Women & Child - Central)
+1. Basic Information
+CAclubindia
+ Scheme Name: Sukanya Samriddhi Yojana (SSY)
+CAclubindia
+ Type: Central Government
+ Department: Ministry of Finance / Ministry of Women & Child Development
+ Objective: To encourage parents to build a fund for the future education and marriage
+expenses of their female child.
+ Target Beneficiaries: Girl children who are resident Indians.
+CAclubindia
+2. Eligibility
+CAclubindia
+ Age Limit: The girl child must be under 10 years of age at the time of account opening.
+CAclubindia
+ Family Limit: Maximum of two SSY accounts per family (exceptions allowed for twins/triplets
+on the second birth).
+CAclubindia
+ Citizenship: The girl child must be a resident Indian (account closed if she becomes an NRI).
+CAclubindia
+3. Dynamic Eligibility Questions (System Logic)
+ What is the age of the girl child? (Maps to integer: girl_child_age - must be < 10)
+CAclubindia
+ How many SSY accounts already exist in your family? (Maps to integer:
+existing_ssy_accounts - must be < 2)
+CAclubindia
+4. Benefits
+CAclubindia
+ High Interest: Offers 8.2% per annum (compounded annually for Q2 FY 2026-27).
+CAclubindia
+ Tax Benefits (EEE): Deposits (up to ₹1.5 lakh under 80C), interest earned, and maturity
+amount are all entirely tax-free.
+CAclubindia
+ Maturity: The account matures 21 years after opening, with deposits required only for the first
+15 years.
+ClearTax
+5. Required Documents
+Document Name Requirement Source/Platform Manual Upload?
+Girl Child's Birth Certificate Mandatory Civil Registration System Yes (if no API)
+Parent/Guardian Aadhaar Mandatory UIDAI No
+Parent/Guardian PAN Mandatory NSDL / Income Tax No
+Medical Cert (for twins) Conditional Hospital Yes
+ClearTax
+6. Application Procedure
+1. Application: Submit Form SSA-1 along with documents at an authorized Bank or Post Office.
+Canara HSBC Life Insurance
+2. Verification: Bank/Post office verifies KYC.
+3. Account Opening: Account is opened upon making the initial deposit (minimum ₹250).
+Canara HSBC Life Insurance
+7. Fees & 8. Processing Time
+ Fees: Minimum ₹250 to open. A penalty of ₹50 applies if the minimum annual deposit is
+missed.
+CAclubindia
+
+--- PAGE 13 ---
+ Processing Time: Account is opened instantly over the counter.
+9. Status Flow Application Submitted at Bank/PO → KYC Verified → Initial Deposit Made → SSY
+Passbook Issued.
+10. Rejection Reasons
+CAclubindia
+ Girl child is over 10 years old.
+CAclubindia
+ Family already has two active SSY accounts.
+CAclubindia
+11. Grievance Process
+ Banking Ombudsman or specific bank/post office grievance portals.
+12. Related Schemes (SAMANVAI Logic)
+ If girl_child_age hits 18 AND SSY account is active → Unlock triggers for Pre/Post-Matric
+Scholarships and Kalyana Lakshmi (if state matches).
+16. Disability Pension / SADAREM (Pension - State)
+1. Basic Information
+ Scheme Name: Aasara Disability Pension.
+ Type: State Government (Telangana).
+ Department: Society for Elimination of Rural Poverty (SERP).
+ Objective: To provide financial security to persons with disabilities (PwDs).
+ Target Beneficiaries: Disabled citizens from BPL families.
+2. Eligibility
+ Age Limit: No age limit for disability pensions.
+ Disability Percentage: Must have a minimum of 40% disability (51% for hearing impaired)
+certified by SADAREM (Software for Assessment of Disabled for Access Rehabilitation and
+Empowerment).
+ Income Limit: Must be from a Below Poverty Line (BPL) household.
+3. Dynamic Eligibility Questions (System Logic)
+ Do you have a valid SADAREM Certificate? (Maps to boolean: has_sadarem_cert)
+ What is the disability percentage mentioned on your certificate? (Maps to integer:
+disability_percentage)
+ Do you have a White Ration Card? (Maps to boolean: has_white_card)
+4. Benefits
+ Financial Assistance: Enhanced monthly pension (currently around ₹3,016 or as updated
+per latest GOs), credited via DBT.
+5. Required Documents
+Document Name Requirement Source/Platform Manual Upload?
+SADAREM Certificate Mandatory SADAREM DB API No
+Aadhaar Card Mandatory eKYC No
+BPL/White Ration Card Mandatory Civil Supplies API No
+Bank Account Mandatory NPCI No
+6. Application Procedure
+1. Certification: Citizen attends a medical board assessment to get the SADAREM certificate.
+2. Application: Submits pension application at MeeSeva or Gram Panchayat.
+3. Field Enquiry: Panchayat Secretary validates the BPL status.
+4. Approval: MPDO sanctions the pension based on the SADAREM ID validation.
+7. Fees & 8. Processing Time
+ Fees: Free application (nominal MeeSeva charges).
+ Processing Time: 30-45 days for approval post-SADAREM certification.
+9. Status Flow SADAREM Certified → Applied for Pension → Field Enquiry Completed → MPDO
+Approved → Monthly DBT Active.
+10. Rejection Reasons
+ Disability percentage is below the 40% threshold.
+ Applicant has stable income/assets exceeding BPL norms.
+11. Grievance Process
+ Medical reassessment can be appealed at the District Medical Board. Payment issues
+handled by MPDO.
+
+--- PAGE 14 ---
+12. Related Schemes (SAMANVAI Logic)
+ If has_sadarem_cert == TRUE → Automatically trigger Free Bus Pass (TSRTC) and NHFDC
+loan recommendations.
+17. Food Security Card / Ration Card (Government Services - State)
+1. Basic Information
+ClearTax
+ Scheme Name: Food Security Card (FSC) / Ration Card.
+ClearTax
+ Type: State Government (Telangana).
+ClearTax
+ Department: Consumer Affairs, Food & Civil Supplies Department.
+Bajaj Markets
+ Objective: To provide subsidized food grains under the Public Distribution System (PDS) and
+serve as a core BPL identifier.
+ClearTax
+2. Eligibility
+BankBazaar
+ Income Limit: Annual family income must be less than ₹1.5 lakh in rural areas and ₹2 lakh in
+urban areas.
+BankBazaar
+ Land Limit: Must own less than 3.50 acres of wetland or less than 7.50 acres of dry land.
+BankBazaar
+ Exclusions: Should not hold another active ration card. Government employees, income
+taxpayers, and owners of four-wheelers (excluding tractors/taxis) are ineligible.
+Bajaj Markets
+3. Dynamic Eligibility Questions (System Logic)
+ What is your total annual family income? (Maps to integer: family_annual_income)
+BankBazaar
+ How many acres of land do you own? (Wet/Dry) (Maps to float: wet_land_acres,
+dry_land_acres)
+ Does anyone in your family pay income tax or own a car? (Maps to boolean:
+owns_car_or_taxpayer)
+4. Benefits
+ Subsidized Commodities: Rice, sugar, wheat, etc., through Fair Price Shops.
+ Gateway Benefit: Acts as the primary proof for almost all state welfare schemes (Aarogyasri,
+Housing, Fee Reimbursement).
+ClearTax
+5. Required Documents
+Document Name Requirement Source/Platform Manual Upload?
+Aadhaar (All Members) Mandatory UIDAI No
+Income Certificate Mandatory Revenue Dept / e-District No (API fetch)
+Address Proof / Domicile Mandatory Revenue Dept Yes
+Passport Photo (Head) Mandatory N/A Yes
+Bajaj Markets
+6. Application Procedure
+1. Application: Submit offline via MeeSeva or during state-wide drives like Praja Palana.
+BankBazaar
+2. Document Check: Initial scrutiny by MeeSeva operator.
+BankBazaar
+3. Revenue Enquiry: VRO/Revenue Inspector visits the home to physically verify economic
+status and land holdings.
+4. Approval & e-KYC: If approved, beneficiaries must complete biometric e-KYC at the nearest
+ration shop.
+ClearTax
+7. Fees & 8. Processing Time
+ Fees: ₹35 - ₹50 MeeSeva service charge.
+ Processing Time: Heavy backlog dependent; usually takes several months, expedited during
+election/scheme launch drives.
+
+--- PAGE 15 ---
+9. Status Flow Application Registered → Sent to Tahsildar → Assigned to VRO/RI → Field
+Verification Report Submitted → Approved/Rejected → FSC Number Generated → e-KYC Completed
+→ Card Active.
+10. Rejection Reasons
+BankBazaar
+ Exceeding income or land limits.
+BankBazaar
+ Duplicate members already present in another FSC.
+ClearTax
+ Failed field verification (e.g., house is too large/luxurious for BPL).
+11. Grievance Process
+Bajaj Markets
+ Helpline numbers (1967 or 1800-425-0033) and the ePDS portal Grievance Redressal
+System.
+Bajaj Markets
+12. Related Schemes (SAMANVAI Logic)
+ClearTax
+ If FSC_Status == 'Active' → SAMANVAI must globally set is_BPL = TRUE for the user,
+instantly unlocking eligibility for Aarogyasri, Aasara, and Housing schemes.
+ClearTax
+For a visual breakdown of the application process regarding the Food Security Card, you might find
+this helpful: Telangana New Ration Card Process 2026. This video explains the latest documentation
+and procedural steps for the state's ration card system.
