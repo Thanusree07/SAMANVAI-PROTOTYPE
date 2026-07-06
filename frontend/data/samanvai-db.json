@@ -1,0 +1,61 @@
+{
+  "users": [
+    {
+      "id": "citizen-001",
+      "name": "Verified Citizen",
+      "authenticated": true,
+      "portalLanguage": "en"
+    }
+  ],
+  "preferences": {
+    "citizen-001": {
+      "samanvaiLanguage": "en",
+      "consent": true
+    }
+  },
+  "applications": [],
+  "notifications": [
+    {
+      "id": "notice-001",
+      "title": "Government Portal session verified",
+      "body": "PIN verification completed. SAMANVAI can now assist within this authenticated session.",
+      "at": "2026-07-06T08:03:15.473Z",
+      "read": false
+    }
+  ],
+  "history": [
+    {
+      "id": "52fcb654-ea73-437c-96fd-4a06fcc3d45e",
+      "input": "I want to check eligibility",
+      "response": "This information is currently unavailable in the verified prototype knowledge base. Please verify through the official Government Portal.",
+      "at": "2026-07-06T08:21:58.742Z"
+    },
+    {
+      "id": "f8089292-70e2-40bc-8dec-5fba9ebee396",
+      "input": "hello",
+      "response": "This information is currently unavailable in the verified prototype knowledge base. Please verify through the official Government Portal.",
+      "at": "2026-07-06T08:18:17.004Z"
+    }
+  ],
+  "profileFacts": {},
+  "auditLogs": [
+    {
+      "id": "b0ed8a1a-047c-4224-b15a-087611fefac9",
+      "action": "assistant_message",
+      "at": "2026-07-06T08:21:58.742Z",
+      "metadata": {
+        "intent": "unknown",
+        "itemId": "unknown"
+      }
+    },
+    {
+      "id": "3c53661d-0587-4330-b037-fedee4492999",
+      "action": "assistant_message",
+      "at": "2026-07-06T08:18:17.004Z",
+      "metadata": {
+        "intent": "unknown",
+        "itemId": "unknown"
+      }
+    }
+  ]
+}

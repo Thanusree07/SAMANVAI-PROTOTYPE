@@ -42,6 +42,12 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
+      "page": "/api/samanvai",
+      "regex": "^/api/samanvai(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/samanvai(?:/)?$"
+    },
+    {
       "page": "/dashboard",
       "regex": "^/dashboard(?:/)?$",
       "routeKeys": {},

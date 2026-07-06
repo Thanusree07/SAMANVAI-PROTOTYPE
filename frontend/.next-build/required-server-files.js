@@ -104,7 +104,7 @@ self.__SERVER_FILES_MANIFEST={
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "C:\\Users\\kadiy\\OneDrive\\Desktop\\SAMANVAI-PROTOTYPE\\frontend",
+    "outputFileTracingRoot": "C:\\development\\SAMANVAI-PROTOTYPE\\frontend",
     "cacheComponents": false,
     "cacheLife": {
       "default": {
@@ -166,7 +166,7 @@ self.__SERVER_FILES_MANIFEST={
       "proxyPrefetch": "flexible",
       "optimisticClientCache": true,
       "manualClientBasePath": false,
-      "cpus": 11,
+      "cpus": 15,
       "memoryBasedWorkersCount": false,
       "imgOptConcurrency": null,
       "imgOptTimeoutInSeconds": 7,
@@ -304,11 +304,11 @@ self.__SERVER_FILES_MANIFEST={
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts",
     "turbopack": {
-      "root": "C:\\Users\\kadiy\\OneDrive\\Desktop\\SAMANVAI-PROTOTYPE\\frontend"
+      "root": "C:\\development\\SAMANVAI-PROTOTYPE\\frontend"
     },
     "distDirRoot": ".next-build"
   },
-  "appDir": "C:\\Users\\kadiy\\OneDrive\\Desktop\\SAMANVAI-PROTOTYPE\\frontend",
+  "appDir": "C:\\development\\SAMANVAI-PROTOTYPE\\frontend",
   "relativeAppDir": "",
   "files": [
     ".next-build\\package.json",
