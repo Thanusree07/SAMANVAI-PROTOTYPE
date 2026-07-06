@@ -68,6 +68,18 @@ const translations: Record<LanguageCode, Record<string, string>> = {
     recommendations: "इस अनुरोध के बाद सत्यापित सिफारिशें",
     statusMissing: "कृपया सही SAMANVAI Reference ID दें, जैसे SMV-PMKISAN-YYYYMMDD-XXXXXX.",
   },
+  kn: {
+    eligible: "ಅಧಿಕಾರಿಕ ನಿಯಮಗಳ ಪ್ರಕಾರ, ನೀವು ಅರ್ಹರಾಗಿರುತ್ತೀರಿ.",
+    notEligible: "ಅಧಿಕಾರಿಕ ನಿಯಮಗಳ ಪ್ರಕಾರ, ನೀವು ಅರ್ಹರಾಗಿರುವುದಿಲ್ಲ.",
+    ask: "ಮುಂದುವರಿಯಲು ನನಗೆ ಒಂದು ಅಗತ್ಯ ಮಾಹಿತಿ ಬೇಕು:",
+    apply: "ಅರ್ಜಿಯನ್ನು ಸಲ್ಲಿಸಲು 'apply' ಎಂದು ಬರೆಯಿರಿ.",
+    noMatch: serviceDiscoveryResponse,
+    documents: "ಅಗತ್ಯ ದಾಖಲೆಗಳು",
+    workflow: "ಕಾರ್ಯವಿಧಾನ",
+    benefits: "ಪ್ರಯೋಜನಗಳು",
+    recommendations: "ಈ ವಿನಂತಿಯ ನಂತರದ ನವೀಕೃತ ಶಿಫಾರಸುಗಳು",
+    statusMissing: "ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ SAMANVAI Reference ID ನಮೂದಿಸಿ, ಉದಾಹರಣೆಗೆ SMV-PMKISAN-YYYYMMDD-XXXXXX.",
+  },
 };
 
 const stopIfFalse: Record<string, string[]> = {
@@ -99,73 +111,175 @@ export function detectLanguage(input: string): LanguageCode {
   return "en";
 }
 
+export type UserIntent = "greeting" | "casual_chat" | "scheme_discovery" | "application_workflow" | "status_tracking";
+
+export function classifyIntent(message: string, activeItemId?: string, lastQuestionKey?: string): UserIntent {
+  const trimmed = message.trim();
+  const lower = trimmed.toLowerCase();
+
+  // 1. Status tracking check
+  const hasRefId = /SMV-[A-Z0-9]+-\d{8}-[A-Z0-9]+/i.test(trimmed);
+  if (hasRefId || /\b(check status|my status|application status|track status|track application)\b/i.test(lower)) {
+    return "status_tracking";
+  }
+
+  // 2. Greeting check
+  const greetings = /^(hi|hello|hey|yo|namaste|namaskaram|namaskara|hello there|హాయ్|హలో|నమస్కారం|नमस्ते|हेलो|ನಮಸ್ಕಾರ|ಹಲೋ)$/i;
+  if (greetings.test(trimmed)) {
+    return "greeting";
+  }
+
+  // 3. Casual chat / ask about assistant / humor check
+  const casualWords = /\b(how\s+are\s+you|how\s+is\s+it\s+going|how\s+are\s+you\s+doing|how\s+r\s+u|how\s+ru|how\s+are\s+u|how\s+ru\s+dng|how\s+r\s+u\s+dng|who\s+are\s+you|your\s+name|what\s+is\s+samanvai|what\s+are\s+you|joke|jokes|make\s+me\s+laugh|thank\s+you|thanks|good|fine|great|awesome|ok|okay|cool|samanvai\s+ante|సమన్వయ్|సరే|బాగుంది|समनवय|अच्छा|ನಮಸ್ಕಾರ|ಸರಿ|ಹೇಗಿದ್ದೀರಾ)\b/i;
+  if (casualWords.test(lower)) {
+    return "casual_chat";
+  }
+
+  // 4. Scheme Discovery check (general questions about schemes)
+  const discoveryPatterns = /\b(what schemes|list of schemes|show schemes|any schemes|available schemes|schemes for|help for|is there any|information about|tell me about)\b/i;
+  const isExplicitApply = /\b(apply|register|start application|enroll|submit|sign up|need to apply|want to apply|i need|కావాలి|ಬೇಕು)\b/i.test(lower);
+
+  if (discoveryPatterns.test(lower) && !isExplicitApply) {
+    return "scheme_discovery";
+  }
+
+  // 5. Explicit workflow activation
+  if (isExplicitApply) {
+    return "application_workflow";
+  }
+
+  // 6. If we are currently in an active workflow
+  if (activeItemId && lastQuestionKey) {
+    return "application_workflow";
+  }
+
+  // Default to discovery if a scheme keyword matches, otherwise casual
+  return "scheme_discovery";
+}
+
 export function findKnowledgeItem(input: string, preferredId?: string) {
   if (preferredId) return getKnowledgeItem(preferredId);
   const normalized = input.toLowerCase();
+  
+  // Only auto-trigger matching schemes if the user is explicitly requesting application/registration
+  const isApplyRequest = /\b(apply|register|enroll|submit|want to|need to|need|i need|kaavali|కావాలి|ಬೇಕು)\b/i.test(normalized);
+  if (!isApplyRequest) return undefined;
+
   return (
     knowledgeBase.find((item) => [item.name, ...item.aliases].some((alias) => normalized.includes(alias.toLowerCase()))) ||
     knowledgeBase.find((item) => normalized.includes(item.kind) || item.aliases.some((alias) => alias.split(" ").some((token) => token.length > 4 && normalized.includes(token.toLowerCase()))))
   );
 }
 
+export function validateAndMapInput(key: string, input: string): { valid: boolean; value?: any } {
+  const trimmed = input.trim();
+  const lower = trimmed.toLowerCase();
+
+  const booleanKeys = [
+    "owns_cultivable_land", "is_institutional_land", "paid_income_tax",
+    "pension_over_10k", "is_registered_professional", "is_ts_resident",
+    "has_bpl_card", "owns_pucca_house", "received_prior_housing",
+    "owns_plot", "has_income_proof", "is_female_owner",
+    "has_white_ration_card", "is_covered_procedure", "attendance_above_75",
+    "has_govt_employee", "has_family_caste_cert", "is_notified_crop",
+    "is_loanee_farmer", "has_sowing_proof", "has_sadarem_cert",
+    "has_white_card", "owns_car_or_taxpayer", "agreed_to_apply"
+  ];
+  if (booleanKeys.includes(key)) {
+    const positive = /\b(yes|yeah|true|have|own|resident|avu|avunu|undhi|undha|haan|yes sir|correct|ಹೌದು|ಇದೆ|हाँ|हां|हाँजी|जी)\b/i;
+    const negative = /\b(no|not|false|dont|don't|ledu|ledhu|kadh|kadhu|nahi|nahin|alla|illa|ಇಲ್ಲ|नहीं|जी नहीं)\b/i;
+    if (positive.test(trimmed)) return { valid: true, value: true };
+    if (negative.test(trimmed)) return { valid: true, value: false };
+    return { valid: false };
+  }
+
+  const numberKeys = [
+    "family_income", "previous_marks_percentage", "bride_age",
+    "parents_income", "project_cost", "girl_child_age",
+    "existing_ssy_accounts", "disability_percentage", "family_annual_income",
+    "wet_land_acres", "dry_land_acres"
+  ];
+  if (numberKeys.includes(key)) {
+    const moneyMatch = trimmed.match(/(?:rs\.?|₹)?\s*(\d+(?:\.\d+)?)\s*(lakh|lac|crore|k)?/i);
+    const numMatch = trimmed.match(/\b(\d+(?:\.\d+)?)\b/);
+    if (moneyMatch) {
+      let val = Number(moneyMatch[1]);
+      if (moneyMatch[2]?.toLowerCase() === "lakh" || moneyMatch[2]?.toLowerCase() === "lac") val *= 100000;
+      if (moneyMatch[2]?.toLowerCase() === "crore") val *= 10000000;
+      return { valid: true, value: val };
+    } else if (numMatch) {
+      return { valid: true, value: Number(numMatch[1]) };
+    }
+    return { valid: false };
+  }
+
+  if (key === "primary_income_source") {
+    const choices = ["Agriculture", "Salary", "Business", "Other"];
+    const match = choices.find((c) => lower.includes(c.toLowerCase()));
+    if (match) return { valid: true, value: match };
+    return { valid: false };
+  }
+  if (key === "social_category") {
+    const choices = ["SC", "ST", "BC", "OBC", "Minority", "General", "OC", "EBC"];
+    const match = choices.find((c) => lower.includes(c.toLowerCase()));
+    if (match) return { valid: true, value: match };
+    return { valid: false };
+  }
+  if (key === "admission_type") {
+    const choices = ["Convenor Quota", "Management Quota"];
+    const match = choices.find((c) => lower.includes(c.toLowerCase()));
+    if (match) return { valid: true, value: match };
+    return { valid: false };
+  }
+  if (key === "sector_type") {
+    const choices = ["Manufacturing", "Service"];
+    const match = choices.find((c) => lower.includes(c.toLowerCase()));
+    if (match) return { valid: true, value: match };
+    return { valid: false };
+  }
+
+  if (key === "date_of_birth" || key === "marriage_date") {
+    const dateMatch = trimmed.match(/\b(\d{4})[-/](\d{1,2})[-/](\d{1,2})\b/);
+    if (dateMatch) {
+      const formatted = `${dateMatch[1]}-${dateMatch[2].padStart(2, "0")}-${dateMatch[3].padStart(2, "0")}`;
+      return { valid: true, value: formatted };
+    }
+    const yearMatch = trimmed.match(/\b(19|20)\d{2}\b/);
+    if (yearMatch) {
+      const parsed = Date.parse(trimmed);
+      if (!isNaN(parsed)) {
+        return { valid: true, value: new Date(parsed).toISOString().slice(0, 10) };
+      }
+    }
+    return { valid: false };
+  }
+
+  if (trimmed.length >= 2) {
+    let cleanVal = trimmed;
+    if (key === "state" || key === "district" || key === "name") {
+      cleanVal = trimmed.replace(/\b(my state is|my district is|my name is|i am applying from|i live in|i am|state|district|name)\b/gi, "").trim();
+    }
+    return { valid: true, value: cleanVal };
+  }
+
+  return { valid: false };
+}
+
 export function extractFacts(input: string, item?: KnowledgeItem): ProfileFacts {
   const normalized = input.toLowerCase();
   const facts: ProfileFacts = {};
-
-  if (/telangana/.test(normalized)) {
-    facts.state = "Telangana";
-    facts.is_ts_resident = true;
+  if (/income certificate|income proof|annual income/.test(normalized)) {
+    facts.requested_service = "Income Certificate";
   }
-  const districtMatch = normalized.match(/\b(hyderabad|warangal|karimnagar|nizamabad|khammam|nalgonda|medak|adilabad|mahabubnagar|siddipet|suryapet|jagtial|kamareddy|rangareddy)\b/i);
-  if (districtMatch) facts.district = districtMatch[1].replace(/\b\w/g, (char) => char.toUpperCase());
-  if (/aadhaar|aadhar|uidai|fetch my aadhaar|fetch my aadhar/.test(normalized)) {
-    facts.aadhaar_consent = true;
-    facts.name = "Verified Citizen";
-    facts.date_of_birth = "1990-01-01";
-    facts.gender = "Verified";
-    facts.address = facts.district ? `${facts.district}, ${facts.state || "Telangana"}` : "Verified address on Aadhaar";
-  }
-  if (/income certificate|income proof|annual income/.test(normalized)) facts.requested_service = "Income Certificate";
-
-  if (/\b(yes|yeah|true|have|own|resident|ఉంది|అవును|हां|हाँ)\b/i.test(input)) facts.__last_boolean = true;
-  if (/\b(no|not|false|do not|dont|don't|లేదు|కాదు|नहीं)\b/i.test(input)) facts.__last_boolean = false;
-  if (/tax/.test(normalized)) facts.paid_income_tax = !/\b(no|not|do not|don't|dont)\b/.test(normalized);
-  if (/farmer|agriculture|cultivable|landholding|రైతు|किसान/.test(normalized)) facts.owns_cultivable_land = true;
-  if (/telangana|hyderabad|warangal|karimnagar|nizamabad|తెలంగాణ/.test(normalized)) facts.is_ts_resident = true;
-  if (/white ration|bpl|ration card|food security|fsc/.test(normalized)) {
-    facts.has_bpl_card = true;
-    facts.has_white_ration_card = true;
-    facts.has_white_card = true;
-  }
-  if (/pucca|rcc/.test(normalized) && /\b(no|not|don't|dont|without)\b/.test(normalized)) facts.owns_pucca_house = false;
-
-  const moneyMatch = normalized.match(/(?:rs\.?|₹)?\s*(\d+(?:\.\d+)?)\s*(lakh|lac|crore|k)?/);
-  if (moneyMatch) {
-    let value = Number(moneyMatch[1]);
-    if (moneyMatch[2] === "lakh" || moneyMatch[2] === "lac") value *= 100000;
-    if (moneyMatch[2] === "crore") value *= 10000000;
-    if (item?.questions.some((q) => q.key.includes("income"))) facts.family_income = value;
-  }
-
-  const ageMatch = normalized.match(/\b(\d{1,2})\s*(?:years|year|yrs|age)?\b/);
-  if (ageMatch && item) {
-    const age = Number(ageMatch[1]);
-    const ageQuestion = item.questions.find((q) => q.key.includes("age"));
-    if (ageQuestion) facts[ageQuestion.key] = age;
-  }
-
   return facts;
 }
 
 export function mergeAnswerWithQuestion(facts: ProfileFacts, questionKey?: string, input?: string): ProfileFacts {
   if (!questionKey || !input) return facts;
   const next = { ...facts };
-  const lowered = input.toLowerCase();
-  if (/\b(yes|yeah|true|have|own|resident|అవును|ఉంది|हाँ|हां)\b/.test(lowered)) next[questionKey] = true;
-  else if (/\b(no|not|false|do not|dont|don't|లేదు|नहीं)\b/.test(lowered)) next[questionKey] = false;
-  else {
-    const number = lowered.match(/\d+(?:\.\d+)?/);
-    next[questionKey] = number ? Number(number[0]) : input.trim();
+  const validation = validateAndMapInput(questionKey, input);
+  if (validation.valid) {
+    next[questionKey] = validation.value;
   }
   return next;
 }
@@ -177,19 +291,74 @@ export function evaluateEligibility(item: KnowledgeItem, facts: ProfileFacts) {
   for (const [key, ids] of Object.entries(stopIfTrue)) {
     if (ids.includes(item.id) && facts[key] === true) return false;
   }
-  if (item.id === "pmay-u-2" && Number(facts.family_income || 0) > 900000) return false;
+  if (item.id === "pmay-u-2") {
+    const income = Number(facts.family_income || 0);
+    if (income > 900000) return false;
+    // Female ownership mandatory for EWS and LIG (income <= 6 Lakhs)
+    if (income <= 600000 && facts.is_female_owner === false) return false;
+  }
   if (item.id === "post-matric-scholarship") {
     if (Number(facts.previous_marks_percentage || 100) < 50) return false;
     const category = String(facts.social_category || "").toLowerCase();
     const income = Number(facts.family_income || 0);
+    // Must belong to SC, ST, OBC, or Minority
+    if (!["sc", "st", "obc", "minority"].some((c) => category.includes(c))) return false;
     if (category.includes("minority") && income > 200000) return false;
-    if (["sc", "st", "obc"].includes(category) && income > 250000) return false;
+    if (["sc", "st", "obc"].some((c) => category.includes(c)) && income > 250000) return false;
   }
-  if (item.id === "kalyana-lakshmi" && Number(facts.bride_age || 99) < 18) return false;
-  if (item.id === "pmegp" && Number(facts.project_cost || 0) > 500000 && !/8|viii|class viii|10|12|graduate/i.test(String(facts.education_level || ""))) return false;
-  if (item.id === "sukanya" && (Number(facts.girl_child_age || 0) >= 10 || Number(facts.existing_ssy_accounts || 0) >= 2)) return false;
-  if (item.id === "aasara-disability" && Number(facts.disability_percentage || 100) < 40) return false;
-  if (item.id === "ration-card" && (Number(facts.family_annual_income || 0) > 200000 || Number(facts.wet_land_acres || 0) >= 3.5 || Number(facts.dry_land_acres || 0) >= 7.5)) return false;
+  if (item.id === "telangana-epass") {
+    if (facts.attendance_above_75 === false) return false;
+    if (String(facts.admission_type || "").toLowerCase().includes("management")) return false;
+    const category = String(facts.social_category || "").toLowerCase();
+    const income = Number(facts.family_income || 0);
+    const age = Number(facts.age || 0);
+    // Target communities only
+    if (!["sc", "st", "bc", "ebc", "minority", "physically challenged"].some((c) => category.includes(c))) return false;
+    if (["sc", "st", "minority"].some((c) => category.includes(c)) && income > 200000) return false;
+    if (["bc", "ebc"].some((c) => category.includes(c))) {
+      const isUrban = String(facts.district || "").toLowerCase() === "hyderabad";
+      const limit = isUrban ? 200000 : 150000;
+      if (income > limit) return false;
+    }
+    if (age > 0) {
+      const maxAge = (category.includes("oc") || category.includes("general")) ? 25 : 29;
+      if (age > maxAge) return false;
+    }
+  }
+  if (item.id === "kalyana-lakshmi") {
+    if (Number(facts.bride_age || 0) > 0 && Number(facts.bride_age || 0) < 18) return false;
+    if (Number(facts.groom_age || 0) > 0 && Number(facts.groom_age || 0) < 21) return false;
+    if (facts.has_govt_employee === true) return false;
+    const category = String(facts.social_category || "").toLowerCase();
+    const income = Number(facts.parents_income || facts.family_income || 0);
+    if (!["sc", "st", "bc", "ebc", "minority"].some((c) => category.includes(c))) return false;
+    if (["sc", "st", "minority"].some((c) => category.includes(c)) && income > 200000) return false;
+    if (["bc", "ebc"].some((c) => category.includes(c))) {
+      const isUrban = String(facts.district || "").toLowerCase() === "hyderabad";
+      const limit = isUrban ? 200000 : 150000;
+      if (income > limit) return false;
+    }
+  }
+  if (item.id === "pmegp") {
+    if (Number(facts.age || 0) > 0 && Number(facts.age || 0) < 18) return false;
+    if (Number(facts.project_cost || 0) > 500000 && !/8|viii|class viii|10|12|graduate/i.test(String(facts.education_level || ""))) return false;
+  }
+  if (item.id === "sukanya") {
+    if (Number(facts.girl_child_age || 0) >= 10 || Number(facts.existing_ssy_accounts || 0) >= 2) return false;
+  }
+  if (item.id === "aasara-disability") {
+    if (facts.has_sadarem_cert === false) return false;
+    if (facts.has_white_card === false || facts.has_white_ration_card === false) return false;
+    if (Number(facts.disability_percentage || 0) > 0 && Number(facts.disability_percentage || 0) < 40) return false;
+  }
+  if (item.id === "ration-card") {
+    if (facts.owns_car_or_taxpayer === true) return false;
+    const income = Number(facts.family_annual_income || facts.family_income || 0);
+    const isUrban = String(facts.district || "").toLowerCase() === "hyderabad";
+    const incomeLimit = isUrban ? 200000 : 150000;
+    if (income > incomeLimit) return false;
+    if (Number(facts.wet_land_acres || 0) >= 3.5 || Number(facts.dry_land_acres || 0) >= 7.5) return false;
+  }
   return undefined;
 }
 

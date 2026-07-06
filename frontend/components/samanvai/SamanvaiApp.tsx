@@ -109,7 +109,7 @@ const copy = {
     profile: "User Profile",
     accessibility: "Accessibility",
     menu: "Menu",
-    typePrompt: "Type your request",
+    typePrompt: "Type your request...",
     voicePrompt: "Speak your request",
     send: "Send",
     apply: "Apply",
@@ -243,6 +243,12 @@ export default function SamanvaiApp() {
   const [statusReference, setStatusReference] = useState("");
   const [statusText, setStatusText] = useState("");
   const recognitionRef = useRef<unknown>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const chatEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [conversation]);
 
   const t = copy[selectedLanguage];
   const portalCopy = copy[portalLanguage];
@@ -306,7 +312,13 @@ export default function SamanvaiApp() {
     setAssistantOpen(true);
     setActiveView("home");
     if (seed) setMessage(seed);
-    if (mode === "voice") startVoice();
+    if (mode === "voice") {
+      startVoice();
+    } else {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    }
   }
 
   async function sendAssistantMessage(seed?: string) {
@@ -516,51 +528,116 @@ export default function SamanvaiApp() {
               </div>
             </div>
 
-            <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center pb-5 pt-16 text-center">
+            <div className={`relative mx-auto flex min-h-screen max-w-6xl flex-col items-center pb-5 text-center transition-all duration-300 ${assistantOpen ? "justify-start pt-6" : "justify-center pt-16"}`}>
               <div className="pointer-events-none absolute left-1/2 top-[1%] h-[34rem] w-[min(68rem,94vw)] -translate-x-1/2 rounded-full bg-white/95 blur-3xl" />
-              <h1 className="relative mt-1 text-5xl font-black leading-none tracking-[.14em] text-[#061f55] drop-shadow-[0_14px_24px_rgba(10,42,110,.18)] sm:text-6xl lg:text-[4.8rem]">SAMANVAI</h1>
-              <div className="relative mt-5 h-1 w-40 overflow-hidden rounded-full bg-white/70 shadow-inner">
-                <div className="h-full w-full bg-[linear-gradient(90deg,#ff9933_0%,#ff9933_34%,#ffffff_34%,#ffffff_66%,#138808_66%,#138808_100%)]" />
-              </div>
-              <p className="relative mt-4 text-lg font-medium tracking-wide text-slate-800 sm:text-xl">{t.tagline}</p>
-              <p className="relative mt-6 max-w-3xl text-base font-semibold leading-7 text-slate-700 sm:text-lg">{greetingLine[selectedLanguage]}</p>
+              <h1 className={`relative font-black leading-none tracking-[.14em] text-[#061f55] drop-shadow-[0_14px_24px_rgba(10,42,110,.18)] transition-all duration-300 ${assistantOpen ? "text-3xl sm:text-4xl lg:text-4xl mt-1 mb-2" : "text-5xl sm:text-6xl lg:text-[4.8rem] mt-1"}`}>SAMANVAI</h1>
+              
+              {!assistantOpen && (
+                <>
+                  <div className="relative mt-5 h-1 w-40 overflow-hidden rounded-full bg-white/70 shadow-inner">
+                    <div className="h-full w-full bg-[linear-gradient(90deg,#ff9933_0%,#ff9933_34%,#ffffff_34%,#ffffff_66%,#138808_66%,#138808_100%)]" />
+                  </div>
+                  <p className="relative mt-4 text-lg font-medium tracking-wide text-slate-800 sm:text-xl">{t.tagline}</p>
+                  <p className="relative mt-6 max-w-3xl text-base font-semibold leading-7 text-slate-700 sm:text-lg">{greetingLine[selectedLanguage]}</p>
+                </>
+              )}
 
               {activeView === "home" ? (
                 <>
                   <div className="relative mt-7 grid w-full max-w-[34rem] grid-cols-1 gap-6 sm:grid-cols-2">
-                    <button type="button" onClick={() => openAssistant("text")} className="group relative flex aspect-square min-h-44 flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-white/95 bg-[radial-gradient(circle_at_50%_36%,rgba(255,255,255,1)_0%,rgba(255,255,255,.96)_22%,rgba(230,244,255,.62)_50%,rgba(255,255,255,.5)_100%)] p-7 text-[#061f55] shadow-[0_0_0_1px_rgba(255,255,255,.9),0_34px_84px_rgba(14,96,185,.2),0_0_130px_rgba(255,255,255,1),0_0_70px_rgba(66,153,225,.18),inset_0_1px_0_rgba(255,255,255,1),inset_0_0_72px_rgba(255,255,255,.92),inset_0_-1px_0_rgba(150,198,247,.4)] backdrop-blur-[34px] transition duration-300 hover:-translate-y-1 hover:bg-white/75">
+                    <button
+                      type="button"
+                      onClick={() => openAssistant("text")}
+                      className={`group relative flex aspect-square min-h-44 flex-col items-center justify-center overflow-hidden rounded-[2rem] border transition duration-300 hover:-translate-y-1 hover:bg-white/75 cursor-pointer ${
+                        assistantOpen && assistantMode === "text"
+                          ? "border-[#061f55]/60 bg-white shadow-[0_0_40px_rgba(6,31,85,0.25),inset_0_1px_0_rgba(255,255,255,1)] text-[#061f55]"
+                          : "border-white/95 bg-[radial-gradient(circle_at_50%_36%,rgba(255,255,255,1)_0%,rgba(255,255,255,.96)_22%,rgba(230,244,255,.62)_50%,rgba(255,255,255,.5)_100%)] text-[#061f55] shadow-[0_0_0_1px_rgba(255,255,255,.9),0_34px_84px_rgba(14,96,185,.2),0_0_130px_rgba(255,255,255,1),0_0_70px_rgba(66,153,225,.18)] backdrop-blur-[34px]"
+                      }`}
+                    >
                       <Keyboard className="relative drop-shadow-[0_0_32px_rgba(9,83,190,.34)] transition duration-300 group-hover:scale-105" size={72} strokeWidth={2.4} />
-                      <span className="sr-only">{t.typePrompt}</span>
+                      <span className="mt-4 text-base font-black tracking-wide text-slate-800 group-hover:text-[#061f55] transition duration-300">Text Assistant</span>
                     </button>
-                    <button type="button" onClick={() => openAssistant("voice")} className="group relative flex aspect-square min-h-44 flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-white/95 bg-[radial-gradient(circle_at_50%_36%,rgba(255,255,255,1)_0%,rgba(255,255,255,.96)_22%,rgba(230,244,255,.62)_50%,rgba(255,255,255,.5)_100%)] p-7 text-[#075dd6] shadow-[0_0_0_1px_rgba(255,255,255,.9),0_34px_84px_rgba(14,96,185,.2),0_0_130px_rgba(255,255,255,1),0_0_70px_rgba(66,153,225,.18),inset_0_1px_0_rgba(255,255,255,1),inset_0_0_72px_rgba(255,255,255,.92),inset_0_-1px_0_rgba(150,198,247,.4)] backdrop-blur-[34px] transition duration-300 hover:-translate-y-1 hover:bg-white/75">
+                    <button
+                      type="button"
+                      onClick={() => openAssistant("voice")}
+                      className={`group relative flex aspect-square min-h-44 flex-col items-center justify-center overflow-hidden rounded-[2rem] border transition duration-300 hover:-translate-y-1 hover:bg-white/75 cursor-pointer ${
+                        assistantOpen && assistantMode === "voice"
+                          ? "border-[#075dd6]/60 bg-white shadow-[0_0_40px_rgba(7,93,214,0.25),inset_0_1px_0_rgba(255,255,255,1)] text-[#075dd6]"
+                          : "border-white/95 bg-[radial-gradient(circle_at_50%_36%,rgba(255,255,255,1)_0%,rgba(255,255,255,.96)_22%,rgba(230,244,255,.62)_50%,rgba(255,255,255,.5)_100%)] text-[#075dd6] shadow-[0_0_0_1px_rgba(255,255,255,.9),0_34px_84px_rgba(14,96,185,.2),0_0_130px_rgba(255,255,255,1),0_0_70px_rgba(66,153,225,.18)] backdrop-blur-[34px]"
+                      }`}
+                    >
                       <Mic className="relative drop-shadow-[0_0_36px_rgba(9,83,190,.38)] transition duration-300 group-hover:scale-105" size={82} strokeWidth={2.5} />
-                      <span className="sr-only">{t.voicePrompt}</span>
+                      <span className="mt-4 text-base font-black tracking-wide text-slate-800 group-hover:text-[#075dd6] transition duration-300">Voice Assistant</span>
                     </button>
                   </div>
 
                   {assistantOpen ? (
-                    <div className="relative mt-6 grid w-full max-w-6xl gap-4 text-left lg:grid-cols-[1fr_24rem]">
-                      <div className="rounded-[1.35rem] border border-white/95 bg-white/70 p-4 shadow-[0_22px_62px_rgba(36,86,142,.12)] backdrop-blur-[32px]">
-                        <div className="max-h-72 space-y-3 overflow-auto pr-2">
-                          {conversation.map((entry, index) => (
-                            <div key={`${entry.role}-${index}`} className={`rounded-2xl px-4 py-3 text-sm leading-6 ${entry.role === "citizen" ? "ml-auto max-w-[84%] bg-[#0a2a6e] text-white" : "mr-auto max-w-[92%] bg-white text-slate-800 shadow-sm"}`}>
-                              {entry.text}
+                    <div className="relative mt-4 grid w-full max-w-6xl gap-4 text-left lg:grid-cols-[1fr_24rem] items-start w-full">
+                      <div className="rounded-[2rem] border border-white/95 bg-white/70 p-6 pb-6 shadow-[0_22px_62px_rgba(36,86,142,.12)] backdrop-blur-[32px] flex flex-col h-auto w-full">
+                        {conversation.length === 0 ? (
+                          <div className="flex flex-col items-center justify-center p-6 text-center mb-6">
+                            <div className="flex h-16 w-16 items-center justify-center rounded-[1.25rem] bg-[#0a2a6e] text-white shadow-[0_18px_40px_rgba(10,42,110,.2)] mb-5">
+                              <FileCheck2 size={28} />
                             </div>
-                          ))}
-                        </div>
+                            <h2 className="text-2.5xl font-black tracking-wide text-[#061f55]">Welcome to SAMANVAI</h2>
+                            <p className="mt-1 text-sm font-semibold tracking-wider text-slate-500 uppercase">From Need to Service</p>
+
+                            <div className="mt-8 w-full max-w-md">
+                              <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Popular Suggestions</p>
+                              <div className="flex flex-wrap justify-center gap-2">
+                                {["PM-KISAN", "Aarogyasri", "Indiramma Illu", "Telangana ePASS"].map((suggestion) => (
+                                  <button
+                                    key={suggestion}
+                                    type="button"
+                                    onClick={() => {
+                                      void sendAssistantMessage(suggestion);
+                                    }}
+                                    className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 hover:text-slate-900 cursor-pointer"
+                                  >
+                                    {suggestion}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="overflow-y-auto max-h-[60vh] pr-2 space-y-3 mb-4">
+                            {conversation.map((entry, index) => (
+                              <div key={`${entry.role}-${index}`} className={`rounded-2xl px-4 py-3 text-sm leading-6 ${entry.role === "citizen" ? "ml-auto max-w-[84%] bg-[#0a2a6e] text-white" : "mr-auto max-w-[92%] bg-white text-slate-800 shadow-sm"}`}>
+                                {entry.text}
+                              </div>
+                            ))}
+                            <div ref={chatEndRef} />
+                          </div>
+                        )}
                         <form
                           onSubmit={(event) => {
                             event.preventDefault();
                             void sendAssistantMessage();
                           }}
-                          className="mt-4 flex gap-2"
+                          className="mt-4 flex gap-3"
                         >
-                          <input value={message} onChange={(event) => setMessage(event.target.value)} placeholder={assistantMode === "voice" ? t.voicePrompt : t.typePrompt} className="h-12 min-w-0 flex-1 rounded-2xl border border-white/80 bg-white/80 px-4 text-sm font-semibold outline-none focus:border-sky-300" />
-                          <button type="submit" aria-label={t.send} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0a2a6e] text-white">
-                            <Send size={18} />
+                          <input
+                            ref={inputRef}
+                            value={message}
+                            onChange={(event) => setMessage(event.target.value)}
+                            placeholder={assistantMode === "voice" ? t.voicePrompt : t.typePrompt}
+                            className="h-13 min-w-0 flex-1 rounded-2xl border border-white/90 bg-white/90 px-5 text-sm font-semibold outline-none focus:border-sky-300 focus:bg-white shadow-[0_4px_16px_rgba(0,0,0,0.03)]"
+                          />
+                          <button
+                            type="submit"
+                            aria-label={t.send}
+                            className="flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl bg-[#0a2a6e] text-white shadow-md hover:bg-sky-950 transition duration-200 cursor-pointer"
+                          >
+                            <Send size={19} />
                           </button>
-                          <button type="button" aria-label={t.voicePrompt} onClick={startVoice} className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/80 bg-white/80 text-[#075dd6]">
-                            <Mic size={18} />
+                          <button
+                            type="button"
+                            aria-label={t.voicePrompt}
+                            onClick={startVoice}
+                            className="flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl border border-white/80 bg-white/80 text-[#075dd6] hover:bg-white hover:text-blue-700 transition duration-300 shadow-sm cursor-pointer"
+                          >
+                            <Mic size={19} />
                           </button>
                         </form>
                       </div>
@@ -623,6 +700,22 @@ function LiveApplicationForm({
   submitApplication: () => void;
   applyLabel: string;
 }) {
+  const isApplying = facts.agreed_to_apply === true || String(facts.agreed_to_apply) === "true";
+
+  if (!isApplying) {
+    return (
+      <aside className="rounded-[1.35rem] border border-white/95 bg-white/78 p-6 shadow-[0_22px_62px_rgba(36,86,142,.12)] backdrop-blur-[32px] flex flex-col items-center justify-center text-center min-h-[18rem] lg:sticky lg:top-6 lg:w-[24rem]">
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0a2a6e]/5 text-[#0a2a6e] mb-4 shadow-inner">
+          <FileCheck2 size={24} />
+        </div>
+        <h2 className="text-lg font-black text-slate-900">No Active Application</h2>
+        <p className="mt-2 text-xs font-semibold leading-5 text-slate-500 max-w-xs">
+          Your application will appear here after you choose a scheme and start applying.
+        </p>
+      </aside>
+    );
+  }
+
   const item = assistant?.item;
   const baseFields: FormQuestion[] = [
     { key: "state", question: "State", type: "text" },
@@ -636,8 +729,13 @@ function LiveApplicationForm({
   const fields = [...baseFields, ...dynamicFields].filter((field, index, all) => all.findIndex((candidate) => candidate.key === field.key) === index);
   const hasWorkflow = Boolean(item);
 
+  const allFieldsCompleted = fields.every((field) => {
+    const value = facts[field.key];
+    return value !== undefined && value !== "";
+  });
+
   return (
-    <aside className="rounded-[1.35rem] border border-white/95 bg-white/78 p-4 shadow-[0_22px_62px_rgba(36,86,142,.12)] backdrop-blur-[32px]">
+    <aside className="rounded-[1.35rem] border border-white/95 bg-white/78 p-4 shadow-[0_22px_62px_rgba(36,86,142,.12)] backdrop-blur-[32px] lg:sticky lg:top-6 lg:w-[24rem]">
       <div className="flex items-start gap-3">
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0a2a6e] text-white">
           <FileCheck2 size={19} />
@@ -677,10 +775,10 @@ function LiveApplicationForm({
       ) : null}
 
       <div className="mt-4 flex flex-col gap-2">
-        <button type="button" disabled={!assistant?.canApply} onClick={openReview} className="rounded-2xl border border-white/90 bg-white px-4 py-3 text-sm font-black text-[#08245d] disabled:cursor-not-allowed disabled:opacity-50">
+        <button type="button" disabled={!assistant?.canApply || !allFieldsCompleted} onClick={openReview} className="rounded-2xl border border-white/90 bg-white px-4 py-3 text-sm font-black text-[#08245d] disabled:cursor-not-allowed disabled:opacity-50">
           Review Application
         </button>
-        <button type="button" disabled={!hasWorkflow || !assistant?.canApply || !reviewOpen} onClick={submitApplication} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#138808] px-4 py-3 text-sm font-black uppercase tracking-wide text-white disabled:cursor-not-allowed disabled:opacity-50">
+        <button type="button" disabled={!hasWorkflow || !assistant?.canApply || !reviewOpen || !allFieldsCompleted} onClick={submitApplication} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#138808] px-4 py-3 text-sm font-black uppercase tracking-wide text-white disabled:cursor-not-allowed disabled:opacity-50">
           {applyLabel}
           <ChevronRight size={18} />
         </button>

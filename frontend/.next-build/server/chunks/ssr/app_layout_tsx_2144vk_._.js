@@ -1,3 +1,0 @@
-module.exports=[33290,a=>{"use strict";var b=a.i(7997);a.s(["default",0,function({children:a}){return(0,b.jsx)("html",{lang:"en",className:"h-full scroll-smooth",children:(0,b.jsx)("body",{className:"flex min-h-full flex-col antialiased",children:a})})},"metadata",0,{title:"National Portal of India | india.gov.in",description:"Access government services, schemes, citizen resources and public information through the National Portal of India."}])},70864,a=>{a.n(a.i(33290))}];
-
-//# sourceMappingURL=app_layout_tsx_2144vk_._.js.map
