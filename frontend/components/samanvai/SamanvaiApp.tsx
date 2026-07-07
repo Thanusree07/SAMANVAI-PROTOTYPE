@@ -31,9 +31,9 @@ type FlowStep = "login" | "pin" | "profile" | "language" | "dashboard";
 type ProfileId = "lakshmi" | "suresh" | "ramana" | "live";
 
 const profileOptions: Array<{ id: ProfileId; name: string; role: string; description: string; scripted: boolean }> = [
-  { id: "lakshmi", name: "Lakshmi", role: "Homemaker (Widow) — Guided Demo", description: "Pre-scripted journey for welfare & pension schemes.", scripted: true },
-  { id: "suresh", name: "Suresh", role: "Farmer — Guided Demo", description: "Pre-scripted journey for PM-KISAN and farm schemes.", scripted: true },
-  { id: "ramana", name: "Ramana", role: "CSC Operator — Guided Demo", description: "Pre-scripted journey demonstrating a CSC operator flow.", scripted: true },
+  { id: "lakshmi", name: "Lakshmi", role: "Homemaker (Widow)", description: "Journey covering welfare, pension, ration and family services.", scripted: true },
+  { id: "suresh", name: "Suresh", role: "Farmer", description: "Journey covering PM-KISAN, crop insurance and agriculture support.", scripted: true },
+  { id: "ramana", name: "Ramana", role: "CSC Operator", description: "Facilitator flow — help citizens complete Government services.", scripted: true },
   { id: "live", name: "Live Citizen", role: "Natural Conversation", description: "Talk freely — limited to 20 supported schemes.", scripted: false },
 ];
 type ViewKey = "home" | "history" | "applications" | "documents" | "notifications" | "support" | "settings" | "profile";
@@ -677,7 +677,7 @@ export default function SamanvaiApp() {
               </div>
               <p className="mt-6 text-xs font-bold uppercase tracking-[.28em] text-sky-700">{portalCopy.secureAccess}</p>
               <h1 className="mt-3 text-3xl font-black tracking-normal text-slate-950">Choose a Profile</h1>
-              <p className="mt-3 text-sm leading-6 text-slate-600">Pick a persona to demonstrate SAMANVAI, or continue as a Live Citizen for natural conversation.</p>
+              <p className="mt-3 text-sm leading-6 text-slate-600">Choose who you are — the workflow is the same for everyone.</p>
             </div>
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               {profileOptions.map((profile) => (
@@ -693,9 +693,6 @@ export default function SamanvaiApp() {
                       <span className="block text-xl font-black text-slate-950">{profile.name}</span>
                       <span className="mt-1 block text-xs font-black uppercase tracking-wide text-sky-700">{profile.role}</span>
                     </div>
-                    <span className={`inline-flex shrink-0 items-center rounded-full border px-2.5 py-1 text-[10px] font-black uppercase tracking-wide ${profile.scripted ? "border-sky-200 bg-sky-50 text-sky-700" : "border-emerald-200 bg-emerald-50 text-emerald-700"}`}>
-                      {profile.scripted ? "Scripted" : "Live"}
-                    </span>
                   </div>
                   <p className="mt-3 text-sm font-semibold leading-6 text-slate-600">{profile.description}</p>
                   <span className="mt-5 inline-flex items-center gap-2 text-sm font-black text-sky-700">

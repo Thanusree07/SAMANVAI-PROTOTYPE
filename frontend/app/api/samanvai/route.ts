@@ -204,7 +204,17 @@ function processPhase1(message: string, currentFacts: any): {
       "Jagananna Vidya Deevena": "vidya-deevena",
       "National Scholarship Schemes": "post-matric-scholarship",
       "YSR Cheyutha": "ysr-cheyutha",
-      "PM Mudra Yojana": "pmegp"
+      "PM Mudra Yojana": "pmegp",
+      "Amma Vodi": "amma-vodi",
+      "Telangana ePASS": "telangana-epass",
+      "Kalyana Lakshmi": "kalyana-lakshmi",
+      "EBC Nestham": "ebc-nestham",
+      "Sukanya Samriddhi Yojana": "sukanya",
+      "Aasara Disability Pension": "aasara-disability",
+      "Ration Card": "ration-card",
+      "Income Certificate": "income-certificate",
+      "Caste Certificate": "caste-certificate",
+      "PM Ujjwala Yojana": "ujjwala",
     };
 
     // Check if they want to restart / search for a new scheme (from restart rule)
@@ -235,18 +245,11 @@ function processPhase1(message: string, currentFacts: any): {
     
     if (isYes) {
       const schemeId = schemeToIdMap[currentFacts.selectedScheme] || "pmkisan";
-      const updatedFacts = {
-        ...currentFacts,
-        checking_eligibility: true,
-        active_scheme_id: schemeId
-      };
-      
-      return {
-        response: `Understood. Let's verify your eligibility for ${currentFacts.selectedScheme}.\n\nState`,
-        suggestions: ["Telangana", "Andhra Pradesh", "Karnataka"],
-        facts: updatedFacts,
-        intent: "start_eligibility"
-      };
+      // Mutate currentFacts so the engine (running after processPhase1 returns null)
+      // picks up the checking_eligibility flag and evaluates with all persona seeds.
+      currentFacts.checking_eligibility = true;
+      currentFacts.active_scheme_id = schemeId;
+      return null;
     } else if (isNo) {
       return {
         response: `Understood. We will continue exploring this scheme. What else would you like to know?`,
@@ -568,16 +571,42 @@ function processPhase1(message: string, currentFacts: any): {
   // 3. Fallback matching for partial strings with emoji/text (like suggestion chip selections)
   const cleanSchemes = [
     { text: "pm-kisan", scheme: "PM-KISAN", situation: "Farmer / Agriculture" },
+    { text: "pm kisan", scheme: "PM-KISAN", situation: "Farmer / Agriculture" },
+    { text: "pmkisan", scheme: "PM-KISAN", situation: "Farmer / Agriculture" },
     { text: "rythu bharosa", scheme: "Rythu Bharosa", situation: "Farmer / Agriculture" },
     { text: "pm fasal bima yojana", scheme: "PM Fasal Bima Yojana", situation: "Farmer / Agriculture" },
+    { text: "pmfby", scheme: "PM Fasal Bima Yojana", situation: "Farmer / Agriculture" },
+    { text: "fasal bima", scheme: "PM Fasal Bima Yojana", situation: "Farmer / Agriculture" },
     { text: "indiramma illu", scheme: "Indiramma Illu", situation: "Housing" },
     { text: "pmay", scheme: "PMAY", situation: "Housing" },
+    { text: "pradhan mantri awas", scheme: "PMAY", situation: "Housing" },
     { text: "aarogyasri", scheme: "Aarogyasri", situation: "Healthcare" },
+    { text: "arogyasri", scheme: "Aarogyasri", situation: "Healthcare" },
     { text: "ayushman bharat", scheme: "Ayushman Bharat", situation: "Healthcare" },
+    { text: "ayushman", scheme: "Ayushman Bharat", situation: "Healthcare" },
     { text: "jagananna vidya deevena", scheme: "Jagananna Vidya Deevena", situation: "Education" },
-    { text: "national scholarship schemes", scheme: "National Scholarship Schemes", situation: "Education" },
+    { text: "vidya deevena", scheme: "Jagananna Vidya Deevena", situation: "Education" },
+    { text: "national scholarship", scheme: "National Scholarship Schemes", situation: "Education" },
+    { text: "post-matric scholarship", scheme: "National Scholarship Schemes", situation: "Education" },
+    { text: "post matric scholarship", scheme: "National Scholarship Schemes", situation: "Education" },
+    { text: "amma vodi", scheme: "Amma Vodi", situation: "Education" },
+    { text: "telangana epass", scheme: "Telangana ePASS", situation: "Education" },
+    { text: "epass", scheme: "Telangana ePASS", situation: "Education" },
+    { text: "kalyana lakshmi", scheme: "Kalyana Lakshmi", situation: "Women / Self Employment" },
     { text: "ysr cheyutha", scheme: "YSR Cheyutha", situation: "Women / Self Employment" },
-    { text: "pm mudra yojana", scheme: "PM Mudra Yojana", situation: "Women / Self Employment" }
+    { text: "cheyutha", scheme: "YSR Cheyutha", situation: "Women / Self Employment" },
+    { text: "pm mudra yojana", scheme: "PM Mudra Yojana", situation: "Women / Self Employment" },
+    { text: "mudra", scheme: "PM Mudra Yojana", situation: "Women / Self Employment" },
+    { text: "pmegp", scheme: "PM Mudra Yojana", situation: "Women / Self Employment" },
+    { text: "ebc nestham", scheme: "EBC Nestham", situation: "Women / Self Employment" },
+    { text: "sukanya", scheme: "Sukanya Samriddhi Yojana", situation: "Women / Self Employment" },
+    { text: "aasara", scheme: "Aasara Disability Pension", situation: "Women / Self Employment" },
+    { text: "disability pension", scheme: "Aasara Disability Pension", situation: "Women / Self Employment" },
+    { text: "ration card", scheme: "Ration Card", situation: "Certificates" },
+    { text: "income certificate", scheme: "Income Certificate", situation: "Certificates" },
+    { text: "caste certificate", scheme: "Caste Certificate", situation: "Certificates" },
+    { text: "ujjwala", scheme: "PM Ujjwala Yojana", situation: "Women / Self Employment" },
+    { text: "pmuy", scheme: "PM Ujjwala Yojana", situation: "Women / Self Employment" },
   ];
 
   for (const cs of cleanSchemes) {
@@ -772,7 +801,7 @@ export async function POST(request: NextRequest) {
     // fall through to standard engine flow — it will pick up next unanswered applicationQuestion
   }
 
-  // Phase 6 — "Confirm & Submit" click → trigger apply
+  // Phase 6 — "Confirm & Submit" click → trigger apply + Need→Service recommendations
   if (userMsg === "confirm & submit" || userMsg === "confirm and submit" || userMsg === "confirm submit") {
     const activeItemId = String(db.profileFacts.active_scheme_id || "");
     const item = activeItemId ? getKnowledgeItem(activeItemId) : undefined;
@@ -797,7 +826,51 @@ export async function POST(request: NextRequest) {
       db.profileFacts.active_scheme_id = "";
       db.profileFacts.selectedScheme = "";
       db.profileFacts.phase1_completed = false;
-      const responseText = `✔ Application submitted successfully.\n\nSAMANVAI Reference ID: ${app.referenceId}\n\nStatus: ${app.status}\n\nYou can track this application anytime by asking "Track my application" or entering the Reference ID.`;
+
+      // Need → Service — recommend related supported schemes from the same category
+      const relatedMap: Record<string, string[]> = {
+        // Farmer
+        pmkisan: ["Rythu Bharosa", "PM Fasal Bima Yojana"],
+        "rythu-bharosa": ["PM-KISAN", "PM Fasal Bima Yojana"],
+        pmfby: ["PM-KISAN", "Rythu Bharosa"],
+        // Housing
+        "indiramma-illu": ["PMAY", "Ration Card"],
+        "pmay-u-2": ["Indiramma Illu", "Ration Card"],
+        // Healthcare
+        aarogyasri: ["Ayushman Bharat", "YSR Cheyutha"],
+        "ayushman-bharat": ["Aarogyasri", "Aasara Disability Pension"],
+        // Education
+        "post-matric-scholarship": ["Vidya Deevena", "Amma Vodi", "Telangana ePASS"],
+        "vidya-deevena": ["Post-Matric Scholarship", "Amma Vodi"],
+        "amma-vodi": ["Vidya Deevena", "Post-Matric Scholarship"],
+        "telangana-epass": ["Post-Matric Scholarship", "Vidya Deevena"],
+        "kalyana-lakshmi": ["EBC Nestham", "YSR Cheyutha"],
+        // Certificates
+        "income-certificate": ["Caste Certificate", "Ration Card"],
+        "caste-certificate": ["Income Certificate", "Ration Card"],
+        "ration-card": ["Income Certificate", "PM Ujjwala Yojana"],
+        // Business / self-employment
+        pmegp: ["EBC Nestham", "YSR Cheyutha"],
+        "ebc-nestham": ["PMEGP", "Kalyana Lakshmi"],
+        "ysr-cheyutha": ["EBC Nestham", "PMEGP", "Aasara Disability Pension"],
+        // Girl child / women
+        sukanya: ["Kalyana Lakshmi", "Amma Vodi"],
+        "aasara-disability": ["Ayushman Bharat", "YSR Cheyutha"],
+        // Gas
+        ujjwala: ["Ration Card", "YSR Cheyutha"],
+      };
+      const recoNames = relatedMap[item.id] || [];
+      let recoLine = "";
+      const recoSuggestions: string[] = [];
+      if (recoNames.length > 0) {
+        recoLine = "\n\nYou may also benefit from these related Government services:";
+        for (const name of recoNames) {
+          recoLine += `\n• ${name}`;
+          recoSuggestions.push(name);
+        }
+      }
+
+      const responseText = `✔ Application submitted successfully.\n\nSAMANVAI Reference ID: ${app.referenceId}\n\nStatus: ${app.status}${recoLine}\n\nYou can track this application anytime by asking "Track my application" or entering the Reference ID.`;
       db.history.unshift({ id: crypto.randomUUID(), input: "Confirm & Submit", response: responseText, at: new Date().toISOString() });
       await writeDb(db);
       return NextResponse.json({
@@ -807,7 +880,7 @@ export async function POST(request: NextRequest) {
         facts: db.profileFacts,
         application: app,
         response: responseText,
-        suggestions: ["Track Application", "Search Another Scheme"],
+        suggestions: ["Track Application", ...recoSuggestions, "Search Another Scheme"],
         canApply: false,
       });
     }
@@ -870,11 +943,13 @@ export async function POST(request: NextRequest) {
     const personaSeeds: Record<string, ProfileFacts> = {
       lakshmi: {
         __persona: "Lakshmi",
-        __persona_role: "Homemaker (Widow) — Guided Demo",
+        __persona_role: "Homemaker (Widow)",
         __persona_scripted: true,
         name: "Lakshmi Devi",
         gender: "Female",
         date_of_birth: "1968-06-12",
+        age: 57,
+        age_group: "55+",
         state: "Telangana",
         district: "Hyderabad",
         address: "H.No. 12-4-32, Malakpet, Hyderabad",
@@ -883,23 +958,59 @@ export async function POST(request: NextRequest) {
         has_white_ration_card: true,
         has_white_card: true,
         has_bpl_card: true,
+        has_ration_card: true,
+        ration_card_number: "TSHYD-2019-004521",
         is_female: true,
         social_category: "BC",
+        category: "BC",
         family_income: 90000,
+        family_annual_income: 90000,
+        parents_income: 90000,
+        income_category: "Below ₹5 Lakhs",
+        primary_income_source: "Household",
         aadhaar_number: "999912345678",
         mobile_number: "9876500011",
         bank_account_number: "SBIN0001234567",
         ifsc_code: "SBIN0002345",
         has_sadarem_cert: true,
+        has_income_proof: true,
+        has_family_caste_cert: true,
+        has_required_id: true,
+        has_lpg_connection: false,
         disability_percentage: 45,
+        covered_other_health: false,
+        covered_other_applicable: false,
+        is_ap_resident: false,
+        is_farmer: false,
+        is_student: false,
+        is_govt_employee: false,
+        has_govt_employee: false,
+        paid_income_tax: false,
+        owns_cultivable_land: false,
+        owns_or_cultivates_land: false,
+        owns_pucca_house: false,
+        owns_permanent_house: false,
+        owns_plot: false,
+        received_prior_housing: false,
+        owns_car_or_taxpayer: false,
+        has_credit_default: false,
+        ekyc: true,
+        is_ts_resident: true,
+        is_covered_procedure: true,
+        wet_land_acres: 0,
+        dry_land_acres: 0,
+        girl_child_age: 22,
+        existing_ssy_accounts: 0,
+        previous_marks_percentage: 78,
       },
       suresh: {
         __persona: "Suresh",
-        __persona_role: "Farmer — Guided Demo",
+        __persona_role: "Farmer",
         __persona_scripted: true,
         name: "Suresh Reddy",
         gender: "Male",
         date_of_birth: "1978-03-22",
+        age: 47,
         state: "Andhra Pradesh",
         district: "Guntur",
         address: "D.No. 3-45, Chebrolu Village, Guntur",
@@ -913,25 +1024,55 @@ export async function POST(request: NextRequest) {
         is_notified_crop: true,
         primary_income_source: "Agriculture",
         social_category: "BC",
+        category: "BC",
         family_income: 120000,
+        family_annual_income: 120000,
+        parents_income: 120000,
+        income_category: "Below ₹5 Lakhs",
         aadhaar_number: "999987654321",
         mobile_number: "9988776655",
         bank_account_number: "APGB0000123456",
         ifsc_code: "APGB0004567",
         land_ownership_details: "Own — Pattadar Passbook No. GNT-2018-4521",
         land_survey_number: "SY 214/2A",
+        dry_land_acres: 1.2,
+        wet_land_acres: 0.8,
         paid_income_tax: false,
         is_govt_employee: false,
+        has_govt_employee: false,
         is_institutional_land: false,
+        is_ap_resident: true,
+        is_female: false,
+        is_student: false,
+        has_ration_card: true,
+        ration_card_number: "APGNT-2016-009876",
+        has_white_ration_card: true,
+        has_white_card: true,
+        has_bpl_card: true,
+        has_income_proof: true,
+        has_family_caste_cert: true,
+        has_required_id: true,
+        has_lpg_connection: true,
+        covered_other_health: false,
+        covered_other_applicable: false,
+        owns_pucca_house: false,
+        owns_permanent_house: false,
+        received_prior_housing: false,
+        owns_car_or_taxpayer: false,
+        has_credit_default: false,
         ekyc: true,
+        farmer_id: "AP-KRISHI-2018-4521",
+        crop_details: "Paddy — Kharif season",
+        crop_season: "Kharif",
       },
       ramana: {
         __persona: "Ramana",
-        __persona_role: "CSC Operator — Guided Demo",
+        __persona_role: "CSC Operator",
         __persona_scripted: true,
         name: "Ramana Kumar",
         gender: "Male",
         date_of_birth: "1990-11-05",
+        age: 35,
         state: "Andhra Pradesh",
         district: "Krishna",
         address: "CSC Centre, Main Road, Vijayawada",
@@ -939,11 +1080,39 @@ export async function POST(request: NextRequest) {
         mandal: "Vijayawada Urban",
         __role: "csc_operator",
         social_category: "OC",
+        category: "OC",
         aadhaar_number: "999955443322",
         mobile_number: "9000012345",
         bank_account_number: "HDFC0006789012",
         ifsc_code: "HDFC0001122",
         family_income: 180000,
+        family_annual_income: 180000,
+        income_category: "Below ₹5 Lakhs",
+        is_ap_resident: true,
+        is_female: false,
+        is_farmer: false,
+        is_student: false,
+        is_govt_employee: false,
+        paid_income_tax: false,
+        owns_cultivable_land: false,
+        owns_pucca_house: true,
+        has_ration_card: true,
+        ration_card_number: "APKRI-2020-001122",
+        has_white_ration_card: false,
+        has_white_card: false,
+        has_bpl_card: false,
+        has_income_proof: true,
+        has_family_caste_cert: true,
+        has_required_id: true,
+        covered_other_health: false,
+        covered_other_applicable: false,
+        received_prior_housing: false,
+        owns_car_or_taxpayer: false,
+        has_credit_default: false,
+        ekyc: true,
+        primary_income_source: "Salary",
+        owns_or_starts_business: true,
+        is_ts_resident: false,
       },
       live: {
         __persona: "Live Citizen",
@@ -1090,17 +1259,21 @@ export async function POST(request: NextRequest) {
   // 2. Workflow selection & Form Mapping (ONLY for application_workflow)
   const explicitItem = findKnowledgeItem(String(body.message || ""));
   const isNewWorkflowStart = explicitItem && (!activeItemId || explicitItem.id !== activeItemId);
-  
+
+  // Workflow-transient keys — clear these when switching schemes or starting eligibility,
+  // but PRESERVE all persona identity + eligibility seed facts.
+  const workflowTransientKeys = [
+    "checking_eligibility", "agreed_to_apply", "eligibility_confirmed",
+    "application_mode", "application_mode_prompted", "application_ready",
+    "active_scheme_id", "selectedScheme", "selectedSituation",
+    "phase1_completed", "attempted_eligibility",
+  ];
+
   if (isNewWorkflowStart) {
     activeItemId = explicitItem.id;
-    // Topic changed! Reset context but keep base keys:
-    const baseKeys = ["state", "district", "name", "date_of_birth", "gender", "address"];
-    const cleanFacts: ProfileFacts = {};
-    for (const key of baseKeys) {
-      if (activeFacts[key] !== undefined) {
-        cleanFacts[key] = activeFacts[key];
-      }
-    }
+    // Topic changed → clear only workflow-transient keys; preserve persona seeds.
+    const cleanFacts: ProfileFacts = { ...activeFacts };
+    for (const k of workflowTransientKeys) delete cleanFacts[k];
     cleanFacts.active_scheme_id = activeItemId;
     activeFacts = cleanFacts;
     db.profileFacts = cleanFacts;
@@ -1112,13 +1285,9 @@ export async function POST(request: NextRequest) {
   const matchedScheme = matchedId ? getKnowledgeItem(matchedId) : undefined;
 
   if (isCheckingStart && matchedScheme) {
-    const baseKeys = ["state", "district", "name", "date_of_birth", "gender", "address"];
-    const cleanFacts: ProfileFacts = {};
-    for (const key of baseKeys) {
-      if (activeFacts[key] !== undefined) {
-        cleanFacts[key] = activeFacts[key];
-      }
-    }
+    // Start Check Eligibility → clear ONLY workflow-transient keys; preserve persona seeds.
+    const cleanFacts: ProfileFacts = { ...activeFacts };
+    for (const k of workflowTransientKeys) delete cleanFacts[k];
     cleanFacts.active_scheme_id = matchedId;
     cleanFacts.checking_eligibility = true;
     activeFacts = cleanFacts;

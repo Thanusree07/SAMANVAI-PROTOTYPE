@@ -489,7 +489,8 @@ export function evaluateEligibility(item: KnowledgeItem, facts: ProfileFacts) {
     }
     if (item.id === "aarogyasri") {
       console.log("evaluationSteps:\n- Checking Aarogyasri rules");
-      if (cleanString(facts.state) !== "andhra pradesh") {
+      const st = cleanString(facts.state);
+      if (st !== "andhra pradesh" && st !== "telangana") {
         console.log("State Check = FAIL");
         return false;
       }

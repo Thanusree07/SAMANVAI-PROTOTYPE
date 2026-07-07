@@ -1,0 +1,283 @@
+{
+  "users": [
+    {
+      "id": "citizen-001",
+      "name": "Verified Citizen",
+      "authenticated": true,
+      "portalLanguage": "en"
+    }
+  ],
+  "preferences": {
+    "citizen-001": {
+      "samanvaiLanguage": "en",
+      "consent": true
+    }
+  },
+  "applications": [
+    {
+      "referenceId": "SMV-AAROGYAS-20260707-Q16OO2",
+      "itemId": "aarogyasri",
+      "itemName": "Aarogyasri",
+      "status": "Eligibility Verified",
+      "internalStatus": "Submitted",
+      "governmentSyncedStatus": "Eligibility Verified",
+      "createdAt": "2026-07-07T19:01:11.512Z",
+      "updatedAt": "2026-07-07T19:01:11.512Z",
+      "facts": {
+        "__persona": "Lakshmi",
+        "__persona_role": "Homemaker (Widow)",
+        "__persona_scripted": true,
+        "name": "Lakshmi Devi",
+        "gender": "Female",
+        "date_of_birth": "1968-06-12",
+        "age": 57,
+        "age_group": "55+",
+        "state": "Telangana",
+        "district": "Hyderabad",
+        "address": "H.No. 12-4-32, Malakpet, Hyderabad",
+        "village": "Malakpet",
+        "mandal": "Amberpet",
+        "has_white_ration_card": true,
+        "has_white_card": true,
+        "has_bpl_card": true,
+        "has_ration_card": true,
+        "ration_card_number": "TSHYD-2019-004521",
+        "is_female": true,
+        "social_category": "BC",
+        "category": "BC",
+        "family_income": 90000,
+        "family_annual_income": 90000,
+        "parents_income": 90000,
+        "income_category": "Below ₹5 Lakhs",
+        "primary_income_source": "Household",
+        "aadhaar_number": "masked",
+        "mobile_number": "9876500011",
+        "bank_account_number": "masked",
+        "ifsc_code": "SBIN0002345",
+        "has_sadarem_cert": true,
+        "has_income_proof": true,
+        "has_family_caste_cert": true,
+        "has_required_id": true,
+        "has_lpg_connection": false,
+        "disability_percentage": 45,
+        "covered_other_health": false,
+        "covered_other_applicable": false,
+        "is_ap_resident": false,
+        "is_farmer": false,
+        "is_student": false,
+        "is_govt_employee": false,
+        "has_govt_employee": false,
+        "paid_income_tax": false,
+        "owns_cultivable_land": false,
+        "owns_or_cultivates_land": false,
+        "owns_pucca_house": false,
+        "owns_permanent_house": false,
+        "owns_plot": false,
+        "received_prior_housing": false,
+        "owns_car_or_taxpayer": false,
+        "has_credit_default": false,
+        "ekyc": true,
+        "is_ts_resident": true,
+        "is_covered_procedure": true,
+        "wet_land_acres": 0,
+        "dry_land_acres": 0,
+        "girl_child_age": 22,
+        "existing_ssy_accounts": 0,
+        "previous_marks_percentage": 78,
+        "active_scheme_id": "aarogyasri",
+        "checking_eligibility": true,
+        "active_conv_lang": "en",
+        "eligibility_confirmed": true,
+        "application_mode_prompted": true,
+        "agreed_to_apply": true,
+        "application_mode": "fetch",
+        "application_ready": true
+      },
+      "statusHistory": [
+        {
+          "status": "Draft",
+          "at": "2026-07-07T19:01:11.512Z",
+          "note": "SAMANVAI draft created after citizen confirmation."
+        },
+        {
+          "status": "Eligibility Verified",
+          "at": "2026-07-07T19:01:11.512Z",
+          "note": "Submitted through SAMANVAI after citizen review."
+        }
+      ],
+      "documents": [
+        {
+          "name": "White Ration Card",
+          "status": "API verification ready",
+          "source": "State Civil Supplies API",
+          "manualUpload": "No"
+        },
+        {
+          "name": "Aadhaar Card",
+          "status": "API verification ready",
+          "source": "eKYC / UIDAI",
+          "manualUpload": "No"
+        },
+        {
+          "name": "Aarogyasri Card",
+          "status": "Manual upload fallback ready",
+          "source": "Aarogyasri Trust",
+          "manualUpload": "N/A"
+        }
+      ]
+    }
+  ],
+  "notifications": [
+    {
+      "id": "8c9ad13b-4f54-4324-95d4-9b6b32ad23d9",
+      "title": "Reference ID generated",
+      "body": "SMV-AAROGYAS-20260707-Q16OO2 created for Aarogyasri.",
+      "at": "2026-07-07T19:01:11.513Z",
+      "read": false
+    },
+    {
+      "id": "notice-001",
+      "title": "Government Portal session verified",
+      "body": "PIN verification completed. SAMANVAI can now assist within this authenticated session.",
+      "at": "2026-07-07T19:00:28.844Z",
+      "read": false
+    }
+  ],
+  "history": [
+    {
+      "id": "4e32ba1b-4636-4442-a4be-1850bfb08005",
+      "input": "Track Application",
+      "response": "📄 Latest Application\n\nReference ID: SMV-AAROGYAS-20260707-Q16OO2\nService: Aarogyasri\nSAMANVAI Internal Status: Submitted\nGovernment Synced Status: Eligibility Verified\nLatest update: Submitted through SAMANVAI after citizen review.\n\nProgress:\n\n• Draft — 2026-07-07 7:01:11 PM\n  SAMANVAI draft created after citizen confirmation.\n• Eligibility Verified — 2026-07-07 7:01:11 PM\n  Submitted through SAMANVAI after citizen review.",
+      "at": "2026-07-07T19:01:14.039Z"
+    },
+    {
+      "id": "f63e6b18-7154-4211-a056-dd64769bf749",
+      "input": "Confirm & Submit",
+      "response": "✔ Application submitted successfully.\n\nSAMANVAI Reference ID: SMV-AAROGYAS-20260707-Q16OO2\n\nStatus: Eligibility Verified\n\nYou may also benefit from these related Government services:\n• Ayushman Bharat\n• YSR Cheyutha\n\nYou can track this application anytime by asking \"Track my application\" or entering the Reference ID.",
+      "at": "2026-07-07T19:01:11.513Z"
+    },
+    {
+      "id": "6e8d9e6e-ba37-4c3d-bd99-1b757b5696d2",
+      "input": "Fetch Automatically",
+      "response": "Documents auto-fetched from linked Government systems (Aadhaar, Bank NPCI, Land Records, etc.).\n\nFetched:\n✔ Aadhaar Number.\n✔ Mobile Number.\n✔ Ration Card Number.\n✔ What is your annual household income\n✔ Address.\n✔ District.\n✔ Would you like to complete e-KYC\n\nPending (please review):\n☐ Hospital Preference (optional).\n\nPlease review the details and confirm to submit.",
+      "at": "2026-07-07T19:01:08.964Z"
+    },
+    {
+      "id": "e2173d6d-35ed-4775-bcdc-f5c3c2e83f30",
+      "input": "Apply Now",
+      "response": "Would you like to fetch documents from linked Government systems?",
+      "at": "2026-07-07T19:01:06.442Z"
+    },
+    {
+      "id": "a7b48a71-6457-44c4-abf3-25dd2cfc7c91",
+      "input": "Check Eligibility",
+      "response": "✅ Eligible\n\nCongratulations! You are eligible for Aarogyasri.\n\nPrerequisites Checklist:\n☐ White Ration Card\n☐ Aadhaar Card\n☐ Aarogyasri Card\n\nClick Apply Now to begin the application.",
+      "at": "2026-07-07T19:01:03.930Z"
+    },
+    {
+      "id": "5bebc6c6-b607-4d3d-8300-5e4875752cd1",
+      "input": "Aarogyasri",
+      "response": "Aarogyasri\n\nAarogyasri provides comprehensive health insurance and medical coverage for tertiary care treatments to low-income families.\n\nWhat would you like to know about this scheme?",
+      "at": "2026-07-07T19:01:01.407Z"
+    }
+  ],
+  "profileFacts": {
+    "__persona": "Lakshmi",
+    "__persona_role": "Homemaker (Widow)",
+    "__persona_scripted": true,
+    "name": "Lakshmi Devi",
+    "gender": "Female",
+    "date_of_birth": "1968-06-12",
+    "age": 57,
+    "age_group": "55+",
+    "state": "Telangana",
+    "district": "Hyderabad",
+    "address": "H.No. 12-4-32, Malakpet, Hyderabad",
+    "village": "Malakpet",
+    "mandal": "Amberpet",
+    "has_white_ration_card": true,
+    "has_white_card": true,
+    "has_bpl_card": true,
+    "has_ration_card": true,
+    "ration_card_number": "TSHYD-2019-004521",
+    "is_female": true,
+    "social_category": "BC",
+    "category": "BC",
+    "family_income": 90000,
+    "family_annual_income": 90000,
+    "parents_income": 90000,
+    "income_category": "Below ₹5 Lakhs",
+    "primary_income_source": "Household",
+    "aadhaar_number": "999912345678",
+    "mobile_number": "9876500011",
+    "bank_account_number": "SBIN0001234567",
+    "ifsc_code": "SBIN0002345",
+    "has_sadarem_cert": true,
+    "has_income_proof": true,
+    "has_family_caste_cert": true,
+    "has_required_id": true,
+    "has_lpg_connection": false,
+    "disability_percentage": 45,
+    "covered_other_health": false,
+    "covered_other_applicable": false,
+    "is_ap_resident": false,
+    "is_farmer": false,
+    "is_student": false,
+    "is_govt_employee": false,
+    "has_govt_employee": false,
+    "paid_income_tax": false,
+    "owns_cultivable_land": false,
+    "owns_or_cultivates_land": false,
+    "owns_pucca_house": false,
+    "owns_permanent_house": false,
+    "owns_plot": false,
+    "received_prior_housing": false,
+    "owns_car_or_taxpayer": false,
+    "has_credit_default": false,
+    "ekyc": true,
+    "is_ts_resident": true,
+    "is_covered_procedure": true,
+    "wet_land_acres": 0,
+    "dry_land_acres": 0,
+    "girl_child_age": 22,
+    "existing_ssy_accounts": 0,
+    "previous_marks_percentage": 78,
+    "active_scheme_id": "",
+    "checking_eligibility": false,
+    "active_conv_lang": "en",
+    "eligibility_confirmed": false,
+    "application_mode_prompted": false,
+    "agreed_to_apply": false,
+    "application_mode": "",
+    "application_ready": false,
+    "selectedScheme": "",
+    "phase1_completed": false
+  },
+  "auditLogs": [
+    {
+      "id": "342d46f2-33ed-4fff-b58c-2beb2b854f9f",
+      "action": "application_submitted",
+      "at": "2026-07-07T19:01:11.513Z",
+      "metadata": {
+        "referenceId": "SMV-AAROGYAS-20260707-Q16OO2"
+      }
+    },
+    {
+      "id": "ed1fd913-5835-4add-b1b9-cb941e214f62",
+      "action": "assistant_message",
+      "at": "2026-07-07T19:01:03.930Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    }
+  ],
+  "currentProfile": "lakshmi",
+  "profilesData": {
+    "live": {
+      "facts": {},
+      "applications": [],
+      "history": []
+    }
+  }
+}

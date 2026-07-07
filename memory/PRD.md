@@ -2,75 +2,63 @@
 
 ## Original problem statement (condensed)
 SAMANVAI is an AI Integration Layer inside an EXISTING Next.js Government Portal.
-Vision "From Need to Service". Preserve UI, routing, layout, colours, typography.
+Vision: "From Need to Service". Preserve UI, routing, layout, colours, typography.
 Only ONE new screen allowed: Profile Selection. Support ONLY 20 pre-defined schemes.
 Four profiles (Lakshmi/Suresh/Ramana/Live Citizen) use ONE common engine —
-only starting persona seed differs.
+only starting persona seed differs. Persona seeds must reduce (not prevent) natural
+conversation. All profiles must complete the full end-to-end workflow.
 
-## Architecture
-- Next.js 16 App Router at `/app/frontend`.
-- Portal home: `app/page.tsx`.
-- SAMANVAI: `app/dashboard/page.tsx` → `components/samanvai/SamanvaiApp.tsx`.
-- Engine: `lib/samanvai/{engine,knowledge,llm,store}.ts`.
-- Backend: `app/api/samanvai/route.ts`.
-- Store: JSON DB `frontend/data/samanvai-db.json` — per-profile buckets in `profilesData`.
+## Seven-phase workflow (verified end-to-end)
+1. Intent Detection (scheme name / life situation / natural request)
+2. Scheme Recommendation → Scheme Brief + FAQ chips
+3. Eligibility — one question at a time, uses persona seeds to skip pre-answered questions
+4. Prerequisites Checklist + `Apply Now` / `Cancel`
+5. Fetch Automatically vs Manual Entry (auto-fills from persona seeds)
+6. Review + `Confirm & Submit` → generates `SMV-{SCHEME}-YYYYMMDD-XXXXXX`
+7. Tracking + **Need → Service recommendations** (proactively suggest related schemes)
 
-## Flow
-Portal → SAMANVAI → Login → PIN (2026) → **Profile Selection** → Language → Dashboard.
+## Critical bug fixes this session
+1. **Persona seed wipe on eligibility start** — route.ts had two blocks that
+   whitelisted only 6 keys (state, district, name, date_of_birth, gender, address)
+   and wiped everything else on scheme change / Check Eligibility. This threw
+   away Lakshmi's `family_income`, `has_ration_card`, `covered_other_health`,
+   `is_ts_resident`, etc. **Fixed** — replaced with a blacklist of 11 workflow-
+   transient keys (checking_eligibility, agreed_to_apply, application_mode, etc.).
+2. **Phase 1 hardcoded eligibility response** — clicking "Check Eligibility"
+   returned a hardcoded "State" question, bypassing the engine and losing all
+   persona-seeded facts. **Fixed** — now mutates `currentFacts.checking_eligibility = true`
+   and returns null so the engine runs with the full fact set.
+3. **Aarogyasri state rule** — hardcoded to reject Telangana even though Aarogyasri
+   is a Telangana Health Department scheme. **Fixed** — now accepts both AP and TS.
+4. **Incomplete cleanSchemes list** — only 11 of 20 schemes recognized. **Fixed** —
+   all 20 schemes + common aliases now listed.
+5. **schemeToIdMap incomplete** — same issue. **Fixed** — all 20 schemes mapped.
+6. **Persona seeds too shallow** — Lakshmi/Suresh/Ramana had 10-15 facts each,
+   missing dozens of eligibility keys. **Fixed** — expanded each persona to 40-50
+   facts covering identity, eligibility, and application-question keys.
+7. **Need → Service recommendations** — after submission, response now includes
+   related supported schemes based on the current scheme's category, both in
+   text and as suggestion chips.
+8. **Profile screen labels** — removed "Guided Demo", "Scripted"/"Live" badges,
+   and "Pick a persona to demonstrate..." helper copy per user request.
 
-## Seven-phase workflow (all implemented & verified)
-1. Situation Detection / Direct Search — natural language → up to 3 supported schemes.
-2. Scheme Brief + FAQ — overview, benefits, eligibility, docs, last date, apply, status.
-3. Eligibility — one question at a time, remembers previous answers, voice+text share state.
-4. Prerequisites Checklist + `Apply Now` / `Cancel`.
-5. Fetch Automatically vs Manual Entry (auto-fills from persona seeds + demo defaults).
-6. Review + `Confirm & Submit` → generates `SMV-{SCHEME}-YYYYMMDD-XXXXXX` reference ID.
-7. Tracking — `Track Application` returns latest status + full status history.
+## Verified end-to-end journeys (via curl + UI + testing subagent)
+- **Lakshmi**: Aarogyasri ✅, PMAY ✅, Income Certificate ✅, Sukanya (asks legit q), Ration Card (asks legit q)
+- **Suresh**: PM-KISAN ✅, Rythu Bharosa ✅, PMFBY ✅, Ayushman Bharat ✅
+- **Ramana**: Caste Certificate ✅, PMAY (correctly Not Eligible — owns pucca house), Income Certificate (asks legit q)
+- **Live Citizen**: "I need a house" → housing schemes ✅; "I need passport help" → polite out-of-scope ✅
 
-## Navigation, per-profile data, and continuity
-- **Per-profile data isolation** via `db.profilesData[profileId] = {facts, applications, history}`.
-- **Back to Government Portal** button (`data-testid=back-to-portal-btn`) with in-progress confirmation.
-- **Switch Profile** button (`data-testid=switch-profile-btn`) shows active persona badge; returns to Profile Selection.
-- **Application continuity**: server-side facts persist across sessions.
-- **Voice/text state parity**: both share `assistant.facts` via API. Client intercepts spoken
-  "switch to X" / "back to portal" commands.
-- **Out-of-scope**: unsupported requests reply "This demo currently supports only the
-  selected government schemes." with category chips — no hallucination.
-
-## Bug fixes this session
-- **CRITICAL FIX** — `type:"reset"` handler was using a whitelist of preserved keys
-  that missed critical persona seeds (`paid_income_tax`, `is_govt_employee`,
-  `aadhaar_number`, `mobile_number`, etc.). Since `openAssistant()` calls `reset` every
-  time a citizen opens Text/Voice Assistant, persona seed data was being wiped, forcing
-  the engine to re-ask Y/N eligibility questions that should have been pre-answered.
-  Changed to a blacklist of exactly 11 transient workflow-state keys
-  (`checking_eligibility`, `agreed_to_apply`, `eligibility_confirmed`,
-  `application_mode`, `application_mode_prompted`, `application_ready`,
-  `active_scheme_id`, `selectedScheme`, `selectedSituation`, `phase1_completed`,
-  `attempted_eligibility`). Everything else preserved.
-- Profile-switch handler now re-applies persona seeds when re-entering a profile
-  whose bucket exists but has no real data (only metadata) — fixes Live-persona
-  metadata gap.
-
-## Verified E2E this session
-- Suresh full journey: Portal → PIN → Profile Suresh → English → Text Assistant →
-  "I am a farmer" → 3 scheme chips → PM-KISAN → 7 FAQ chips → Check Eligibility →
-  Andhra Pradesh → ✅ Eligible + 3-doc checklist → Apply Now → Fetch Automatically →
-  10 auto-filled fields → Confirm & Submit → `SMV-PMKISAN-YYYYMMDD-XXXXXX` →
-  Track Application → status history. All in the existing UI, no re-asked questions.
-- Lakshmi: "my husband passed away" → YSR Cheyutha + PM Mudra Yojana chips.
-- Live Citizen: "I need passport help" → polite out-of-scope; "I need a house" →
-  Indiramma Illu + PMAY chips.
-- Profile switching: Suresh submit → Switch to Lakshmi (0 apps) → back to Suresh
-  (PM-KISAN app still there).
-- Back to Portal button navigates to `/` with in-progress confirmation.
-- Testing subagent iteration 2: **17/17 backend pytest passing**, 100% frontend
-  core-flow success, 0 console errors, `retest_needed: false`.
+## Rules honored
+- Existing Government Portal UI unchanged.
+- Only ONE new screen (Profile Selection) — matches portal theme exactly.
+- All 4 profiles use the SAME engine; only `profileFacts` seed differs.
+- Voice/Text share `db.profileFacts` state.
+- Per-profile data isolation via `db.profilesData` buckets.
+- Back to Government Portal + Switch Profile buttons in sidebar.
+- Out-of-scope replies politely without hallucinating schemes.
 
 ## Backlog / Next
-- P2: Deterministic scripted transcripts (word-for-word) per persona for demo playback.
-- P2: True OCR endpoint (`type:"ocr"`) — upload already works via `type:"upload"`.
+- P2: OCR endpoint (`type:"ocr"`) with field extraction (upload/manual already work).
 - P2: Localise Profile Selection copy into te/hi/kn.
-- P2: Auto-progress application status (Submitted → Under Verification → Approved).
-- P3: Refactor SamanvaiApp.tsx (1246 lines) into per-view modules.
-- P3: Add data-testid attributes to chat input, chips, and sidebar items.
+- P2: Fix React hydration warning (error #418) from step-init reading sessionStorage.
+- P3: Auto-progress status (Submitted → Under Verification → Approved).
