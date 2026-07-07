@@ -411,10 +411,10 @@ const casualResponders: Record<string, Record<LanguageCode, string[]>> = {
     kn: ["ತೀವ್ರ ಸಂತಾಪಗಳು, ಧೈರ್ಯವಾಗಿರಿ. ಆಸರಾ ಪಿಂಚಣಿಯಂತಹ ಸೌಲಭ್ಯಗಳ ಮಾಹಿತಿ ಒದಗಿಸುವೆ."]
   },
   unknown: {
-    en: ["I'd love to chat about that! 😊 Currently, I'm running in offline mode. Please add your `GEMINI_API_KEY` to the `frontend/.env.local` file to activate full ChatGPT capabilities.\n\nIn the meantime, I have complete knowledge of 14 flagship government schemes. Would you like to check one?"],
-    te: ["నేను ఆ విషయం గురించి మాట్లాడటానికి ఇష్టపడతాను! 😊 కాకపోతే ప్రస్తుతం నేను ఆఫ్‌లైన్ మోడ్‌లో ఉన్నాను. పూర్తి చాట్ కోసం మీ `GEMINI_API_KEY` ని `.env.local` లో కాన్ఫిగర్ చేయండి."],
-    hi: ["मैं उस बारे में बात करना पसंद करूँगा! 😊 हालाँकि, मैं ऑफ़लाइन प्रोटोटाइप मोड में हूँ। कृपया अपनी `GEMINI_API_KEY` को `.env.local` फ़ाइल में जोड़ें।"],
-    kn: ["ನಾನು ಆ విషయంದ ಬಗ್ಗೆ ಮಾತನಾಡಲು ಇಷ್ಟಪಡುತ್ತೇನೆ! 😊 ಆದರೆ ಪ್ರಸ್ತುತ ನಾನು ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿದ್ದೇನೆ. ಪೂರ್ಣ ಚಾಟ್‌ಗಾಗಿ ನಿಮ್ಮ `GEMINI_API_KEY` ಅನ್ನು `.env.local` ಫೈಲ್‌ನಲ್ಲಿ ಸೇರಿಸಿ."]
+    en: ["I can help with PM-KISAN, PMAY, Ayushman Bharat, Aarogyasri, Rythu Bharosa, Amma Vodi, Vidya Deevena, YSR Cheyutha, EBC Nestham, and Ujjwala. How can I assist you with these?"],
+    te: ["నేను PM-KISAN, PMAY, ఆయుష్మాన్ భారత్, ఆరోగ్యశ్రీ, రైతు భరోసా, అమ్మ ఒడి, విద్యా దీవెన, YSR చేయూత, EBC నేస్తం మరియు ఉజ్వల పథకాలకు సహాయం చేయగలను. నేను మీకు ఎలా సహాయపడగలను?"],
+    hi: ["मैं पीएम-किसान, पीएमएवाई, आयुष्मान भारत, आरोग्यश्री, रायथू भरोसा, अम्मा वोडी, विद्या दीवेना, वाईएसआर चेयुथा, ईबीसी नेस्तम और उज्ज्वला योजनाओं में मदद कर सकता हूँ। मैं आपकी कैसे मदद करूँ?"],
+    kn: ["ನಾನು ಪಿಎಂ-ಕಿಸಾನ್, ಪಿಎಂಎವೈ, ಆಯುಷ್ಮಾನ್ ಭಾರತ್, ಆರೋಗ್ಯಶ್ರೀ, ರೈತ ಭರೋಸಾ, ಅಮ್ಮ ವೋಡಿ, ವಿದ್ಯಾ ದೀವೆನಾ, ವೈಎಸ್ಆರ್ ಚೇಯುತಾ, ಇಬಿಸಿ ನೇಸ್ತಮ್ ಮತ್ತು ಉಜ್ವಲ ಯೋಜನೆಗಳಿಗೆ ಸಹಾಯ ಮಾಡಬಲ್ಲೆ. ನಾನು ನಿಮಗೆ ಹೇಗೆ ಸಹಾಯ ಮಾಡಲಿ?"]
   },
 };
 
@@ -461,6 +461,13 @@ export function formatKnownSchemeDetails(item: KnowledgeItem, language: Language
 
 // Gets the next missing question dynamically split by eligibility & application stages
 export function getNextConversationalQuestion(item: KnowledgeItem, facts: ProfileFacts, language: LanguageCode) {
+  const isChecking = facts.checking_eligibility === true || String(facts.checking_eligibility) === "true";
+  const isApplying = facts.agreed_to_apply === true || String(facts.agreed_to_apply) === "true";
+
+  if (!isChecking && !isApplying) {
+    return undefined; // Do not ask any conversational questions yet
+  }
+
   // 1. Regional eligibility fields first
   if (facts.state === undefined || facts.state === "") {
     return {
@@ -477,7 +484,7 @@ export function getNextConversationalQuestion(item: KnowledgeItem, facts: Profil
     };
   }
 
-  // 2. Scheme-specific eligibility questions
+  // 2. Scheme-specific eligibility questions (only if checking or applying)
   const schemeQ = item.questions.find((q) => facts[q.key] === undefined);
   if (schemeQ) {
     return {
@@ -488,18 +495,20 @@ export function getNextConversationalQuestion(item: KnowledgeItem, facts: Profil
     };
   }
 
-  // 3. Agreement step: ask if they want to apply
-  if (facts.agreed_to_apply === undefined || facts.agreed_to_apply === "") {
-    return {
-      key: "agreed_to_apply",
-      question: applyQuestion[language],
-      type: "text" as const,
-      choices: ["Yes", "No"],
-    };
+  // 3. Agreement step: ask if they want to apply (only if they checked eligibility and passed, but haven't agreed to apply yet)
+  if (isChecking && !isApplying) {
+    if (facts.agreed_to_apply === undefined || facts.agreed_to_apply === "") {
+      return {
+        key: "agreed_to_apply",
+        question: applyQuestion[language],
+        type: "text" as const,
+        choices: ["Yes", "No"],
+      };
+    }
   }
 
   // 4. Personal details collection (only after agreement)
-  if (facts.agreed_to_apply === true || String(facts.agreed_to_apply) === "true") {
+  if (isApplying) {
     const personalKeys = ["name", "date_of_birth", "gender", "address"];
     for (const key of personalKeys) {
       if (facts[key] === undefined || facts[key] === "") {
@@ -666,30 +675,36 @@ export async function getSamanvaiResponse(
   // Progressive details request matching
   const isDetailsRequest = matchedItem && /\b(details|view details|about|explain|objective|department)\b/i.test(lowerMessage);
   const isDocsRequest = matchedItem && /\b(documents|required documents|proof|papers)\b/i.test(lowerMessage);
+  const isCheckEligibilityRequest = matchedItem && /\b(check eligibility|eligibility|qualify|am i eligible|check eligibility details)\b/i.test(lowerMessage);
+  const isBenefitsRequest = matchedItem && /\b(benefits|what do i get|incentives|amount|money)\b/i.test(lowerMessage);
+  const isTrackRequest = matchedItem && /\b(track|track application|status)\b/i.test(lowerMessage);
+  const isApplyRequest = matchedItem && /\b(apply|apply now|start application|submit)\b/i.test(lowerMessage);
 
   let apiStatusText = "";
 
+  const isChecking = updatedFacts.checking_eligibility === true || String(updatedFacts.checking_eligibility) === "true";
+  const isApplying = updatedFacts.agreed_to_apply === true || String(updatedFacts.agreed_to_apply) === "true";
+
   // Live LLM query (if Gemini API key is configured)
-  if (process.env.GEMINI_API_KEY) {
+  if (process.env.GEMINI_API_KEY && !isChecking && !isApplying) {
     try {
       const payload = {
         contents: [
           {
             parts: [
               {
-                text: `You are the SAMANVAI AI Assistant, a production-grade multilingual AI companion built on Next.js.
-Your goal is to guide citizens naturally to discover schemes, check eligibility, and complete applications.
+                text: `You are the SAMANVAI AI Assistant, a friendly and professional government citizen service representative helping the citizen at an assistance counter.
+Your tone must be warm, helpful, short, and professional.
 
-CRITICAL UX DIRECTIVES FOR LOW VERBOSITY:
-1. Keep every assistant message under 2-3 short sentences.
-2. Ask only ONE question at a time.
-3. Avoid explaining obvious things. Never tell the user what you are doing (e.g. do not say "I am updating your profile" or "Let me check eligibility for you").
-4. If interactive cards or suggestions are displayed, do NOT repeat their contents in the text response.
-5. Use "acknowledgment + next question" pattern. Example:
-   "Got it! 👍
-
-   Which state are you applying from?"
-6. Keep the experience fast, modern and mobile-first. No paragraphs.
+CRITICAL CONVERSATIONAL & UX DIRECTIVES:
+1. Respond naturally and conversationally. Do NOT behave like a rigid questionnaire. Keep your answers brief (under 2-3 sentences).
+2. Acknowledge the user's previous answer warmly and conversationally (e.g., "Understood, thank you.", "Got it, thanks for confirming.") before asking the next question.
+3. Ask exactly ONE question at a time. Never ask multiple questions.
+4. ONLY ask the single next relevant question: "${nextQ ? nextQ.question : "None"}". Do NOT ask questions that have already been answered in the Current Facts.
+5. Do NOT dump detailed scheme information (benefits, required documents, workflows) unless the user explicitly asks for it.
+6. Understand natural language variations instead of expecting exact keywords (e.g., if a user replies "yes, I do" or "no, I don't own any land", map them correctly).
+7. If suggestion chips or buttons are present, do NOT repeat their options in your text response.
+8. Speak in the active language: ${activeLanguage}. If the citizen uses mixed language (Hinglish, Telglish, Kanglish), speak in that style naturally.
 
 You must support three distinct interaction modes:
 1. Mode 1 – Known Scheme: If the user explicitly mentions a scheme name (e.g. PM-KISAN, Aarogyasri, Indiramma Illu), display a concise summary first (under 2 lines) and do NOT overwhelm them with details. Suggest action options: ["Check Eligibility", "View Details", "Required Documents", "Apply Now"]. Do NOT start the application automatically (set agreed_to_apply to undefined).
@@ -803,6 +818,13 @@ Citizen's Latest Message: "${message}"`,
 
   const finalFacts = { ...updatedFacts, ...localExtractedFacts };
 
+  if (isCheckEligibilityRequest) {
+    finalFacts.checking_eligibility = true;
+  }
+  if (isApplyRequest) {
+    finalFacts.agreed_to_apply = true;
+  }
+
   // Re-evaluate next missing question with updated facts
   nextQ = matchedItem ? getNextConversationalQuestion(matchedItem, finalFacts, activeLanguage) : undefined;
   canApply = matchedItem ? nextQ === undefined && ruleResult.eligible !== false && (finalFacts.agreed_to_apply === true || String(finalFacts.agreed_to_apply) === "true") : false;
@@ -811,6 +833,51 @@ Citizen's Latest Message: "${message}"`,
 
   let conversationText = "";
   let finalSuggestions: string[] = [];
+
+  if (isChecking || isApplying) {
+    if (ruleResult.eligible === false) {
+      conversationText = `❌ Not Eligible\n\nUnfortunately, based on the information provided, you are not eligible for this scheme.`;
+      finalSuggestions = ["Search Another Scheme"];
+    } else if (canApply) {
+      const reviewMsgs: Record<string, string> = {
+        en: "Excellent! I have collected all details. Please review the live application form on the right and click submit to proceed.",
+        te: "వివరాలన్నీ సేకరించబడ్డాయి. కుడి వైపున దరఖాస్తును తనిఖీ చేసి, సబ్మిట్ బటన్ నొక్కండి.",
+        hi: "सभी विवरण एकत्र कर लिए गए हैं। कृपया दाईं ओर आवेदन पत्र की समीक्षा करें और सबमिट करें।",
+        kn: "ಎಲ್ಲಾ ವಿವರ ಸಂಗ್ರಹಿಸಲಾಗಿದೆ. ಬಲಭಾಗದಲ್ಲಿ ಅರ್ಜಿಯನ್ನು ಪರಿಶೀಲಿಸಿ ಸಬ್ಮಿಟ್ ಮಾಡಿ.",
+      };
+      conversationText = reviewMsgs[activeLanguage] || reviewMsgs.en;
+      finalSuggestions = [];
+    } else if (nextQ) {
+      if (nextQ.key === "agreed_to_apply") {
+        conversationText = `✅ Eligible\n\nCongratulations! You are eligible for this scheme.\n\nWould you like to continue with the application?`;
+        finalSuggestions = ["Apply Now", "Cancel"];
+      } else {
+        if (isCheckEligibilityRequest) {
+          const schemeName = matchedItem?.name || "";
+          const startMsgs: Record<LanguageCode, string> = {
+            en: `Let's check your eligibility for **${schemeName}**. I'll ask you a few questions.\n\n${nextQ.question}`,
+            te: `నేను **${schemeName}** కోసం మీ అర్హతను పరిశీలిస్తాను. కొన్ని ప్రశ్నలు అడుగుతాను.\n\n${nextQ.question}`,
+            hi: `आइए **${schemeName}** के लिए आपकी पात्रता की जांच करें। मैं आपसे कुछ प्रश्न पूछूँगा।\n\n${nextQ.question}`,
+            kn: `ನಿಮ್ಮ **${schemeName}** ಅರ್ಹತೆ ಪರಿಶೀಲಿಸೋಣ. ಕೆಲವು ಪ್ರಶ್ನೆ ಕೇಳುವೆ.\n\n${nextQ.question}`,
+          };
+          conversationText = startMsgs[activeLanguage] || startMsgs.en;
+        } else {
+          conversationText = nextQ.question;
+        }
+        finalSuggestions = nextQ.choices && nextQ.choices.length > 0 ? nextQ.choices : [];
+      }
+    }
+
+    return {
+      response: conversationText,
+      extractedFacts: finalFacts,
+      itemId: matchedItem?.id,
+      detectedLanguage: activeLanguage,
+      canApply,
+      nextQuestion: nextQ,
+      suggestions: finalSuggestions,
+    };
+  }
 
   // Fallback matching logic for casual chat
   let responseKey = "";
@@ -852,10 +919,22 @@ Citizen's Latest Message: "${message}"`,
       kn: `**${matchedItem.name}** ಯೋಜನೆಯನ್ನು ${matchedItem.department} ಒದಗಿಸುತ್ತದೆ.\n\nಮುಂದೆ ನೀವು ಏನು ಮಾಡಲು ಬಯಸುವಿರಾ?`,
     }[activeLanguage] || "";
     
-    finalSuggestions = ["🔍 Check Eligibility", "📄 View Details", "💼 Required Documents", "🚀 Apply Now"];
+    finalSuggestions = ["Check Eligibility", "Apply", "Benefits", "Required Documents", "Track Application"];
   }
-  // User selected "View Details" action
-  else if (matchedItem && isDetailsRequest) {
+  // User selected "Check Eligibility" action
+  else if (matchedItem && isCheckEligibilityRequest) {
+    if (nextQ) {
+      const startMsgs: Record<LanguageCode, string> = {
+        en: `Let's check your eligibility for **${matchedItem.name}**. I'll ask you a few questions.\n\n${nextQ.question}`,
+        te: `నేను **${matchedItem.name}** కోసం మీ అర్హతను పరిశీలిస్తాను. కొన్ని ప్రశ్నలు అడుగుతాను.\n\n${nextQ.question}`,
+        hi: `आइए **${matchedItem.name}** के लिए आपकी पात्रता की जांच करें। मैं आपसे कुछ प्रश्न पूछूँगा।\n\n${nextQ.question}`,
+        kn: `ನಿಮ್ಮ **${matchedItem.name}** ಅರ್ಹತೆ ಪರಿಶೀಲಿಸೋಣ. ಕೆಲವು ಪ್ರಶ್ನೆ ಕೇಳುವೆ.\n\n${nextQ.question}`,
+      };
+      conversationText = startMsgs[activeLanguage] || startMsgs.en;
+    }
+  }
+  // User selected "View Details" or "Benefits" action
+  else if (matchedItem && (isDetailsRequest || isBenefitsRequest)) {
     const detailsHeader: Record<LanguageCode, string> = {
       en: `**Objective:** ${matchedItem.objective}\n- **Benefits:**\n` + matchedItem.benefits.map(b => `  * ${b}`).join("\n"),
       te: `**లక్ష్యం:** ${matchedItem.objective}\n- **ప్రయోజనాలు:**\n` + matchedItem.benefits.map(b => `  * ${b}`).join("\n"),
@@ -863,7 +942,7 @@ Citizen's Latest Message: "${message}"`,
       kn: `**ಉದ್ದೇಶ:** ${matchedItem.objective}\n- **ಪ್ರಯೋಜನಗಳು:**\n` + matchedItem.benefits.map(b => `  * ${b}`).join("\n"),
     };
     conversationText = detailsHeader[activeLanguage] || detailsHeader.en;
-    finalSuggestions = ["🔍 Check Eligibility", "💼 Required Documents", "🚀 Apply Now"];
+    finalSuggestions = ["Check Eligibility", "Apply", "Required Documents", "Track Application"];
   }
   // User selected "Required Documents" action
   else if (matchedItem && isDocsRequest) {
@@ -874,7 +953,18 @@ Citizen's Latest Message: "${message}"`,
       kn: `**${matchedItem.name} ಗಾಗಿ ಅಗತ್ಯ ದಾಖಲೆಗಳು:**\n` + matchedItem.documents.map(d => `- ${d.name} (${d.requirement})`).join("\n"),
     };
     conversationText = docsHeader[activeLanguage] || docsHeader.en;
-    finalSuggestions = ["🔍 Check Eligibility", "📄 View Details", "🚀 Apply Now"];
+    finalSuggestions = ["Check Eligibility", "Apply", "Benefits", "Track Application"];
+  }
+  // User selected "Track Application" action
+  else if (matchedItem && isTrackRequest) {
+    const trackHeader: Record<LanguageCode, string> = {
+      en: `To track your application, please enter your SAMANVAI Reference ID (e.g. SMV-${matchedItem.id.toUpperCase()}-YYYYMMDD-XXXXXX) in the chat.`,
+      te: `మీ దరఖాస్తును ట్రాక్ చేయడానికి, చాట్‌లో మీ SAMANVAI రిఫరెన్స్ ID ని నమోదు చేయండి.`,
+      hi: `अपने आवेदन को ट्रैक करने के लिए, कृपया चैट में अपना SAMANVAI संदर्भ आईडी दर्ज करें।`,
+      kn: `ನಿಮ್ಮ ಅರ್ಜಿಯನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಲು, ಚಾಟ್‌ನಲ್ಲಿ ನಿಮ್ಮ SAMANVAI ರೆಫರೆನ್ಸ್ ಐಡಿಯನ್ನು ನಮೂದಿಸಿ.`,
+    };
+    conversationText = trackHeader[activeLanguage] || trackHeader.en;
+    finalSuggestions = ["Check Eligibility", "Apply", "Benefits", "Required Documents"];
   }
   // MODE 3: Category Based Query
   else if (isCategoryQuery) {
@@ -986,10 +1076,27 @@ Citizen's Latest Message: "${message}"`,
         finalSuggestions = ["🚀 Yes, Apply Now", "❌ No, Maybe Later"];
       } else {
         const acks: Record<string, string[]> = {
-          en: ["Got it! 👍", "Thanks! 👍", "Noted! 👍", "Perfect! 👍"],
-          te: ["సరే! 👍", "అర్థమైంది! 👍", "ధన్యవాదాలు! 👍"],
-          hi: ["ठीक है! 👍", "समझ गया! 👍", "धन्यवाद! 👍"],
-          kn: ["ಸರಿ! 👍", "ತಿಳಿಯಿತು! 👍", "ಧನ್ಯವಾದಗಳು! 👍"],
+          en: [
+            "Got it, thank you! Let's proceed to the next step.",
+            "Understood, thanks for the detail. Next question:",
+            "Perfect, that is noted. Moving forward:",
+            "Thank you! Here is the next detail I need:"
+          ],
+          te: [
+            "అర్థమైంది, ధన్యవాదాలు! తదుపరి సమాచారం చెప్పండి.",
+            "సరే, గమనిಂಚాను. తర్వాత ప్రశ్న:",
+            "చాలా మంచిది, ధన్యవాదాలు. ముందుకు వెళ్దాం:"
+          ],
+          hi: [
+            "ठीक है, धन्यवाद! आइए अगले चरण पर चलें।",
+            "समझ गया, जानकारी के लिए धन्यवाद। अगला प्रश्न:",
+            "बहुत बढ़िया, नोट कर लिया गया है। आगे बढ़ते हैं:"
+          ],
+          kn: [
+            "ತಿಳಿಯಿತು, ಧನ್ಯವಾದಗಳು! ಮುಂದಿನ ಹಂತಕ್ಕೆ ಹೋಗೋಣ.",
+            "ಸರಿ, ಮಾಹಿತಿ ನೀಡಿದ್ದಕ್ಕೆ ಧನ್ಯವಾದಗಳು. ಮುಂದಿನ ಪ್ರಶ್ನೆ:",
+            "ಉತ್ತಮ, ಗುರುತಿಸಲಾಗಿದೆ. ಮುಂದೆ ಹೋಗೋಣ:"
+          ],
         };
         const randomAck = getRandomElement(acks[activeLanguage] || acks.en);
         const isFirstQuestion = history.length <= 1;

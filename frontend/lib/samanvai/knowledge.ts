@@ -16,6 +16,12 @@ export type KnowledgeItem = {
     type: "boolean" | "number" | "text" | "choice" | "date";
     choices?: string[];
   }>;
+  applicationQuestions?: Array<{
+    key: string;
+    question: string;
+    type: "boolean" | "number" | "text" | "choice" | "date";
+    choices?: string[];
+  }>;
   benefits: string[];
   documents: Array<{
     name: string;
@@ -36,7 +42,7 @@ export const knowledgeBase: KnowledgeItem[] = [
   {
     id: "pmkisan",
     kind: "scheme",
-    name: "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+    name: "PM-KISAN",
     aliases: ["pm kisan", "farmer pension", "farmer support", "kisan samman", "agriculture support"],
     type: "Central Government",
     department: "Ministry of Agriculture & Farmers Welfare",
@@ -48,11 +54,22 @@ export const knowledgeBase: KnowledgeItem[] = [
       "Income taxpayers, most government employees, high pensioners, constitutional post holders, and registered professionals are excluded.",
     ],
     questions: [
-      { key: "owns_cultivable_land", question: "Do you or your family own cultivable agricultural land?", type: "boolean" },
-      { key: "is_institutional_land", question: "Is the land owned by an institution?", type: "boolean" },
+      { key: "state", question: "Which state do you belong to?", type: "choice", choices: ["Andhra Pradesh", "Telangana", "Karnataka"] },
+      { key: "owns_cultivable_land", question: "Do you own cultivable agricultural land?", type: "boolean" },
       { key: "paid_income_tax", question: "Did anyone in your family pay income tax in the previous year?", type: "boolean" },
-      { key: "pension_over_10k", question: "Does anyone in your family receive a government pension of Rs. 10,000 or more?", type: "boolean" },
-      { key: "is_registered_professional", question: "Are you a registered Doctor, Engineer, Lawyer, CA, or Architect?", type: "boolean" },
+      { key: "is_govt_employee", question: "Is any member of your family a government employee?", type: "boolean" }
+    ],
+    applicationQuestions: [
+      { key: "aadhaar_number", question: "Please enter your Aadhaar Number.", type: "text" },
+      { key: "mobile_number", question: "Please enter your Mobile Number.", type: "text" },
+      { key: "bank_account_number", question: "Please enter your Bank Account Number.", type: "text" },
+      { key: "ifsc_code", question: "Please enter your IFSC Code.", type: "text" },
+      { key: "land_ownership_details", question: "Please enter your Land Ownership Details.", type: "text" },
+      { key: "land_survey_number", question: "Please enter your Land Survey Number.", type: "text" },
+      { key: "village", question: "Please enter your Village.", type: "text" },
+      { key: "mandal", question: "Please enter your Mandal.", type: "text" },
+      { key: "district", question: "Please enter your District.", type: "text" },
+      { key: "ekyc", question: "Would you like to complete e-KYC?", type: "boolean" }
     ],
     benefits: ["Rs. 6,000 per year per family.", "Paid in three DBT installments of Rs. 2,000 every four months."],
     documents: [
@@ -71,7 +88,7 @@ export const knowledgeBase: KnowledgeItem[] = [
   {
     id: "indiramma-illu",
     kind: "scheme",
-    name: "Indiramma Illu (Indiramma Indlu) Housing Scheme",
+    name: "Indiramma Illu",
     aliases: ["indiramma", "indlu", "house scheme", "housing telangana", "i want house"],
     type: "State Government",
     department: "Telangana State Housing Department",
@@ -79,11 +96,25 @@ export const knowledgeBase: KnowledgeItem[] = [
     targetBeneficiaries: "Homeless, landless citizens, and EWS/BPL families in Telangana.",
     eligibility: ["Permanent Telangana resident.", "BPL or EWS household.", "Must not already own a pucca house.", "Must not have received housing under any government scheme after 1995."],
     questions: [
-      { key: "is_ts_resident", question: "Are you a permanent resident of Telangana?", type: "boolean" },
-      { key: "has_bpl_card", question: "Do you have a BPL or White Ration Card?", type: "boolean" },
-      { key: "owns_pucca_house", question: "Do you currently own a permanent RCC roof house?", type: "boolean" },
-      { key: "received_prior_housing", question: "Have you received a government house after 1995?", type: "boolean" },
-      { key: "owns_plot", question: "Do you own a plot of land for construction?", type: "boolean" },
+      { key: "state", question: "Which state do you belong to?", type: "choice", choices: ["Andhra Pradesh", "Telangana"] },
+      { key: "owns_permanent_house", question: "Do you own a permanent house?", type: "boolean" },
+      { key: "family_income", question: "What is your annual family income?", type: "choice", choices: ["Below ₹2.5 Lakhs", "Above ₹2.5 Lakhs"] },
+      { key: "owns_plot", question: "Do you own a house site?", type: "boolean" },
+      { key: "received_prior_housing", question: "Have you already received a government housing benefit?", type: "boolean" }
+    ],
+    applicationQuestions: [
+      { key: "aadhaar_number", question: "Please enter your Aadhaar Number.", type: "text" },
+      { key: "mobile_number", question: "Please enter your Mobile Number.", type: "text" },
+      { key: "address", question: "Please enter your Address.", type: "text" },
+      { key: "district", question: "Please enter your District.", type: "text" },
+      { key: "mandal", question: "Please enter your Mandal.", type: "text" },
+      { key: "village", question: "Please enter your Village.", type: "text" },
+      { key: "family_income", question: "What is your annual family income?", type: "choice", choices: ["Below ₹2.5 Lakhs", "Above ₹2.5 Lakhs"] },
+      { key: "house_site_details", question: "Please enter your House Site Details.", type: "text" },
+      { key: "existing_house_details", question: "Please enter your Existing House Details.", type: "text" },
+      { key: "bank_account_number", question: "Please enter your Bank Account Number.", type: "text" },
+      { key: "ekyc", question: "Would you like to complete e-KYC?", type: "boolean" },
+      { key: "photo", question: "Please upload your Photo.", type: "text" }
     ],
     benefits: ["Rs. 5,00,000 assistance for general category applicants.", "Rs. 6,00,000 assistance for SC/ST applicants.", "Free plot for eligible landless beneficiaries.", "Stage-wise DBT release."],
     documents: [
@@ -114,6 +145,7 @@ export const knowledgeBase: KnowledgeItem[] = [
       { key: "primary_income_source", question: "What is your primary source of income?", type: "choice", choices: ["Agriculture", "Salary", "Business", "Other"] },
       { key: "has_income_proof", question: "Do you have a current salary slip, IT return, or affidavit?", type: "boolean" },
     ],
+    applicationQuestions: [],
     benefits: ["Foundational certificate for Fee Reimbursement, Housing, scholarships, and other welfare schemes."],
     documents: [
       { name: "Aadhaar", requirement: "Mandatory", source: "UIDAI", manualUpload: "No" },
@@ -131,7 +163,7 @@ export const knowledgeBase: KnowledgeItem[] = [
   {
     id: "pmay-u-2",
     kind: "scheme",
-    name: "Pradhan Mantri Awas Yojana Urban 2.0 (PMAY-U 2.0)",
+    name: "PMAY",
     aliases: ["pmay", "awas yojana", "urban housing", "central housing"],
     type: "Central Government",
     department: "Ministry of Housing and Urban Affairs",
@@ -139,10 +171,22 @@ export const knowledgeBase: KnowledgeItem[] = [
     targetBeneficiaries: "EWS, LIG, and MIG urban households.",
     eligibility: ["EWS income up to Rs. 3 lakh, LIG Rs. 3-6 lakh, MIG Rs. 6-9 lakh.", "Family must not own a pucca house anywhere in India.", "Female ownership or joint ownership is mandatory for EWS/LIG.", "No housing benefit in the last 20 years."],
     questions: [
-      { key: "family_income", question: "What is your total annual household income?", type: "number" },
-      { key: "owns_pucca_house", question: "Does anyone in your family own a pucca house in India?", type: "boolean" },
-      { key: "received_prior_housing", question: "Have you received any government housing benefits previously?", type: "boolean" },
-      { key: "is_female_owner", question: "Is the house being registered in the name of a female family member?", type: "boolean" },
+      { key: "state", question: "Which state do you belong to?", type: "choice", choices: ["Andhra Pradesh", "Telangana", "Karnataka"] },
+      { key: "owns_pucca_house", question: "Do you own a pucca house?", type: "boolean" },
+      { key: "family_income", question: "What is your annual family income?", type: "choice", choices: ["EWS", "LIG", "MIG-I", "MIG-II"] },
+      { key: "received_prior_housing", question: "Have you previously received housing assistance?", type: "boolean" }
+    ],
+    applicationQuestions: [
+      { key: "aadhaar_number", question: "Please enter your Aadhaar Number.", type: "text" },
+      { key: "mobile_number", question: "Please enter your Mobile Number.", type: "text" },
+      { key: "address", question: "Please enter your Address.", type: "text" },
+      { key: "income_category", question: "Which income category do you belong to?", type: "choice", choices: ["EWS", "LIG", "MIG-I", "MIG-II"] },
+      { key: "family_income", question: "What is your annual family income?", type: "choice", choices: ["EWS", "LIG", "MIG-I", "MIG-II"] },
+      { key: "existing_house_details", question: "Please enter your Existing House Details.", type: "text" },
+      { key: "bank_account_number", question: "Please enter your Bank Account Number.", type: "text" },
+      { key: "ifsc_code", question: "Please enter your IFSC Code.", type: "text" },
+      { key: "ekyc", question: "Would you like to complete e-KYC?", type: "boolean" },
+      { key: "photo", question: "Please upload your Photo.", type: "text" }
     ],
     benefits: ["Central assistance up to Rs. 2.5 lakh for EWS and up to Rs. 1.5 lakh for LIG.", "Housing loan up to Rs. 25 lakh in non-metro centers."],
     documents: [
@@ -162,7 +206,7 @@ export const knowledgeBase: KnowledgeItem[] = [
   {
     id: "aarogyasri",
     kind: "scheme",
-    name: "Rajiv Aarogyasri / Cheyutha",
+    name: "Aarogyasri",
     aliases: ["aarogyasri", "cheyutha", "health scheme", "hospital", "surgery"],
     type: "State Government",
     department: "Rajiv Aarogyasri Health Care Trust, Telangana Health Department",
@@ -170,8 +214,20 @@ export const knowledgeBase: KnowledgeItem[] = [
     targetBeneficiaries: "BPL families in Telangana.",
     eligibility: ["Resident of Telangana.", "Valid White Ration Card / Food Security Card.", "Procedure must be covered under the listed packages."],
     questions: [
-      { key: "has_white_ration_card", question: "Do you have a valid White Ration Card issued by Telangana?", type: "boolean" },
-      { key: "is_covered_procedure", question: "Is the required medical procedure covered under Aarogyasri packages?", type: "boolean" },
+      { key: "state", question: "Which state do you belong to?", type: "choice", choices: ["Andhra Pradesh", "Telangana"] },
+      { key: "family_income", question: "What is your annual household income?", type: "choice", choices: ["Below ₹5 Lakhs", "Above ₹5 Lakhs"] },
+      { key: "has_ration_card", question: "Do you have a valid ration card?", type: "boolean" },
+      { key: "covered_other_health", question: "Are you already covered under another government health insurance scheme?", type: "boolean" }
+    ],
+    applicationQuestions: [
+      { key: "aadhaar_number", question: "Please enter your Aadhaar Number.", type: "text" },
+      { key: "mobile_number", question: "Please enter your Mobile Number.", type: "text" },
+      { key: "ration_card_number", question: "Please enter your Ration Card Number.", type: "text" },
+      { key: "family_income", question: "What is your annual household income?", type: "choice", choices: ["Below ₹5 Lakhs", "Above ₹5 Lakhs"] },
+      { key: "address", question: "Please enter your Address.", type: "text" },
+      { key: "district", question: "Please enter your District.", type: "text" },
+      { key: "hospital_preference", question: "Please enter your Hospital Preference (optional).", type: "text" },
+      { key: "ekyc", question: "Would you like to complete e-KYC?", type: "boolean" }
     ],
     benefits: ["Coverage up to Rs. 10 lakh per family per year.", "Cashless treatment at government and empanelled private hospitals.", "Covers major surgeries, hospitalizations, organ transplants, and post-treatment care."],
     documents: [
@@ -190,7 +246,7 @@ export const knowledgeBase: KnowledgeItem[] = [
   {
     id: "post-matric-scholarship",
     kind: "scheme",
-    name: "Post-Matric Scholarships Scheme for Minorities / SC / ST / OBC",
+    name: "National Scholarship Schemes",
     aliases: ["scholarship", "post matric", "student scholarship", "daughter scholarship", "education help", "nsp scholarship"],
     type: "Central Government",
     department: "Ministry of Minority Affairs / Ministry of Social Justice & Empowerment",
@@ -198,10 +254,23 @@ export const knowledgeBase: KnowledgeItem[] = [
     targetBeneficiaries: "SC, ST, OBC, or Minority students in recognized institutions.",
     eligibility: ["At least 50% marks in the previous final examination.", "Income limit: Rs. 2.5 lakh for SC/ST/OBC or Rs. 2 lakh for Minorities.", "Valid caste/community certificate required."],
     questions: [
-      { key: "education_level", question: "What is your current education level?", type: "text" },
-      { key: "previous_marks_percentage", question: "What was your percentage in the previous academic year?", type: "number" },
-      { key: "family_income", question: "What is your family's annual income?", type: "number" },
-      { key: "social_category", question: "What is your social category?", type: "choice", choices: ["SC", "ST", "OBC", "Minority", "Other"] },
+      { key: "state", question: "Which state do you belong to?", type: "choice", choices: ["Andhra Pradesh", "Telangana", "Karnataka"] },
+      { key: "is_student", question: "Are you currently studying?", type: "boolean" },
+      { key: "education_level", question: "Education level?", type: "choice", choices: ["School", "Intermediate", "Diploma", "Degree", "Post Graduation"] },
+      { key: "family_income", question: "Annual family income?", type: "choice", choices: ["Below ₹2.5 Lakhs", "Above ₹2.5 Lakhs"] },
+      { key: "previous_marks_percentage", question: "Did you score 50% or above in your previous final exam?", type: "boolean" }
+    ],
+    applicationQuestions: [
+      { key: "aadhaar_number", question: "Please enter your Aadhaar Number.", type: "text" },
+      { key: "student_name", question: "Please enter your Student Name.", type: "text" },
+      { key: "mobile_number", question: "Please enter your Mobile Number.", type: "text" },
+      { key: "college_name", question: "Please enter your School or College Name.", type: "text" },
+      { key: "course", question: "Please enter your Course.", type: "text" },
+      { key: "education_level", question: "Please enter your Education Level.", type: "choice", choices: ["School", "Intermediate", "Diploma", "Degree", "Post Graduation"] },
+      { key: "family_income", question: "Annual family income?", type: "choice", choices: ["Below ₹2.5 Lakhs", "Above ₹2.5 Lakhs"] },
+      { key: "bank_account_number", question: "Please enter your Bank Account Number.", type: "text" },
+      { key: "ifsc_code", question: "Please enter your IFSC Code.", type: "text" },
+      { key: "ekyc", question: "Would you like to complete e-KYC?", type: "boolean" }
     ],
     benefits: ["Admission fees, tuition fees, and monthly maintenance allowance credited through DBT."],
     documents: [
@@ -235,6 +304,7 @@ export const knowledgeBase: KnowledgeItem[] = [
       { key: "social_category", question: "What is your caste category?", type: "choice", choices: ["SC", "ST", "BC", "EBC", "Minority", "Physically Challenged", "OC"] },
       { key: "attendance_above_75", question: "Is your current attendance above 75%?", type: "boolean" },
     ],
+    applicationQuestions: [],
     benefits: ["Full or partial tuition fee reimbursement depending on rank and category.", "Maintenance charges credited through DBT in four annual phases."],
     documents: [
       { name: "Aadhaar Card", requirement: "Mandatory", source: "eKYC / UIDAI", manualUpload: "No" },
@@ -268,6 +338,7 @@ export const knowledgeBase: KnowledgeItem[] = [
       { key: "has_govt_employee", question: "Is anyone in your immediate family a government employee?", type: "boolean" },
       { key: "marriage_date", question: "If the marriage already happened, what was the date?", type: "date" },
     ],
+    applicationQuestions: [],
     benefits: ["One-time grant of Rs. 1,00,116 to the bride's bank account.", "Disabled brides are eligible for Rs. 1,25,145."],
     documents: [
       { name: "Bride Aadhaar and age proof", requirement: "Mandatory", source: "UIDAI / SSC Board", manualUpload: "No if API available" },
@@ -287,7 +358,7 @@ export const knowledgeBase: KnowledgeItem[] = [
   {
     id: "pmegp",
     kind: "scheme",
-    name: "Prime Minister's Employment Generation Programme (PMEGP)",
+    name: "PM Mudra Yojana",
     aliases: ["pmegp", "employment", "business loan", "start business", "self employment"],
     type: "Central Government",
     department: "Khadi and Village Industries Commission (KVIC), MSME",
@@ -295,9 +366,22 @@ export const knowledgeBase: KnowledgeItem[] = [
     targetBeneficiaries: "Unemployed youth and traditional artisans.",
     eligibility: ["Minimum age 18.", "Class VIII required for manufacturing units above Rs. 10 lakh or service units above Rs. 5 lakh.", "No prior margin money subsidy from other schemes."],
     questions: [
-      { key: "sector_type", question: "What type of business are you starting?", type: "choice", choices: ["Manufacturing", "Service"] },
-      { key: "project_cost", question: "What is the total estimated project cost?", type: "number" },
-      { key: "education_level", question: "What is your highest educational qualification?", type: "text" },
+      { key: "state", question: "Which state do you belong to?", type: "choice", choices: ["Andhra Pradesh", "Telangana", "Karnataka"] },
+      { key: "owns_or_starts_business", question: "Do you own or plan to start a small business?", type: "boolean" },
+      { key: "mudra_category", question: "Which loan category do you need?", type: "choice", choices: ["Shishu", "Kishore", "Tarun"] },
+      { key: "has_credit_default", question: "Do you have any past bank loan defaults?", type: "boolean" }
+    ],
+    applicationQuestions: [
+      { key: "aadhaar_number", question: "Please enter your Aadhaar Number.", type: "text" },
+      { key: "mobile_number", question: "Please enter your Mobile Number.", type: "text" },
+      { key: "business_name", question: "Please enter your Business Name.", type: "text" },
+      { key: "business_type", question: "Please enter your Business Type.", type: "text" },
+      { key: "mudra_category", question: "Which loan category do you need?", type: "choice", choices: ["Shishu", "Kishore", "Tarun"] },
+      { key: "loan_amount_required", question: "Please enter the Loan Amount Required.", type: "text" },
+      { key: "bank_account_number", question: "Please enter your Bank Account Number.", type: "text" },
+      { key: "ifsc_code", question: "Please enter your IFSC Code.", type: "text" },
+      { key: "business_address", question: "Please enter your Business Address.", type: "text" },
+      { key: "ekyc", question: "Would you like to complete e-KYC?", type: "boolean" }
     ],
     benefits: ["Margin money subsidy from 15% to 35% depending on location and social category.", "Bank term loan for the remaining amount."],
     documents: [
@@ -338,7 +422,7 @@ export const knowledgeBase: KnowledgeItem[] = [
   {
     id: "pmfby",
     kind: "scheme",
-    name: "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    name: "PM Fasal Bima Yojana",
     aliases: ["fasal bima", "crop insurance", "pmfby", "crop loss", "farmer insurance"],
     type: "Central Government",
     department: "Ministry of Agriculture & Farmers Welfare",
@@ -346,9 +430,21 @@ export const knowledgeBase: KnowledgeItem[] = [
     targetBeneficiaries: "Farmers growing notified crops in notified areas, including sharecroppers and tenant farmers.",
     eligibility: ["Must cultivate a notified crop in a notified area.", "Voluntary for loanee and non-loanee farmers.", "Preventable risks like theft or animal grazing are excluded."],
     questions: [
-      { key: "is_notified_crop", question: "Are you cultivating a crop notified by the state government for this season?", type: "boolean" },
-      { key: "is_loanee_farmer", question: "Are you a loanee farmer with a Kisan Credit Card?", type: "boolean" },
-      { key: "has_sowing_proof", question: "Do you have sowing certificate or land record proof?", type: "boolean" },
+      { key: "state", question: "Which state do you belong to?", type: "choice", choices: ["Andhra Pradesh", "Telangana", "Karnataka"] },
+      { key: "is_farmer", question: "Are you a farmer?", type: "boolean" },
+      { key: "cultivated_crops", question: "Have you cultivated crops this season?", type: "boolean" },
+      { key: "is_notified_crop", question: "Is your crop a notified crop in your area?", type: "boolean" }
+    ],
+    applicationQuestions: [
+      { key: "aadhaar_number", question: "Please enter your Aadhaar Number.", type: "text" },
+      { key: "mobile_number", question: "Please enter your Mobile Number.", type: "text" },
+      { key: "farmer_id", question: "Please enter your Farmer ID.", type: "text" },
+      { key: "bank_account_number", question: "Please enter your Bank Account Number.", type: "text" },
+      { key: "crop_details", question: "Please enter your Crop Details.", type: "text" },
+      { key: "crop_season", question: "Please enter your Crop Season.", type: "text" },
+      { key: "land_records", question: "Please enter your Land Records details.", type: "text" },
+      { key: "insurance_details", question: "Please enter your Insurance Details.", type: "text" },
+      { key: "ekyc", question: "Would you like to complete e-KYC?", type: "boolean" }
     ],
     benefits: ["Compensation for yield losses, prevented sowing, and post-harvest losses due to localized calamities."],
     documents: [
@@ -379,6 +475,7 @@ export const knowledgeBase: KnowledgeItem[] = [
       { key: "girl_child_age", question: "What is the age of the girl child?", type: "number" },
       { key: "existing_ssy_accounts", question: "How many SSY accounts already exist in your family?", type: "number" },
     ],
+    applicationQuestions: [],
     benefits: ["8.2% annual interest compounded annually for Q2 FY 2026-27.", "EEE tax benefits on deposits up to Rs. 1.5 lakh under 80C, interest, and maturity.", "Matures 21 years after opening; deposits required for first 15 years."],
     documents: [
       { name: "Girl Child Birth Certificate", requirement: "Mandatory", source: "Civil Registration System", manualUpload: "Yes, if no API" },
@@ -409,6 +506,7 @@ export const knowledgeBase: KnowledgeItem[] = [
       { key: "disability_percentage", question: "What is the disability percentage on your certificate?", type: "number" },
       { key: "has_white_card", question: "Do you have a White Ration Card?", type: "boolean" },
     ],
+    applicationQuestions: [],
     benefits: ["Enhanced monthly pension around Rs. 3,016 or as updated by latest GOs, credited through DBT."],
     documents: [
       { name: "SADAREM Certificate", requirement: "Mandatory", source: "SADAREM DB API", manualUpload: "No" },
@@ -440,6 +538,7 @@ export const knowledgeBase: KnowledgeItem[] = [
       { key: "dry_land_acres", question: "How many acres of dry land do you own?", type: "number" },
       { key: "owns_car_or_taxpayer", question: "Does anyone in your family pay income tax or own a car?", type: "boolean" },
     ],
+    applicationQuestions: [],
     benefits: ["Subsidized rice, sugar, wheat, and other commodities.", "Gateway proof for Aarogyasri, Housing, and Fee Reimbursement."],
     documents: [
       { name: "Aadhaar for all members", requirement: "Mandatory", source: "UIDAI", manualUpload: "No" },
@@ -455,6 +554,297 @@ export const knowledgeBase: KnowledgeItem[] = [
     grievance: "Helpline 1967 or 1800-425-0033 and ePDS Grievance Redressal System.",
     recommendations: [{ when: "FSC status is active", recommend: ["Aarogyasri", "Aasara", "Housing schemes"] }],
   },
+  {
+    id: "ayushman-bharat",
+    kind: "scheme",
+    name: "Ayushman Bharat",
+    aliases: ["ayushman bharat", "ayushman card", "pmjay", "national health insurance"],
+    type: "Central Government",
+    department: "National Health Authority",
+    objective: "Cashless secondary and tertiary healthcare coverage of Rs. 5 Lakhs per family per year.",
+    targetBeneficiaries: "Low-income families identified in the SECC 2011 database.",
+    eligibility: [
+      "Must be listed in SECC 2011 or hold an active PM-JAY letter.",
+      "Must not own premium assets or be a government employee.",
+      "Must have a valid BPL card or PM-JAY registration."
+    ],
+    questions: [
+      { key: "state", question: "Which state do you belong to?", type: "choice", choices: ["Andhra Pradesh", "Telangana", "Karnataka"] },
+      { key: "has_bpl_card", question: "Do you possess an active BPL or Ration Card?", type: "boolean" },
+      { key: "has_required_id", question: "Do you possess the required identification?", type: "boolean" },
+      { key: "covered_other_applicable", question: "Are you covered under another applicable scheme?", type: "boolean" }
+    ],
+    applicationQuestions: [
+      { key: "aadhaar_number", question: "Please enter your Aadhaar Number.", type: "text" },
+      { key: "mobile_number", question: "Please enter your Mobile Number.", type: "text" },
+      { key: "family_id", question: "Please enter your Family ID.", type: "text" },
+      { key: "address", question: "Please enter your Address.", type: "text" },
+      { key: "district", question: "Please enter your District.", type: "text" },
+      { key: "ration_card", question: "Please enter your Ration Card details.", type: "text" },
+      { key: "family_income", question: "What is your annual family income?", type: "text" },
+      { key: "ekyc", question: "Would you like to complete e-KYC?", type: "boolean" }
+    ],
+    benefits: ["Cashless treatment up to Rs. 5 Lakhs per family per year.", "Covers pre and post-hospitalization expenses up to 15 days."],
+    documents: [
+      { name: "Aadhaar Card", requirement: "Mandatory", source: "UIDAI", manualUpload: "No" },
+      { name: "Ration Card", requirement: "Mandatory", source: "State Civil Supplies", manualUpload: "No" }
+    ],
+    workflow: ["Verify name at empanelled hospital or PM-JAY kiosk.", "Empanelled doctor requests pre-authorization.", "Cashless treatment provided."],
+    fees: "Application and Ayushman card issuance are free.",
+    processingTime: "Instant verification at empanelled hospital kiosk.",
+    statusFlow: ["Applied", "SECC Match Found", "Aadhaar Verified", "Ayushman Card Active"],
+    rejectionReasons: ["Name not in SECC list.", "Duplicate card holder."],
+    grievance: "PM-JAY Toll-free helpline 14555.",
+    recommendations: []
+  },
+  {
+    id: "rythu-bharosa",
+    kind: "scheme",
+    name: "Rythu Bharosa",
+    aliases: ["rythu bharosa", "ysr rythu", "ap farmer support", "rythu bharosa scheme"],
+    type: "State Government",
+    department: "Andhra Pradesh Agriculture Department",
+    objective: "Financial assistance to landholding and tenant farmers in Andhra Pradesh.",
+    targetBeneficiaries: "All cultivable landholding farmer families and tenant farmers in AP.",
+    eligibility: [
+      "Must be a permanent resident of Andhra Pradesh.",
+      "Must own agricultural cultivable land.",
+      "Tenant farmers from SC/ST/BC/Minority groups are eligible."
+    ],
+    questions: [
+      { key: "state", question: "Which state do you belong to?", type: "choice", choices: ["Andhra Pradesh", "Telangana", "Karnataka"] },
+      { key: "is_farmer", question: "Are you a farmer?", type: "boolean" },
+      { key: "owns_or_cultivates_land", question: "Do you own or cultivate agricultural land?", type: "boolean" },
+      { key: "has_pattadar_passbook", question: "Do you possess a Pattadar Passbook?", type: "boolean" }
+    ],
+    applicationQuestions: [
+      { key: "aadhaar_number", question: "Please enter your Aadhaar Number.", type: "text" },
+      { key: "mobile_number", question: "Please enter your Mobile Number.", type: "text" },
+      { key: "farmer_id", question: "Please enter your Farmer ID (if applicable).", type: "text" },
+      { key: "bank_account_number", question: "Please enter your Bank Account Number.", type: "text" },
+      { key: "ifsc_code", question: "Please enter your IFSC Code.", type: "text" },
+      { key: "land_ownership_details", question: "Please enter your Land Ownership Details.", type: "text" },
+      { key: "crop_details", question: "Please enter your Crop Details.", type: "text" },
+      { key: "village", question: "Please enter your Village.", type: "text" },
+      { key: "mandal", question: "Please enter your Mandal.", type: "text" },
+      { key: "district", question: "Please enter your District.", type: "text" },
+      { key: "ekyc", question: "Would you like to complete e-KYC?", type: "boolean" }
+    ],
+    benefits: ["Rs. 13,500 per year per farmer family.", "Includes Rs. 6,000 from Central PM-KISAN."],
+    documents: [
+      { name: "Aadhaar Card", requirement: "Mandatory", source: "UIDAI", manualUpload: "No" },
+      { name: "Pattadar Passbook / Land Proof", requirement: "Mandatory", source: "Meebhoomi", manualUpload: "Yes" }
+    ],
+    workflow: ["Register via Ward/Gram Sachivalayam.", "Revenue department field verification.", "Beneficiary list displayed at Panchayat.", "DBT credit."],
+    fees: "Free registration.",
+    processingTime: "30-45 working days.",
+    statusFlow: ["Applied", "Land Records Verified", "Sachivalayam Approved", "Payment Released"],
+    rejectionReasons: ["Ineligible land category.", "Non-resident of Andhra Pradesh."],
+    grievance: "AP Spandana portal or toll-free number 1902.",
+    recommendations: []
+  },
+  {
+    id: "amma-vodi",
+    kind: "scheme",
+    name: "Jagananna Amma Vodi",
+    aliases: ["amma vodi", "ammavodi", "school mother assistance", "mother support"],
+    type: "State Government",
+    department: "Andhra Pradesh School Education Department",
+    objective: "Financial assistance to mothers from low-income families to support children's education.",
+    targetBeneficiaries: "Poor mothers sending their children to recognized schools (Class 1 to 12).",
+    eligibility: [
+      "Must be a permanent resident of Andhra Pradesh.",
+      "Must have a White Ration Card.",
+      "Child must have at least 75% school attendance.",
+      "Must own less than 3.5 wet acres or 10 dry acres of land."
+    ],
+    questions: [
+      { key: "is_ap_resident", question: "Are you a permanent resident of Andhra Pradesh?", type: "boolean" },
+      { key: "has_white_ration_card", question: "Do you have a White Ration Card?", type: "boolean" },
+      { key: "child_attendance_above_75", question: "Does your school-going child have at least 75% attendance?", type: "boolean" }
+    ],
+    applicationQuestions: [],
+    benefits: ["Rs. 15,000 annual financial assistance deposited to the mother's bank account.", "Includes deduction of Rs. 1,000 for school sanitation fund."],
+    documents: [
+      { name: "Aadhaar of Mother and Child", requirement: "Mandatory", source: "UIDAI", manualUpload: "No" },
+      { name: "White Ration Card", requirement: "Mandatory", source: "Civil Supplies", manualUpload: "No" },
+      { name: "Study/School Attendance Certificate", requirement: "Mandatory", source: "School Portal", manualUpload: "Yes" }
+    ],
+    workflow: ["Data collected from Unified School Info System.", "Sachivalayam verifies BPL and attendance.", "Social audit publication.", "DBT credit in June."],
+    fees: "Free eligibility enrollment.",
+    processingTime: "Processed automatically at the start of the academic year.",
+    statusFlow: ["School Enrolled", "Attendance Verified", "Social Audit Approved", "Fund Disbursed"],
+    rejectionReasons: ["Attendance below 75%.", "Income or landholdings exceed BPL threshold."],
+    grievance: "AP Education Helpdesk or Sachivalayam representative.",
+    recommendations: []
+  },
+  {
+    id: "vidya-deevena",
+    kind: "scheme",
+    name: "Jagananna Vidya Deevena",
+    aliases: ["vidya deevena", "vidyadeevena", "jvd", "ap fee reimbursement"],
+    type: "State Government",
+    department: "Andhra Pradesh Higher Education Department",
+    objective: "Full fee reimbursement to students from SC/ST/BC/Minority/EBC categories.",
+    targetBeneficiaries: "Students pursuing ITI, Polytechnic, Degree, Engineering, or Medicine in AP.",
+    eligibility: [
+      "Must be a resident of Andhra Pradesh.",
+      "Total family annual income must be below Rs. 2.5 Lakhs.",
+      "Must not own four-wheelers (excluding taxis/tractors).",
+      "Must own less than 10 wet acres or 25 dry acres of land."
+    ],
+    questions: [
+      { key: "state", question: "Which state do you belong to?", type: "choice", choices: ["Andhra Pradesh"] },
+      { key: "is_student", question: "Are you currently a student?", type: "boolean" },
+      { key: "course_studying", question: "Which course are you studying?", type: "choice", choices: ["Intermediate", "Diploma", "Degree", "Engineering", "Medicine", "Post Graduation", "Other"] },
+      { key: "family_income", question: "What is your annual family income?", type: "choice", choices: ["Below ₹2.5 Lakhs", "Above ₹2.5 Lakhs"] },
+      { key: "enrolled_eligible_inst", question: "Are you studying in an eligible institution?", type: "boolean" }
+    ],
+    applicationQuestions: [
+      { key: "aadhaar_number", question: "Please enter your Aadhaar Number.", type: "text" },
+      { key: "student_name", question: "Please enter your Student Name.", type: "text" },
+      { key: "mobile_number", question: "Please enter your Mobile Number.", type: "text" },
+      { key: "college_name", question: "Please enter your College Name.", type: "text" },
+      { key: "course", question: "Please enter your Course.", type: "text" },
+      { key: "year_of_study", question: "Please enter your Year of Study.", type: "text" },
+      { key: "hall_ticket_number", question: "Please enter your Hall Ticket Number.", type: "text" },
+      { key: "family_income", question: "What is your annual family income?", type: "choice", choices: ["Below ₹2.5 Lakhs", "Above ₹2.5 Lakhs"] },
+      { key: "bank_account_number", question: "Please enter your Bank Account Number.", type: "text" },
+      { key: "ifsc_code", question: "Please enter your IFSC Code.", type: "text" },
+      { key: "ekyc", question: "Would you like to complete e-KYC?", type: "boolean" }
+    ],
+    benefits: ["Full fee reimbursement of tuition and special fees paid directly to the mother's bank account in quarterly installments."],
+    documents: [
+      { name: "Aadhaar Card", requirement: "Mandatory", source: "UIDAI", manualUpload: "No" },
+      { name: "Income Certificate", requirement: "Mandatory", source: "Sachivalayam", manualUpload: "No" },
+      { name: "Caste Certificate", requirement: "Mandatory", source: "Sachivalayam", manualUpload: "No" },
+      { name: "College Fee Details & Admission Copy", requirement: "Mandatory", source: "College", manualUpload: "Yes" }
+    ],
+    workflow: ["Admission verification via CET portal.", "Sachivalayam field enquiry for income/assets.", "Sanction release to mothers' accounts quarterly."],
+    fees: "Free application.",
+    processingTime: "Pushed quarterly based on academic schedule.",
+    statusFlow: ["CET Admitted", "College Verified", "Field Verification Approved", "Installment Sanctioned", "Paid to Mother"],
+    rejectionReasons: ["Admission in management quota.", "Family income exceeds Rs. 2.5 Lakhs."],
+    grievance: "AP JVD Portal grievance cell.",
+    recommendations: []
+  },
+  {
+    id: "ysr-cheyutha",
+    kind: "scheme",
+    name: "YSR Cheyutha",
+    aliases: ["ysr cheyutha", "cheyutha scheme", "ap women financial help"],
+    type: "State Government",
+    department: "Andhra Pradesh Society for Elimination of Rural Poverty",
+    objective: "Financial assistance to women from minority and backward categories to encourage entrepreneurship.",
+    targetBeneficiaries: "Women of SC/ST/BC/Minority categories aged 45-60 in AP.",
+    eligibility: [
+      "Must be a female resident of Andhra Pradesh.",
+      "Age must be between 45 and 60 years.",
+      "Must belong to SC, ST, BC, or Minority community.",
+      "Must satisfy BPL criteria."
+    ],
+    questions: [
+      { key: "state", question: "Which state do you belong to?", type: "choice", choices: ["Andhra Pradesh"] },
+      { key: "is_female", question: "Are you a woman?", type: "boolean" },
+      { key: "age_group", question: "Age group?", type: "choice", choices: ["45–60 Years", "Below 45", "Above 60"] },
+      { key: "family_income", question: "Annual family income?", type: "choice", choices: ["Below ₹2.5 Lakhs", "Above ₹2.5 Lakhs"] },
+      { key: "social_category", question: "Do you belong to SC, ST, BC, or Minority category?", type: "choice", choices: ["SC", "ST", "BC", "Minority", "Other"] }
+    ],
+    applicationQuestions: [
+      { key: "aadhaar_number", question: "Please enter your Aadhaar Number.", type: "text" },
+      { key: "mobile_number", question: "Please enter your Mobile Number.", type: "text" },
+      { key: "age", question: "Please enter your Age.", type: "text" },
+      { key: "category", question: "Please enter your Category.", type: "text" },
+      { key: "family_income", question: "Annual family income?", type: "choice", choices: ["Below ₹2.5 Lakhs", "Above ₹2.5 Lakhs"] },
+      { key: "bank_account_number", question: "Please enter your Bank Account Number.", type: "text" },
+      { key: "ifsc_code", question: "Please enter your IFSC Code.", type: "text" },
+      { key: "address", question: "Please enter your Address.", type: "text" },
+      { key: "ekyc", question: "Would you like to complete e-KYC?", type: "boolean" }
+    ],
+    benefits: ["Total financial assistance of Rs. 75,000 over 4 years (Rs. 18,750 per year)."],
+    documents: [
+      { name: "Aadhaar Card", requirement: "Mandatory", source: "UIDAI", manualUpload: "No" },
+      { name: "Caste Certificate", requirement: "Mandatory", source: "Sachivalayam", manualUpload: "No" },
+      { name: "White Ration Card", requirement: "Mandatory", source: "Civil Supplies", manualUpload: "No" }
+    ],
+    workflow: ["Apply via Gram/Ward Sachivalayam.", "Verification of age, caste, and BPL status.", "Social audit.", "DBT disbursement."],
+    fees: "Free application.",
+    processingTime: "30-60 working days.",
+    statusFlow: ["Applied", "Age Verified", "Caste Approved", "Disbursed"],
+    rejectionReasons: ["Age is not between 45 and 60.", "Belongs to general category without minority status."],
+    grievance: "AP SERP helpline or Sachivalayam.",
+    recommendations: []
+  },
+  {
+    id: "ebc-nestham",
+    kind: "scheme",
+    name: "YSR EBC Nestham",
+    aliases: ["ebc nestham", "ebcnestham", "ap upper caste women help"],
+    type: "State Government",
+    department: "Andhra Pradesh BC Welfare Department",
+    objective: "Financial assistance to economically backward class upper-caste women.",
+    targetBeneficiaries: "EBC women aged 45-60 belonging to castes like Reddy, Kamma, Arya Vysya, Brahmin, etc.",
+    eligibility: [
+      "Must be a female resident of Andhra Pradesh.",
+      "Age must be between 45 and 60 years.",
+      "Must belong to an eligible EBC caste (Reddy, Kamma, Arya Vysya, Brahmin, etc.).",
+      "Family income must be below BPL limits."
+    ],
+    questions: [
+      { key: "is_ap_resident", question: "Are you a permanent resident of Andhra Pradesh?", type: "boolean" },
+      { key: "is_female", question: "Are you female?", type: "boolean" },
+      { key: "age", question: "What is your exact age?", type: "number" },
+      { key: "social_category", question: "What is your caste category?", type: "choice", choices: ["Reddy", "Kamma", "Arya Vysya", "Brahmin", "Other EBC"] }
+    ],
+    applicationQuestions: [],
+    benefits: ["Rs. 15,000 per year financial assistance for EBC women."],
+    documents: [
+      { name: "Aadhaar Card", requirement: "Mandatory", source: "UIDAI", manualUpload: "No" },
+      { name: "EBC Caste Certificate", requirement: "Mandatory", source: "Sachivalayam", manualUpload: "No" },
+      { name: "Income Certificate", requirement: "Mandatory", source: "Sachivalayam", manualUpload: "No" }
+    ],
+    workflow: ["Registration via Ward/Gram Sachivalayam.", "Caste and income verified by revenue officials.", "Social audit.", "Fund credit."],
+    fees: "Free application.",
+    processingTime: "45-60 working days.",
+    statusFlow: ["Applied", "Caste Verified", "Income Approved", "Sanctioned", "Paid"],
+    rejectionReasons: ["Age is not between 45 and 60.", "Income exceeds BPL limit."],
+    grievance: "AP BC Welfare department.",
+    recommendations: []
+  },
+  {
+    id: "ujjwala",
+    kind: "scheme",
+    name: "Pradhan Mantri Ujjwala Yojana (PMUY)",
+    aliases: ["ujjwala", "ujjwala yojana", "free gas", "lpg connection", "gas scheme"],
+    type: "Central Government",
+    department: "Ministry of Petroleum and Natural Gas",
+    objective: "Provide deposit-free LPG connections to women from BPL families.",
+    targetBeneficiaries: "Adult women from BPL/low-income families without active gas connections.",
+    eligibility: [
+      "Must be an adult female resident of India.",
+      "Must belong to a BPL household.",
+      "No active LPG connection in the household."
+    ],
+    questions: [
+      { key: "is_female", question: "Are you female?", type: "boolean" },
+      { key: "has_lpg_connection", question: "Do you or anyone in your household have an active LPG connection?", type: "boolean" },
+      { key: "has_bpl_card", question: "Do you have a valid BPL card or ration card?", type: "boolean" }
+    ],
+    applicationQuestions: [],
+    benefits: ["One deposit-free LPG connection per household.", "Financial support of Rs. 1,600 for cylinder regulator and pipe.", "Subsidy on refills."],
+    documents: [
+      { name: "Aadhaar Card", requirement: "Mandatory", source: "UIDAI", manualUpload: "No" },
+      { name: "Ration Card (BPL)", requirement: "Mandatory", source: "Civil Supplies", manualUpload: "No" },
+      { name: "Bank Passbook", requirement: "Mandatory", source: "Bank", manualUpload: "Yes" }
+    ],
+    workflow: ["Submit application at nearby LPG distributor.", "De-duplication checks via LPG portal.", "KYC validation.", "LPG connection issued."],
+    fees: "Deposit and connection are free.",
+    processingTime: "7-14 working days.",
+    statusFlow: ["Applied at Distributor", "KYC Approved", "De-duplication Cleared", "Connection Released"],
+    rejectionReasons: ["Household already has an LPG connection.", "Aadhaar duplicate found in connection database."],
+    grievance: "PMUY Helpdesk 1800-266-6696.",
+    recommendations: []
+  }
 ];
 
 export function getKnowledgeItem(id: string) {

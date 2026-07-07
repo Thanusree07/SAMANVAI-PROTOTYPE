@@ -24,12 +24,15 @@ import {
 } from "lucide-react";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 
-type LanguageCode = "en" | "te" | "hi";
+type LanguageCode = "en" | "te" | "hi" | "kn";
 type FlowStep = "login" | "pin" | "language" | "dashboard";
 type ViewKey = "home" | "history" | "applications" | "documents" | "notifications" | "support" | "settings" | "profile";
 type BrowserSpeechRecognition = {
   lang: string;
   interimResults: boolean;
+  onstart?: () => void;
+  onend?: () => void;
+  onerror?: (event: any) => void;
   onresult: (event: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void;
   start: () => void;
 };
@@ -53,6 +56,7 @@ type KnowledgeSummary = {
   name: string;
   department: string;
   questions: FormQuestion[];
+  applicationQuestions?: FormQuestion[];
   documents: Array<{ name: string; requirement: string; source: string; manualUpload: string }>;
   workflow: string[];
   fees: string;
@@ -65,6 +69,8 @@ type AssistantResult = {
   response: string;
   nextQuestion?: { key: string; question: string };
   canApply: boolean;
+  suggestions?: string[];
+  eligible?: boolean;
 };
 
 const accessPin = "2026";
@@ -72,6 +78,7 @@ const portalLanguages: Array<{ code: LanguageCode; label: string; nativeName: st
   { code: "en", label: "English", nativeName: "English" },
   { code: "te", label: "Telugu", nativeName: "తెలుగు" },
   { code: "hi", label: "Hindi", nativeName: "हिन्दी" },
+  { code: "kn", label: "Kannada", nativeName: "ಕನ್ನಡ" },
 ];
 const samanvaiLanguages = portalLanguages;
 
@@ -199,6 +206,47 @@ const copy = {
     noApplications: "अभी कोई application नहीं है. Verified service के लिए SAMANVAI से पूछें और eligible होने पर submit करें.",
     consent: "Minimum data collection, audit logging, और secure government API checks के लिए consent active है.",
   },
+  kn: {
+    secureAccess: "ಸುರಕ್ಷಿತ ಸರ್ಕಾರಿ ಪ್ರವೇಶ",
+    loginTitle: "Government Portal Login",
+    loginSubtitle: "SAMANVAI ಪ್ರಾರಂಭಿಸುವ ಮೊದಲು Government Portal ನಲ್ಲಿ ದೃಢೀಕರಿಸಿ.",
+    citizenId: "Citizen ID",
+    password: "Password",
+    login: "Login",
+    pinTitle: "Citizen PIN ನಮೂದಿಸಿ",
+    pinSubtitle: "SAMANVAI workspace ತೆರೆಯಲು portal session verify ಮಾಡಿ.",
+    pinPlaceholder: "4-digit PIN",
+    verify: "Verify PIN",
+    pinHint: "Citizen PIN: 2026",
+    invalidPin: "ಸರಿಯಾದ 4-digit citizen PIN ನಮೂದಿಸಿ.",
+    languageTitle: "ನಿಮ್ಮ ಆದ್ಯತೆಯ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    languageSubtitle: "Government Portal ಭಾಷೆ ಬೇರೆಯಾಗಿರುತ್ತದೆ. SAMANVAI ಆಯ್ಕೆಮಾಡಿದ ಭಾಷೆಯಲ್ಲಿ ಮುಂದುವರಿಯುತ್ತದೆ.",
+    chooseLanguage: "ಮುಂದುವರಿಯಿರಿ",
+    tagline: "ಅಗತ್ಯದಿಂದ ಸೇವೆಗೆ",
+    verifiedCitizen: "Verified Citizen",
+    quickAccess: "Quick Access",
+    checkStatus: "Status Check",
+    checkEligibility: "Eligibility Check",
+    bookAppointment: "Appointment Book ಮಾಡಿ",
+    latestUpdates: "Latest Updates",
+    home: "Home",
+    history: "History",
+    applications: "My Applications",
+    documents: "My Documents",
+    notifications: "Notifications",
+    support: "Help & Support",
+    settings: "Settings",
+    profile: "User Profile",
+    accessibility: "Accessibility",
+    menu: "Menu",
+    typePrompt: "ನಿಮ್ಮ ವಿನಂತಿಯನ್ನು ನಮೂದಿಸಿ",
+    voicePrompt: "ನಿಮ್ಮ ವಿನಂತಿಯನ್ನು ತಿಳಿಸಿ",
+    send: "Send",
+    apply: "Apply",
+    statusInput: "SAMANVAI Reference ID ನಮೂದಿಸಿ",
+    noApplications: "ಯಾವುದೇ ಅರ್ಜಿಗಳು ಇಲ್ಲ. ಸೇವೆಗಾಗಿ SAMANVAI ಅನ್ನು ಕೇಳಿ.",
+    consent: "ಕನಿಷ್ಠ ಡೇಟಾ ಸಂಗ್ರಹಣೆಗೆ ಸಮ್ಮತಿ ಸಕ್ರಿಯವಾಗಿದೆ.",
+  },
 } satisfies Record<LanguageCode, Record<string, string>>;
 
 const sidebarIconMap = [Home, History, FileCheck2, FileText, Bell, CircleHelp, Settings, User];
@@ -208,6 +256,7 @@ const greetingLine: Record<LanguageCode, string> = {
   en: "Namaste, Verified Citizen! Which government service can I help you complete today?",
   te: "నమస్కారం, ధృవీకరించిన పౌరుడా! ఈరోజు ఏ ప్రభుత్వ సేవను పూర్తి చేయడంలో సహాయం చేయాలి?",
   hi: "नमस्ते, Verified Citizen! आज किस सरकारी सेवा को पूरा करने में सहायता चाहिए?",
+  kn: "ನಮಸ್ಕಾರ, ಪರಿಶೀಲಿಸಿದ ನಾಗರಿಕರೇ! ಇಂದು ನಾನು ನಿಮಗೆ ಯಾವ ಸರ್ಕಾರಿ ಸೇವೆಯನ್ನು ಪೂರ್ಣಗೊಳಿಸಲು ಸಹಾಯ ಮಾಡಲಿ?",
 };
 
 export default function SamanvaiApp() {
@@ -242,6 +291,7 @@ export default function SamanvaiApp() {
   const [history, setHistory] = useState<Array<{ id: string; input: string; response: string; at: string }>>([]);
   const [statusReference, setStatusReference] = useState("");
   const [statusText, setStatusText] = useState("");
+  const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<unknown>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const chatEndRef = useRef<HTMLDivElement | null>(null);
@@ -307,17 +357,42 @@ export default function SamanvaiApp() {
     setStep("dashboard");
   }
 
-  function openAssistant(mode: "text" | "voice", seed = "") {
+  async function openAssistant(mode: "text" | "voice", seed = "") {
     setAssistantMode(mode);
     setAssistantOpen(true);
     setActiveView("home");
-    if (seed) setMessage(seed);
-    if (mode === "voice") {
-      startVoice();
+    setAssistant(null);
+    setDraftFacts({});
+    setConversation([]);
+
+    // Unlock SpeechSynthesis for the browser during this user-gesture click
+    if (mode === "voice" && typeof window !== "undefined" && window.speechSynthesis) {
+      try {
+        window.speechSynthesis.cancel();
+        const silentUtterance = new SpeechSynthesisUtterance("");
+        window.speechSynthesis.speak(silentUtterance);
+      } catch (e) {
+        console.error("Error unlocking SpeechSynthesis:", e);
+      }
+    }
+
+    // Call backend API reset to clear backend session facts
+    await fetch("/api/samanvai", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "reset" }),
+    });
+
+    if (seed) {
+      void sendAssistantMessage(seed);
     } else {
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 100);
+      if (mode === "voice") {
+        startVoice();
+      } else {
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 100);
+      }
     }
   }
 
@@ -325,6 +400,7 @@ export default function SamanvaiApp() {
     const text = (seed || message).trim();
     if (!text) return;
     setMessage("");
+    setAssistant((prev) => prev ? { ...prev, suggestions: [] } : null);
     setConversation((items) => [...items, { role: "citizen", text }]);
     const response = await fetch("/api/samanvai", {
       method: "POST",
@@ -377,6 +453,28 @@ export default function SamanvaiApp() {
   }
 
   function startVoice() {
+    // Unlock SpeechSynthesis for the browser during this user-gesture click
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      try {
+        const silentUtterance = new SpeechSynthesisUtterance("");
+        window.speechSynthesis.speak(silentUtterance);
+      } catch (e) {
+        console.error("Error unlocking SpeechSynthesis:", e);
+      }
+    }
+
+    if (isListening) {
+      if (recognitionRef.current) {
+        try {
+          (recognitionRef.current as any).stop();
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      setIsListening(false);
+      return;
+    }
+
     const SpeechRecognitionCtor =
       typeof window !== "undefined" &&
       ((window as unknown as { SpeechRecognition?: new () => BrowserSpeechRecognition; webkitSpeechRecognition?: new () => BrowserSpeechRecognition }).SpeechRecognition ||
@@ -386,22 +484,48 @@ export default function SamanvaiApp() {
       return;
     }
     const recognition = new SpeechRecognitionCtor();
-    recognition.lang = selectedLanguage === "te" ? "te-IN" : selectedLanguage === "hi" ? "hi-IN" : "en-IN";
+    recognition.lang = selectedLanguage === "te" ? "te-IN" : selectedLanguage === "hi" ? "hi-IN" : selectedLanguage === "kn" ? "kn-IN" : "en-IN";
     recognition.interimResults = false;
+    
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+    recognition.onerror = () => {
+      setIsListening(false);
+    };
     recognition.onresult = (event) => {
       const transcript = event.results[0]?.[0]?.transcript || "";
       void sendAssistantMessage(transcript);
     };
-    recognition.start();
-    recognitionRef.current = recognition;
+    try {
+      recognition.start();
+      recognitionRef.current = recognition;
+    } catch (e) {
+      console.error(e);
+      setIsListening(false);
+    }
   }
 
   function speak(text: string) {
     if (assistantMode !== "voice" || typeof window === "undefined" || !window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text.replace(/\n+/g, ". "));
-    utterance.lang = selectedLanguage === "te" ? "te-IN" : selectedLanguage === "hi" ? "hi-IN" : "en-IN";
-    window.speechSynthesis.speak(utterance);
+    try {
+      window.speechSynthesis.cancel();
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
+      const utterance = new SpeechSynthesisUtterance(text.replace(/\n+/g, ". "));
+      utterance.lang = selectedLanguage === "te" ? "te-IN" : selectedLanguage === "hi" ? "hi-IN" : selectedLanguage === "kn" ? "kn-IN" : "en-IN";
+      
+      // Delay slightly to allow cancel process to settle
+      setTimeout(() => {
+        window.speechSynthesis.speak(utterance);
+      }, 50);
+    } catch (e) {
+      console.error("Speech Synthesis Error:", e);
+    }
   }
 
   return (
@@ -585,7 +709,7 @@ export default function SamanvaiApp() {
                             <div className="mt-8 w-full max-w-md">
                               <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Popular Suggestions</p>
                               <div className="flex flex-wrap justify-center gap-2">
-                                {["PM-KISAN", "Aarogyasri", "Indiramma Illu", "Telangana ePASS"].map((suggestion) => (
+                                {["PM-KISAN", "Aarogyasri", "Indiramma Illu", "National Scholarship Schemes"].map((suggestion) => (
                                   <button
                                     key={suggestion}
                                     type="button"
@@ -603,10 +727,26 @@ export default function SamanvaiApp() {
                         ) : (
                           <div className="overflow-y-auto max-h-[60vh] pr-2 space-y-3 mb-4">
                             {conversation.map((entry, index) => (
-                              <div key={`${entry.role}-${index}`} className={`rounded-2xl px-4 py-3 text-sm leading-6 ${entry.role === "citizen" ? "ml-auto max-w-[84%] bg-[#0a2a6e] text-white" : "mr-auto max-w-[92%] bg-white text-slate-800 shadow-sm"}`}>
+                              <div key={`${entry.role}-${index}`} className={`rounded-2xl px-4 py-3 text-sm leading-6 whitespace-pre-wrap ${entry.role === "citizen" ? "ml-auto max-w-[84%] bg-[#0a2a6e] text-white" : "mr-auto max-w-[92%] bg-white text-slate-800 shadow-sm"}`}>
                                 {entry.text}
                               </div>
                             ))}
+                            {assistant?.suggestions && assistant.suggestions.length > 0 && (
+                              <div className="mt-3 flex flex-wrap gap-2">
+                                {assistant.suggestions.map((suggestion) => (
+                                  <button
+                                    key={suggestion}
+                                    type="button"
+                                    onClick={() => {
+                                      void sendAssistantMessage(suggestion);
+                                    }}
+                                    className="rounded-xl border border-[#0a2a6e]/20 bg-[#0a2a6e]/5 hover:bg-[#0a2a6e]/10 px-4 py-2 text-xs font-bold text-[#0a2a6e] shadow-sm transition cursor-pointer"
+                                  >
+                                    {suggestion}
+                                  </button>
+                                ))}
+                              </div>
+                            )}
                             <div ref={chatEndRef} />
                           </div>
                         )}
@@ -700,7 +840,7 @@ function LiveApplicationForm({
   submitApplication: () => void;
   applyLabel: string;
 }) {
-  const isApplying = facts.agreed_to_apply === true || String(facts.agreed_to_apply) === "true";
+  const isApplying = (facts.agreed_to_apply === true || String(facts.agreed_to_apply) === "true" || facts.checking_eligibility === true || String(facts.checking_eligibility) === "true") && assistant?.eligible !== false;
 
   if (!isApplying) {
     return (
@@ -717,16 +857,8 @@ function LiveApplicationForm({
   }
 
   const item = assistant?.item;
-  const baseFields: FormQuestion[] = [
-    { key: "state", question: "State", type: "text" },
-    { key: "district", question: "District", type: "text" },
-    { key: "name", question: "Name", type: "text" },
-    { key: "date_of_birth", question: "Date of Birth", type: "date" },
-    { key: "gender", question: "Gender", type: "text" },
-    { key: "address", question: "Address", type: "text" },
-  ];
-  const dynamicFields = item?.questions || [];
-  const fields = [...baseFields, ...dynamicFields].filter((field, index, all) => all.findIndex((candidate) => candidate.key === field.key) === index);
+  const isAgreed = facts.agreed_to_apply === true || String(facts.agreed_to_apply) === "true";
+  const fields = isAgreed ? (item?.applicationQuestions || []) : (item?.questions || []);
   const hasWorkflow = Boolean(item);
 
   const allFieldsCompleted = fields.every((field) => {
@@ -747,6 +879,82 @@ function LiveApplicationForm({
         </div>
       </div>
 
+      {/* Visual Progress Steps */}
+      <div className="mt-4 border-t border-slate-100 pt-4">
+        <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Application Progress</p>
+        <div className="mt-3 flex items-center justify-between gap-1">
+          {["Identify", "Eligibility", "Details", "Verify"].map((stepLabel, idx) => {
+            let stepStatus = "pending"; // pending, active, completed
+            const isChecking = facts.checking_eligibility === true || String(facts.checking_eligibility) === "true";
+            
+            if (idx === 0) {
+              stepStatus = "completed";
+            } else if (idx === 1) {
+              if (isChecking || isAgreed) {
+                const allEligibilityAnswered = item?.questions.every((q) => facts[q.key] !== undefined && facts[q.key] !== "") ?? false;
+                stepStatus = allEligibilityAnswered ? "completed" : "active";
+              } else {
+                stepStatus = "pending";
+              }
+            } else if (idx === 2) {
+              if (isAgreed) {
+                const allEligibilityAnswered = item?.questions.every((q) => facts[q.key] !== undefined && facts[q.key] !== "") ?? false;
+                const allAppFieldsAnswered = item?.applicationQuestions?.every((q) => facts[q.key] !== undefined && facts[q.key] !== "") ?? false;
+                if (allEligibilityAnswered) {
+                  stepStatus = allAppFieldsAnswered ? "completed" : "active";
+                } else {
+                  stepStatus = "pending";
+                }
+              } else {
+                stepStatus = "pending";
+              }
+            } else if (idx === 3) {
+              if (isAgreed) {
+                const allAppFieldsAnswered = item?.applicationQuestions?.every((q) => facts[q.key] !== undefined && facts[q.key] !== "") ?? false;
+                stepStatus = allAppFieldsAnswered ? "active" : "pending";
+              } else {
+                stepStatus = "pending";
+              }
+            }
+
+            return (
+              <div key={stepLabel} className="flex flex-1 flex-col items-center">
+                <div className={`h-1.5 w-full rounded-full transition-all duration-300 ${
+                  stepStatus === "completed"
+                    ? "bg-[#138808]"
+                    : stepStatus === "active"
+                    ? "bg-sky-500 animate-pulse"
+                    : "bg-slate-200"
+                }`} />
+                <span className="mt-1.5 text-[9px] font-bold text-slate-500 text-center leading-3">{stepLabel}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {isAgreed ? (
+        <div className="mt-4 border-t border-slate-100 pt-4">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Application Progress</p>
+          <div className="mt-2 space-y-1.5">
+            {fields.map((field) => {
+              const value = facts[field.key];
+              const filled = value !== undefined && value !== "";
+              return (
+                <div key={field.key} className="flex items-center gap-2 text-xs font-semibold">
+                  <span className={filled ? "text-[#138808] font-black" : "text-slate-400 font-bold"}>
+                    {filled ? "✔" : "☐"}
+                  </span>
+                  <span className={filled ? "text-slate-700" : "text-slate-500"}>
+                    {field.question.replace(/\?$/, "").replace(/Please enter your\s+/i, "").replace(/Enter your\s+/i, "").replace(/Would you like to complete\s+/i, "")}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
+
       <div className="mt-4 space-y-2">
         {fields.map((field) => {
           const value = facts[field.key];
@@ -755,7 +963,7 @@ function LiveApplicationForm({
             <label key={field.key} className="block rounded-2xl border border-white/90 bg-white/72 p-3">
               <span className="flex items-center justify-between gap-2 text-xs font-black uppercase tracking-wide text-slate-500">
                 {field.question}
-                <span className={filled ? "text-[#138808]" : "text-slate-400"}>{filled ? "Verified" : "Pending"}</span>
+                <span className={filled ? "text-[#138808] font-bold" : "text-slate-400 font-bold"}>{filled ? "✔ Verified" : "☐ Pending"}</span>
               </span>
               {reviewOpen ? (
                 <input value={String(value ?? "")} onChange={(event) => updateFact(field.key, event.target.value)} className="mt-2 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-800 outline-none focus:border-sky-300" />

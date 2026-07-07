@@ -25,49 +25,956 @@
   ],
   "history": [
     {
-      "id": "3413aca5-4346-4ca7-bd97-f5cce72855a1",
-      "input": "arogyasri",
-      "response": "**Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)** is managed by the Ministry of Agriculture & Farmers Welfare.\n\nWhat would you like to do next?",
-      "at": "2026-07-06T20:39:51.561Z"
+      "id": "bb9f32bd-6d0f-483e-a81d-532d81a7bba6",
+      "input": "No",
+      "response": "❌ Not Eligible\n\nUnfortunately, based on the information provided, you are not eligible for this scheme.",
+      "at": "2026-07-07T15:53:27.887Z"
     },
     {
-      "id": "4cc63eb6-26f1-49bd-b7b0-24c11e542a1e",
-      "input": "Aarogyasri",
-      "response": "**Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)** is managed by the Ministry of Agriculture & Farmers Welfare.\n\nWhat would you like to do next?",
-      "at": "2026-07-06T20:39:40.311Z"
+      "id": "a6fc8a1d-fa40-4ff8-8f2a-efceb6e11304",
+      "input": "No",
+      "response": "Sure. I'll help you with your PM-KISAN application.\n\nIncome support to landholding farmers for agricultural inputs and related needs.\n\nI need one required detail to continue: Is any member of your family a government employee?",
+      "at": "2026-07-07T15:53:26.500Z"
     },
     {
-      "id": "4e0acdc5-b6a8-4662-b156-e33a89d0a0dc",
-      "input": "hi",
-      "response": "Hello! How can I help you today?Noted! 👍\n\nDo you or your family own cultivable agricultural land?",
-      "at": "2026-07-06T20:26:42.361Z"
+      "id": "ec2329bf-d44d-47ff-8acd-e8545ea1e82e",
+      "input": "Guntur",
+      "response": "Sure. I'll help you with your PM-KISAN application.\n\nIncome support to landholding farmers for agricultural inputs and related needs.\n\nI need one required detail to continue: Do you own cultivable agricultural land?",
+      "at": "2026-07-07T15:53:23.992Z"
     },
     {
-      "id": "ed53bd3f-1719-4c4d-bfd6-418107b2479a",
-      "input": "hi",
-      "response": "Hello! How can I help you today?Perfect! 👍\n\nDo you or your family own cultivable agricultural land?",
-      "at": "2026-07-06T20:23:07.415Z"
+      "id": "171275ce-510a-4797-8d7b-bf3375565bf4",
+      "input": "Andhra Pradesh",
+      "response": "Sure. I'll help you with your PM-KISAN application.\n\nIncome support to landholding farmers for agricultural inputs and related needs.\n\nI need one required detail to continue: Do you own cultivable agricultural land?",
+      "at": "2026-07-07T15:53:21.940Z"
     },
     {
-      "id": "1783a190-8ecd-4a54-a1fc-f7917b67de57",
-      "input": "tpt",
-      "response": "Perfect! 👍\n\nDo you or your family own cultivable agricultural land?",
-      "at": "2026-07-06T20:03:20.890Z"
+      "id": "704c5b9b-8518-4a70-9251-24c82cd629da",
+      "input": "Check Eligibility",
+      "response": "Understood. Let's verify your eligibility for PM-KISAN.\n\nState",
+      "at": "2026-07-07T15:53:19.677Z"
     },
     {
-      "id": "ee25dfb0-9f94-4281-900a-9ea5295fe92f",
-      "input": "gd farmer nenu any scheme",
-      "response": "Which district?",
-      "at": "2026-07-06T20:03:20.586Z"
+      "id": "87ead36a-c97f-4523-987b-0d0d8b6b57aa",
+      "input": "PM-KISAN",
+      "response": "PM-KISAN\n\nPM-KISAN provides financial assistance to eligible farmer families to support agricultural activities.\n\nWhat would you like to know about this scheme?",
+      "at": "2026-07-07T15:53:18.065Z"
     }
   ],
   "profileFacts": {
+    "selectedScheme": "PM-KISAN",
+    "selectedSituation": "Farmer / Agriculture",
+    "phase1_completed": true,
+    "checking_eligibility": true,
     "active_scheme_id": "pmkisan",
-    "district": "tpt",
     "active_conv_lang": "en",
-    "state": "tpt"
+    "state": "Andhra Pradesh",
+    "district": "Guntur",
+    "owns_cultivable_land": false,
+    "paid_income_tax": false,
+    "is_govt_employee": false
   },
   "auditLogs": [
+    {
+      "id": "7596f296-8057-4e40-a57e-1dcc9f9a0c16",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:53:27.887Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "65a91c10-a63a-4592-b098-d5e8da4ba39e",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:53:26.500Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "6ec12d2e-f808-4b49-9d59-b7605cb135b7",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:53:23.992Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "309d14ac-18a2-41d6-bf16-a270d7d4af64",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:53:21.940Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "00b27a35-b4cf-477e-93d6-6e1c7f871c96",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:53:08.923Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "2ab863df-59fc-4b18-af79-4f25afe534d8",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:53:06.008Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "7054ca2d-b8c8-4e16-bee8-c55b7f3bcc84",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:52:56.566Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "1a0ccf8b-4440-456f-a630-f92afade9307",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:52:54.124Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "0b844773-4bed-46f6-8627-69cf9c352142",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:26:16.235Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "6a40165a-05d8-4d6d-b900-c996b5f14876",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:26:12.845Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "433cb024-a493-47a3-b3e0-dd487c2d5bda",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:26:10.484Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "6bb5f78d-36a6-4a7e-a2ed-e44b9279f46c",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:26:08.237Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "a280591a-1778-4250-aa09-7d83a14abd97",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:23:22.670Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "ac99459d-8d70-4284-96ac-846820d39f07",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:23:19.583Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "12e4e7d2-35ed-4160-98d1-7fa52b2400f6",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:23:16.097Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "ab650792-e105-4fbf-9271-1dd32f3a449c",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:23:14.460Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "45627aee-fd63-4400-bc21-ba38f4c6f726",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:18:44.524Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "ad76c242-a628-45b5-9e3a-ca51055a01b4",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:18:41.869Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "60c943a4-7b05-431c-a091-392c11a8f870",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:18:39.805Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "5cbfef06-6879-4fbc-b0c0-b74eae65c089",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:18:36.747Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "fbc308d7-3d62-4f89-a669-1782ee5aeb60",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:15:06.205Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "68fc040b-7262-4a76-ba77-a76301da253c",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:15:03.751Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "d4569296-9ac3-4f67-b625-205102aa3fd7",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:14:59.690Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "93bbf94a-56f4-4cba-b026-b0d97ae3da33",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:14:56.905Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "ca121a37-46e7-4e5b-8eb2-aa4029388859",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:12:20.214Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "31f78077-5b7e-4509-b63e-14434a6603ad",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:12:17.249Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "14786c39-06f2-4d5f-9855-90935dab0c3a",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:12:11.000Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "d88cf858-7827-4f0d-80c6-e296fbd5154b",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:12:08.747Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "765baefa-8511-44c2-8b06-5071c216bf14",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:07:22.738Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "58104c1d-4852-445c-a4ef-082cc7e52494",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:07:18.027Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "49b87e3a-cbe8-4649-b0b6-054ae1020e13",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:07:13.932Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "bae81410-3bf1-43a5-8c34-8a7aec351699",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:07:11.745Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "28970fc9-d4e7-4c08-9180-561dbf0a0884",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:06:32.668Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "889d87b3-3ea1-46e0-bbcc-64dacacf1fde",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:06:24.896Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "70cd659d-5223-4ae5-b9d2-cce722a67931",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:06:22.934Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "e2f246a8-a99e-404f-993e-51c46ac38083",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:06:20.068Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "9c0ff513-7c03-4701-8792-cdf94ff16904",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:06:18.053Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "3b7f0a68-8fd0-415a-9208-a4a11ad6cc08",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:05:29.994Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "277eb7c3-4bf3-46fc-a290-a24dfd7aacf6",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:05:27.951Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "718e6609-9987-4939-8071-83ad296d6d7e",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:05:24.136Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "986ae8fd-fee5-4c73-8e42-375bb3fdd8f7",
+      "action": "assistant_message",
+      "at": "2026-07-07T15:05:22.281Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "687a2252-5595-47f8-a54c-c3b537f4c983",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:59:05.686Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "1cfe1d0a-8602-4e5b-8ee6-dda5a9c31abd",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:58:59.230Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "f8692b43-482c-49bd-b6c8-1daf0330d5f0",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:58:54.597Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "dfc3d7ae-530f-434a-ba03-0f810b5179a7",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:58:37.836Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "770fb1f9-3e7e-4c0d-831b-8d91d914f2e1",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:48:49.636Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "54c9ffff-e5e7-4a75-8c30-88968dddc889",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:48:43.500Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "8393579a-4bd6-4547-a972-d230a3242f4a",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:48:36.853Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "d8c70917-768c-4164-8a4e-9346caf38802",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:48:32.129Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "b770f97d-1093-4213-8eaf-02e17cf84eb4",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:42:29.114Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "7dbd4848-6a9c-4e22-9247-ec61b010ff99",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:42:25.431Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "0676b61d-d752-4db0-9f84-89887928aa13",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:42:22.561Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "7897b5d6-eb80-44cf-9bbe-d7827f10f241",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:42:20.102Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "853fcedc-7a15-4d5f-9ffe-fe17deb97b93",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:32:21.565Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "7dd1dec7-e044-4f5e-875e-2cf6444d0f82",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:32:09.280Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "b74ee771-7479-4156-bc22-eac2deb42dd3",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:32:05.900Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "cd953131-c0b7-4de0-aaa6-8116f06c9039",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:30:52.794Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "b8255ba5-dfd9-4fe5-8f43-2a8baad73979",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:21:35.110Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "51928713-88a4-4169-84ec-9570c667abd8",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:20:55.578Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "b21ad85e-df55-4a56-91e7-05630a7f3188",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:20:48.617Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "a45dda74-2294-4f56-b784-fb08d871b924",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:20:45.962Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "cee3e894-528a-4afb-8d0c-2f4d01710589",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:20:02.025Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "102dbb21-1c2c-47c4-a373-ea9b3d46ed2b",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:19:54.245Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "1d865223-6f55-4e49-b2c2-3732a0b7004f",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:19:50.657Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "68bb0bce-c727-4c84-8221-027543d07c42",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:19:46.971Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "10fd8b2b-5130-43f1-a1bb-e0ded7b6d24c",
+      "action": "assistant_message",
+      "at": "2026-07-07T14:19:44.415Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "8c73fa5d-6299-48d4-ac2a-1fc3cb640a21",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:57:24.195Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "02ee548b-510e-4bc8-84b2-4558ce1533b8",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:57:15.691Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "009a47f9-58ac-4c43-99fc-74d78c8ce8d6",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:57:09.326Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "2994d2f7-2c39-4f1b-a70e-d0112616939e",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:57:03.508Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "de2da22d-8096-4e42-914b-87a9933f8d09",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:56:58.168Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "41b3d862-8abd-4e06-bb0c-bec308357a70",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:56:50.594Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "97465a65-fd28-4903-ab4c-cbaacdf16f81",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:56:41.578Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "a451d409-9830-4c89-994a-7958da802606",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:56:02.878Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "post-matric-scholarship"
+      }
+    },
+    {
+      "id": "e2601f69-6b43-4bd1-89cf-fa157846e22a",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:52:31.411Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "post-matric-scholarship"
+      }
+    },
+    {
+      "id": "5b1a7439-aff9-43ba-909d-105803f3de5d",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:52:19.942Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "post-matric-scholarship"
+      }
+    },
+    {
+      "id": "02d9fa0c-8ad6-403b-be35-2bd05d795b93",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:52:05.915Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "post-matric-scholarship"
+      }
+    },
+    {
+      "id": "2f0447fe-d1a3-462f-866b-e19ad04fe519",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:51:58.130Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "post-matric-scholarship"
+      }
+    },
+    {
+      "id": "bd065512-ff7c-4d0f-a1ed-d9a2caab45fe",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:51:44.521Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "post-matric-scholarship"
+      }
+    },
+    {
+      "id": "0927fa14-d235-4e9d-b5e0-34533ff0f393",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:51:33.974Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "post-matric-scholarship"
+      }
+    },
+    {
+      "id": "681ed764-3163-4497-80b4-635af83fe5aa",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:46:11.587Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "bd83d070-14f3-4b0b-a11e-67386d1bd523",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:43:23.149Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "745bfb47-5935-4d3a-93a3-afc3ef155a01",
+      "action": "assistant_message",
+      "at": "2026-07-07T13:42:03.344Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "c34aab4e-4a82-4981-a560-f3a9e2935d07",
+      "action": "assistant_message",
+      "at": "2026-07-07T10:38:56.415Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "ee106799-bce0-4d48-9cb0-15d58b9cde20",
+      "action": "assistant_message",
+      "at": "2026-07-07T10:37:25.924Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "aarogyasri"
+      }
+    },
+    {
+      "id": "74ef1ef0-8340-49fd-9fa8-e1ba0cf27262",
+      "action": "assistant_message",
+      "at": "2026-07-07T10:36:43.289Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "2021e6fa-3b2c-48fe-8988-efe0dc2bf734",
+      "action": "assistant_message",
+      "at": "2026-07-07T10:29:25.081Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "d1b76890-e094-4c7e-aba2-9de17c1112a1",
+      "action": "assistant_message",
+      "at": "2026-07-07T10:02:48.670Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "7411727b-6421-46c2-a315-17e511a328ce",
+      "action": "assistant_message",
+      "at": "2026-07-07T06:34:36.825Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "f824e019-a32e-4b07-96d7-d7270d774433",
+      "action": "assistant_message",
+      "at": "2026-07-07T06:34:27.505Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "87e73bf4-15e2-4db4-a39d-fe84b0ebca99",
+      "action": "assistant_message",
+      "at": "2026-07-07T06:34:16.295Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "1b391123-9b5d-4544-9f92-828b5e7c9375",
+      "action": "assistant_message",
+      "at": "2026-07-07T06:34:10.103Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "indiramma-illu"
+      }
+    },
+    {
+      "id": "d7e904eb-23ac-44e1-9494-d6cf4093b0d0",
+      "action": "assistant_message",
+      "at": "2026-07-07T06:33:00.935Z",
+      "metadata": {
+        "intent": "service_discovery",
+        "itemId": "unknown"
+      }
+    },
+    {
+      "id": "b367285e-6f89-4b39-a8fb-8ee35788575b",
+      "action": "assistant_message",
+      "at": "2026-07-07T06:29:34.135Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "8d4e32fe-3d75-4748-bc7b-b6acb731a032",
+      "action": "assistant_message",
+      "at": "2026-07-07T06:29:20.710Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "6fee7f61-0698-42c2-8d9f-c786b26dde60",
+      "action": "assistant_message",
+      "at": "2026-07-07T06:27:37.941Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "5f2a6878-a7d1-4eef-a68a-c0461bf9a739",
+      "action": "assistant_message",
+      "at": "2026-07-07T06:27:01.822Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "f45cb22e-8471-47c1-895b-f80ec7673ffd",
+      "action": "assistant_message",
+      "at": "2026-07-07T05:18:53.162Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "97dc6899-4697-425e-8858-646413e0aa3a",
+      "action": "assistant_message",
+      "at": "2026-07-07T05:18:34.559Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "3cf7f9ff-a437-43b5-a356-75a0d5bdba98",
+      "action": "assistant_message",
+      "at": "2026-07-07T05:18:25.676Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
     {
       "id": "4f95942f-e533-4143-bb00-892bda25a75e",
       "action": "assistant_message",
