@@ -16,26 +16,256 @@
   "applications": [],
   "notifications": [
     {
+      "id": "5adae2a3-a37b-4580-ae28-5e1271072cf2",
+      "title": "Reference ID generated",
+      "body": "SMV-PMKISAN-20260707-7V3P95 created for PM-KISAN.",
+      "at": "2026-07-07T18:24:23.929Z",
+      "read": false
+    },
+    {
       "id": "notice-001",
       "title": "Government Portal session verified",
       "body": "PIN verification completed. SAMANVAI can now assist within this authenticated session.",
-      "at": "2026-07-07T18:01:50.926Z",
+      "at": "2026-07-07T18:15:31.721Z",
       "read": false
     }
   ],
   "history": [],
   "profileFacts": {
-    "__persona": "Live Citizen",
-    "__persona_role": "Natural Conversation",
-    "__persona_scripted": false
+    "__persona": "Lakshmi",
+    "__persona_role": "Homemaker (Widow) — Guided Demo",
+    "__persona_scripted": true,
+    "name": "Lakshmi Devi",
+    "gender": "Female",
+    "date_of_birth": "1968-06-12",
+    "state": "Telangana",
+    "district": "Hyderabad",
+    "address": "H.No. 12-4-32, Malakpet, Hyderabad",
+    "village": "Malakpet",
+    "mandal": "Amberpet",
+    "has_white_ration_card": true,
+    "has_white_card": true,
+    "has_bpl_card": true,
+    "is_female": true,
+    "social_category": "BC",
+    "family_income": 90000,
+    "aadhaar_number": "999912345678",
+    "mobile_number": "9876500011",
+    "bank_account_number": "SBIN0001234567",
+    "ifsc_code": "SBIN0002345",
+    "has_sadarem_cert": true,
+    "disability_percentage": 45
   },
-  "auditLogs": [],
-  "currentProfile": "live",
+  "auditLogs": [
+    {
+      "id": "d484e8de-9c08-40d4-b9fd-b13d64fab489",
+      "action": "application_submitted",
+      "at": "2026-07-07T18:24:23.929Z",
+      "metadata": {
+        "referenceId": "SMV-PMKISAN-20260707-7V3P95"
+      }
+    },
+    {
+      "id": "708124fa-376e-4b51-9baa-edc1309a289f",
+      "action": "assistant_message",
+      "at": "2026-07-07T18:24:18.292Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "2adadd00-2126-4f93-8e03-28e2356c4ab1",
+      "action": "assistant_message",
+      "at": "2026-07-07T18:18:35.447Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    }
+  ],
+  "currentProfile": "lakshmi",
   "profilesData": {
     "live": {
       "facts": {},
       "applications": [],
       "history": []
+    },
+    "suresh": {
+      "facts": {
+        "__persona": "Suresh",
+        "__persona_role": "Farmer — Guided Demo",
+        "__persona_scripted": true,
+        "name": "Suresh Reddy",
+        "gender": "Male",
+        "date_of_birth": "1978-03-22",
+        "state": "Andhra Pradesh",
+        "district": "Guntur",
+        "address": "D.No. 3-45, Chebrolu Village, Guntur",
+        "village": "Chebrolu",
+        "mandal": "Chebrolu",
+        "owns_cultivable_land": true,
+        "is_farmer": true,
+        "owns_or_cultivates_land": true,
+        "has_pattadar_passbook": true,
+        "cultivated_crops": true,
+        "is_notified_crop": true,
+        "primary_income_source": "Agriculture",
+        "social_category": "BC",
+        "family_income": 120000,
+        "aadhaar_number": "999987654321",
+        "mobile_number": "9988776655",
+        "bank_account_number": "APGB0000123456",
+        "ifsc_code": "APGB0004567",
+        "land_ownership_details": "Own — Pattadar Passbook No. GNT-2018-4521",
+        "land_survey_number": "SY 214/2A",
+        "paid_income_tax": false,
+        "is_govt_employee": false,
+        "is_institutional_land": false,
+        "ekyc": true,
+        "active_conv_lang": "en",
+        "selectedScheme": "",
+        "selectedSituation": "Farmer / Agriculture",
+        "phase1_completed": false,
+        "checking_eligibility": false,
+        "active_scheme_id": "",
+        "eligibility_confirmed": false,
+        "application_mode_prompted": false,
+        "agreed_to_apply": false,
+        "application_mode": "",
+        "application_ready": false
+      },
+      "applications": [
+        {
+          "referenceId": "SMV-PMKISAN-20260707-7V3P95",
+          "itemId": "pmkisan",
+          "itemName": "PM-KISAN",
+          "status": "Submitted",
+          "internalStatus": "Submitted",
+          "governmentSyncedStatus": "Submitted",
+          "createdAt": "2026-07-07T18:24:23.929Z",
+          "updatedAt": "2026-07-07T18:24:23.929Z",
+          "facts": {
+            "__persona": "Suresh",
+            "__persona_role": "Farmer — Guided Demo",
+            "__persona_scripted": true,
+            "name": "Suresh Reddy",
+            "gender": "Male",
+            "date_of_birth": "1978-03-22",
+            "state": "Andhra Pradesh",
+            "district": "Guntur",
+            "address": "D.No. 3-45, Chebrolu Village, Guntur",
+            "village": "Chebrolu",
+            "mandal": "Chebrolu",
+            "owns_cultivable_land": true,
+            "is_farmer": true,
+            "owns_or_cultivates_land": true,
+            "has_pattadar_passbook": true,
+            "cultivated_crops": true,
+            "is_notified_crop": true,
+            "primary_income_source": "Agriculture",
+            "social_category": "BC",
+            "family_income": 120000,
+            "aadhaar_number": "masked",
+            "mobile_number": "9988776655",
+            "bank_account_number": "masked",
+            "ifsc_code": "APGB0004567",
+            "land_ownership_details": "Own — Pattadar Passbook No. GNT-2018-4521",
+            "land_survey_number": "SY 214/2A",
+            "paid_income_tax": false,
+            "is_govt_employee": false,
+            "is_institutional_land": false,
+            "ekyc": true,
+            "active_conv_lang": "en",
+            "selectedScheme": "PM-KISAN",
+            "selectedSituation": "Farmer / Agriculture",
+            "phase1_completed": true,
+            "checking_eligibility": true,
+            "active_scheme_id": "pmkisan",
+            "eligibility_confirmed": true,
+            "application_mode_prompted": true,
+            "agreed_to_apply": true,
+            "application_mode": "fetch",
+            "application_ready": true
+          },
+          "statusHistory": [
+            {
+              "status": "Draft",
+              "at": "2026-07-07T18:24:23.929Z",
+              "note": "SAMANVAI draft created after citizen confirmation."
+            },
+            {
+              "status": "Submitted",
+              "at": "2026-07-07T18:24:23.929Z",
+              "note": "Submitted through SAMANVAI after citizen review."
+            }
+          ],
+          "documents": [
+            {
+              "name": "Aadhaar Card",
+              "status": "API verification ready",
+              "source": "eKYC / UIDAI verification",
+              "manualUpload": "No"
+            },
+            {
+              "name": "Landholding Papers (Khasra/Khatauni)",
+              "status": "Manual upload fallback ready",
+              "source": "State Land Records",
+              "manualUpload": "Yes, if API fails"
+            },
+            {
+              "name": "Aadhaar-linked Bank Account",
+              "status": "API verification ready",
+              "source": "NPCI Mapper",
+              "manualUpload": "No"
+            }
+          ]
+        }
+      ],
+      "history": [
+        {
+          "id": "ee99ad9e-6d10-4b5e-9f20-3a3c6c2bf290",
+          "input": "Confirm & Submit",
+          "response": "✔ Application submitted successfully.\n\nSAMANVAI Reference ID: SMV-PMKISAN-20260707-7V3P95\n\nStatus: Submitted\n\nYou can track this application anytime by asking \"Track my application\" or entering the Reference ID.",
+          "at": "2026-07-07T18:24:23.929Z"
+        },
+        {
+          "id": "497f260b-7774-40af-ac47-cb58cba2d510",
+          "input": "Fetch Automatically",
+          "response": "Documents auto-fetched from linked Government systems (Aadhaar, Bank NPCI, Land Records, etc.).\n\nFetched:\n✔ Aadhaar Number.\n✔ Mobile Number.\n✔ Bank Account Number.\n✔ IFSC Code.\n✔ Land Ownership Details.\n✔ Land Survey Number.\n✔ Village.\n✔ Mandal.\n✔ District.\n✔ Would you like to complete e-KYC\n\nPlease review the details and confirm to submit.",
+          "at": "2026-07-07T18:24:21.895Z"
+        },
+        {
+          "id": "73178328-3188-4bd4-83fe-2992d9448c5a",
+          "input": "Apply Now",
+          "response": "Would you like to fetch documents from linked Government systems?",
+          "at": "2026-07-07T18:24:20.280Z"
+        },
+        {
+          "id": "891bc448-40c3-4d74-814d-ca0834770cf2",
+          "input": "Andhra Pradesh",
+          "response": "✅ Eligible\n\nCongratulations! You are eligible for PM-KISAN.\n\nPrerequisites Checklist:\n☐ Aadhaar Card\n☐ Landholding Papers (Khasra/Khatauni)\n☐ Aadhaar-linked Bank Account\n\nClick Apply Now to begin the application.",
+          "at": "2026-07-07T18:24:18.292Z"
+        },
+        {
+          "id": "aa23a548-c4de-4584-924c-10e9100389e0",
+          "input": "Check Eligibility",
+          "response": "Understood. Let's verify your eligibility for PM-KISAN.\n\nState",
+          "at": "2026-07-07T18:24:16.618Z"
+        },
+        {
+          "id": "70595120-d70d-4e46-a685-9113337919dc",
+          "input": "🌾 PM-KISAN",
+          "response": "PM-KISAN\n\nPM-KISAN provides financial assistance to eligible farmer families to support agricultural activities.\n\nWhat would you like to know about this scheme?",
+          "at": "2026-07-07T18:24:15.081Z"
+        },
+        {
+          "id": "306bc011-d194-4080-9d7d-3af6b32c73dc",
+          "input": "I am a farmer",
+          "response": "Based on your situation, these schemes may be suitable for you.\n\n🌾 PM-KISAN\n🌱 Rythu Bharosa\n🌾 PM Fasal Bima Yojana\n\nWhich scheme would you like to explore?",
+          "at": "2026-07-07T18:24:12.506Z"
+        }
+      ]
     }
   }
 }

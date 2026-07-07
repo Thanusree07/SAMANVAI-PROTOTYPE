@@ -849,11 +849,16 @@ export async function POST(request: NextRequest) {
   }
 
   if (body.type === "reset") {
-    const preserveKeys = ["__persona", "__persona_role", "__persona_scripted", "__role", "name", "gender", "date_of_birth", "state", "district", "address", "social_category", "family_income", "primary_income_source", "has_white_ration_card", "has_white_card", "is_female", "owns_cultivable_land", "is_farmer", "owns_or_cultivates_land", "has_pattadar_passbook", "cultivated_crops", "is_notified_crop"];
-    const preserved: ProfileFacts = {};
-    for (const key of preserveKeys) {
-      if (db.profileFacts[key] !== undefined) preserved[key] = db.profileFacts[key];
-    }
+    // Preserve ALL persona seed / identity / eligibility / application data.
+    // Only clear transient workflow state so the citizen starts a fresh conversation.
+    const clearKeys = [
+      "checking_eligibility", "agreed_to_apply", "eligibility_confirmed",
+      "application_mode", "application_mode_prompted", "application_ready",
+      "active_scheme_id", "selectedScheme", "selectedSituation",
+      "phase1_completed", "attempted_eligibility",
+    ];
+    const preserved: ProfileFacts = { ...db.profileFacts };
+    for (const k of clearKeys) delete preserved[k];
     db.profileFacts = preserved;
     db.history = [];
     await writeDb(db);

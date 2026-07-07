@@ -153,6 +153,48 @@ class TestProfileIsolation:
         assert len(suresh2.get("applications", [])) == suresh_apps_before
 
 
+# --- Reset preserves persona seed facts (root cause fix in this iteration) ---
+class TestResetPreservesPersona:
+    def test_reset_keeps_suresh_seeds(self, client):
+        _switch_profile(client, "suresh")
+        pre = client.get(API).json().get("profileFacts", {})
+        # Sanity: persona seeds present
+        assert pre.get("__persona") == "Suresh"
+        assert pre.get("is_farmer") is True
+        # Poison with workflow state
+        client.post(API, json={"type": "message", "message": "I am a farmer"})
+        client.post(API, json={"type": "message", "message": "PM-KISAN"})
+        client.post(API, json={"type": "message", "message": "Check Eligibility"})
+        mid = client.get(API).json().get("profileFacts", {})
+        assert mid.get("checking_eligibility") is True or mid.get("active_scheme_id") or mid.get("selectedScheme")
+
+        # Reset
+        r = client.post(API, json={"type": "reset"})
+        assert r.status_code == 200 and r.json().get("ok") is True
+
+        post = client.get(API).json().get("profileFacts", {})
+        # Persona seeds preserved
+        assert post.get("__persona") == "Suresh", post
+        assert post.get("is_farmer") is True
+        assert post.get("paid_income_tax") is False
+        assert post.get("is_govt_employee") is False
+        assert post.get("aadhaar_number"), "aadhaar seed lost after reset"
+        assert post.get("state") == "Andhra Pradesh"
+        # Workflow keys cleared
+        for k in ["checking_eligibility", "agreed_to_apply", "eligibility_confirmed",
+                  "application_mode", "application_ready", "active_scheme_id",
+                  "selectedScheme", "selectedSituation", "phase1_completed"]:
+            assert k not in post, f"Workflow key '{k}' should be cleared after reset"
+
+    def test_reset_keeps_lakshmi_seeds(self, client):
+        _switch_profile(client, "lakshmi")
+        client.post(API, json={"type": "message", "message": "my husband passed away"})
+        r = client.post(API, json={"type": "reset"})
+        assert r.status_code == 200
+        post = client.get(API).json().get("profileFacts", {})
+        assert post.get("__persona") == "Lakshmi"
+
+
 # --- Status tracking ---
 class TestStatusTracking:
     def test_track_application_ref(self, client):

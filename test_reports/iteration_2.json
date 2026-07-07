@@ -1,0 +1,31 @@
+{
+  "summary": "Iteration 2 verified the ROOT CAUSE fix in /api/samanvai type:'reset' handler. Persona seed facts (paid_income_tax, is_govt_employee, aadhaar_number, state, is_farmer, __persona) now survive assistant reset via blacklist of workflow-state keys. Suresh's full PM-KISAN journey now completes eligibility with ONLY 'Andhra Pradesh' answer (previously required 2 extra Y/N clicks). 17/17 backend pytest passing (added 2 new reset-persona tests). Full E2E UI journey verified: auth bypass → Suresh profile → English → Text Assistant → farmer → PM-KISAN → Check Eligibility → Andhra Pradesh → ✅ Eligible → Apply Now → Fetch Automatically → Confirm & Submit → Reference ID SMV-PMKISAN-20260707-7V3P95 generated. Profile isolation verified (Lakshmi cannot see Suresh's application). Back-to-Portal navigation works. 0 console errors.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "POST /api/samanvai type=profile (live)", "issue": "Live persona seeds (__persona:'Live Citizen', __persona_scripted:false) are never applied because default DB starts on currentProfile:'live' with empty facts; later switch-to-live loads the existing empty bucket instead of applying personaSeeds. Cosmetic issue only - Live is unscripted anyway."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": ["/app/tests/backend_test.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "Optional (from iteration 1): on switch-to-live, if bucket exists but facts are empty, seed with personaSeeds.live so Live Citizen persona metadata is present."
+  ],
+  "critical_code_review_comments": [
+    "The reset handler fix uses a well-scoped blacklist of exactly 10 workflow-state keys - clean, minimal, and correct. Persona seeds, personal identifiers (aadhaar_number, name, date_of_birth), and eligibility answers all survive as intended.",
+    "components/samanvai/SamanvaiApp.tsx (1246 lines) and app/api/samanvai/route.ts (1338 lines) still exceed the 700-line guideline - recommend future refactor into per-view/per-phase modules.",
+    "Only 3 data-testid attributes across the app (profile-*-btn, switch-profile-btn, back-to-portal-btn). Chat input, chips, and sidebar items lack data-testid - forces text-based selectors which are language-dependent."
+  ],
+  "updated_files": ["/app/tests/backend_test.py"],
+  "success_rate": {"backend": "100% (17/17 pytest)", "frontend": "100% for core Suresh flow + profile isolation + back-to-portal"},
+  "test_credentials": "Any values on login form; PIN 2026 (from /app/memory/test_credentials.md). Auth can be bypassed via sessionStorage gov-portal-authenticated=true + samanvai-pin-verified=true for testing.",
+  "seed_data_creation": "None - persona seeds applied automatically on profile switch via personaSeeds map in route.ts.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Root cause fix at /app/frontend/app/api/samanvai/route.ts:851-866 is correct - clears only 10 transient workflow keys, preserves everything else. Iteration 1's Suresh Y/N re-asking bug is now fully resolved. The dashboard input 'Type your request...' is only visible AFTER clicking the Text Assistant tile - it is inside the assistant panel. Playwright selector that works: page.locator(\"button:has(span:has-text('Text Assistant'))\").first",
+  "rca of the issue": "PREVIOUS BUG (iteration 1 minor #1): /api/samanvai type='reset' used a WHITELIST that preserved only a few keys, wiping persona seeds like paid_income_tax=false, is_govt_employee=false, aadhaar_number. When SamanvaiApp.openAssistant() called reset before every Text Assistant open, Suresh's seeded eligibility answers were lost. The engine then re-asked those questions during Check Eligibility. FIX APPLIED at route.ts:851-866: switched to a BLACKLIST of exactly the transient workflow keys (checking_eligibility, agreed_to_apply, eligibility_confirmed, application_mode, application_mode_prompted, application_ready, active_scheme_id, selectedScheme, selectedSituation, phase1_completed, attempted_eligibility). Verified end-to-end: Suresh reaches ✅ Eligible after only 'Andhra Pradesh' answer, and both backend (test_reset_keeps_suresh_seeds, test_reset_keeps_lakshmi_seeds) and UI tests confirm the fix."
+}
