@@ -964,8 +964,8 @@ export async function POST(request: NextRequest) {
     // Load incoming profile's bucket, or initialize with persona seeds if new
     const incoming = db.profilesData[profile];
     const seed = personaSeeds[profile] || personaSeeds.live;
-    if (incoming) {
-      // Ensure persona metadata is always present (even for pre-existing empty buckets)
+    if (incoming && Object.keys(incoming.facts).filter((k) => !k.startsWith("__")).length > 0) {
+      // Bucket has real data — restore it, but ensure persona metadata is present
       db.profileFacts = {
         __persona: seed.__persona,
         __persona_role: seed.__persona_role,
@@ -975,9 +975,10 @@ export async function POST(request: NextRequest) {
       db.applications = incoming.applications;
       db.history = incoming.history;
     } else {
+      // Empty/uninitialized bucket — apply full persona seeds
       db.profileFacts = seed;
-      db.applications = [];
-      db.history = [];
+      db.applications = incoming?.applications || [];
+      db.history = incoming?.history || [];
     }
     db.currentProfile = profile;
     await writeDb(db);
