@@ -459,7 +459,12 @@ function processPhase1(message: string, currentFacts: any): {
         /\bagriculture loan\b/i,
         /\bfarmer loan\b/i,
         /\bnew schemes for farmers\b/i,
-        /\bfinancial support for farmers\b/i
+        /\bfinancial support for farmers\b/i,
+        /\bmy crops? (failed|damaged|destroyed|lost)\b/i,
+        /\bcrop (failure|loss|damage)\b/i,
+        /\bi lost my crop\b/i,
+        /\bi need farmer\b/i,
+        /\bagriculture\b/i,
       ],
       schemes: ["🌾 PM-KISAN", "🌱 Rythu Bharosa", "🌾 PM Fasal Bima Yojana"],
       response: `Based on your situation, these schemes may be suitable for you.\n\n🌾 PM-KISAN\n🌱 Rythu Bharosa\n🌾 PM Fasal Bima Yojana\n\nWhich scheme would you like to explore?`
@@ -469,13 +474,15 @@ function processPhase1(message: string, currentFacts: any): {
       patterns: [
         /\bi need a house\b/i,
         /\bi don't own a house\b/i,
-        /\bhousing schemes\b/i,
-        /\bhousing scheme\b/i,
+        /\bhousing schemes?\b/i,
         /\bgovernment house\b/i,
         /\bhome assistance\b/i,
         /\bhouse construction support\b/i,
         /\baffordable housing\b/i,
-        /\bhouse loan support\b/i
+        /\bhouse loan support\b/i,
+        /\bi want to build a house\b/i,
+        /\bpucca house\b/i,
+        /\bi have no house\b/i,
       ],
       schemes: ["🏠 Indiramma Illu", "🏠 PMAY"],
       response: `Based on your situation, these housing schemes may be suitable.\n\n🏠 Indiramma Illu\n🏠 PMAY\n\nWhich scheme would you like to explore?`
@@ -484,14 +491,18 @@ function processPhase1(message: string, currentFacts: any): {
       name: "Healthcare",
       patterns: [
         /\bi need medical help\b/i,
+        /\bi need treatment\b/i,
         /\bhospital expenses\b/i,
         /\bsurgery support\b/i,
         /\btreatment support\b/i,
         /\bhealth insurance\b/i,
         /\bmedical assistance\b/i,
         /\bhospital bills\b/i,
-        /\bhealthcare schemes\b/i,
-        /\bhealthcare scheme\b/i
+        /\bhealthcare schemes?\b/i,
+        /\bcancer treatment\b/i,
+        /\bheart surgery\b/i,
+        /\bkidney (dialysis|treatment)\b/i,
+        /\bfree treatment\b/i,
       ],
       schemes: ["🏥 Aarogyasri", "❤️ Ayushman Bharat"],
       response: `Based on your situation, these healthcare schemes may be suitable.\n\n🏥 Aarogyasri\n❤️ Ayushman Bharat\n\nWhich scheme would you like to explore?`
@@ -500,15 +511,19 @@ function processPhase1(message: string, currentFacts: any): {
       name: "Education",
       patterns: [
         /\bi'm a student\b/i,
+        /\bi am a student\b/i,
         /\bscholarship\b/i,
         /\bcollege fees\b/i,
         /\beducation support\b/i,
         /\btuition fee\b/i,
         /\bdegree student\b/i,
         /\bfinancial support for education\b/i,
-        /\beducation schemes\b/i,
-        /\beducation scheme\b/i,
-        /\bstudent scheme\b/i
+        /\beducation schemes?\b/i,
+        /\bstudent scheme\b/i,
+        /\bi need a scholarship\b/i,
+        /\bmy (daughter|son|child) (joined|is in) college\b/i,
+        /\bmy child (joined|is in) school\b/i,
+        /\bhigher studies\b/i,
       ],
       schemes: ["🎓 Jagananna Vidya Deevena", "📚 National Scholarship Schemes"],
       response: `Based on your situation, these education schemes may be suitable.\n\n🎓 Jagananna Vidya Deevena\n📚 National Scholarship Schemes\n\nWhich scheme would you like to explore?`
@@ -524,8 +539,13 @@ function processPhase1(message: string, currentFacts: any): {
         /\bwomen financial assistance\b/i,
         /\bshg support\b/i,
         /\bentrepreneurship support\b/i,
-        /\bwomen & self employment schemes\b/i,
-        /\bwomen and self employment schemes\b/i
+        /\bwomen (&|and) self employment schemes\b/i,
+        /\bmy husband (passed away|died|is no more)\b/i,
+        /\bi am a widow\b/i,
+        /\bwidow (support|pension|scheme)\b/i,
+        /\bi need pension\b/i,
+        /\bi need help\b/i,
+        /\bi have no income\b/i,
       ],
       schemes: ["👩 YSR Cheyutha", "💼 PM Mudra Yojana"],
       response: `Based on your situation, these schemes may be suitable.\n\n👩 YSR Cheyutha\n💼 PM Mudra Yojana\n\nWhich scheme would you like to explore?`
@@ -589,7 +609,7 @@ function processPhase1(message: string, currentFacts: any): {
 
   // 4. Fallback (Unsupported Input)
   return {
-    response: `I couldn't identify your request.\n\nI can currently help with:\n\nFarmer Schemes\nHousing Schemes\nHealthcare Schemes\nEducation Schemes\nWomen & Self Employment Schemes\n\nWhich category would you like to explore?`,
+    response: `This demo currently supports only the selected government schemes.\n\nI can help you with:\n\nFarmer Schemes\nHousing Schemes\nHealthcare Schemes\nEducation Schemes\nWomen & Self Employment Schemes\n\nPlease describe your situation, or pick a category to explore.`,
     suggestions: [
       "Farmer Schemes",
       "Housing Schemes",
@@ -608,6 +628,191 @@ export async function POST(request: NextRequest) {
   const language = body.language === "te" || body.language === "hi" || body.language === "kn" ? body.language : "en";
 
   const userMsg = String(body.message || "").trim().toLowerCase();
+
+  // "Track Application" → return status of most recent application
+  if (userMsg === "track application" || userMsg === "track my application" || userMsg === "check status") {
+    const app = db.applications[0];
+    if (!app) {
+      const noApps = "You have no submitted applications yet. Please complete an application first.";
+      db.history.unshift({ id: crypto.randomUUID(), input: String(body.message || ""), response: noApps, at: new Date().toISOString() });
+      await writeDb(db);
+      return NextResponse.json({
+        intent: "status_tracking",
+        detectedLanguage: language,
+        facts: db.profileFacts,
+        response: noApps,
+        suggestions: ["Search Another Scheme"],
+        canApply: false,
+      });
+    }
+    const responseText = `📄 Latest Application\n\n${summarizeStatus(app, language)}\n\nProgress:\n\n${app.statusHistory.map((s) => `• ${s.status} — ${new Date(s.at).toLocaleString()}\n  ${s.note}`).join("\n")}`;
+    db.history.unshift({ id: crypto.randomUUID(), input: String(body.message || ""), response: responseText, at: new Date().toISOString() });
+    await writeDb(db);
+    return NextResponse.json({
+      intent: "status_tracking",
+      detectedLanguage: language,
+      facts: db.profileFacts,
+      application: app,
+      response: responseText,
+      suggestions: ["Search Another Scheme"],
+      canApply: false,
+    });
+  }
+
+  // "Cancel" click after eligibility → abort workflow gracefully
+  if (userMsg === "cancel" && db.profileFacts.eligibility_confirmed === true && !db.profileFacts.application_mode) {
+    db.profileFacts.eligibility_confirmed = false;
+    db.profileFacts.checking_eligibility = false;
+    db.profileFacts.agreed_to_apply = false;
+    db.profileFacts.application_mode_prompted = false;
+    const responseText = "Application cancelled. Let me know if you want to explore other schemes.";
+    db.history.unshift({ id: crypto.randomUUID(), input: "Cancel", response: responseText, at: new Date().toISOString() });
+    await writeDb(db);
+    return NextResponse.json({
+      intent: "workflow_cancelled",
+      detectedLanguage: language,
+      facts: db.profileFacts,
+      response: responseText,
+      suggestions: ["Search Another Scheme"],
+      canApply: false,
+    });
+  }
+
+  // Phase 5 Gate — "Apply Now" click after eligibility passed → ask Fetch vs Manual
+  if (userMsg === "apply now" && !db.profileFacts.application_mode &&
+      (db.profileFacts.checking_eligibility === true || String(db.profileFacts.checking_eligibility) === "true") &&
+      db.profileFacts.eligibility_confirmed === true) {
+    db.profileFacts.application_mode_prompted = true;
+    db.history.unshift({
+      id: crypto.randomUUID(),
+      input: "Apply Now",
+      response: "Would you like to fetch documents from linked Government systems?",
+      at: new Date().toISOString(),
+    });
+    await writeDb(db);
+    return NextResponse.json({
+      intent: "application_mode_prompt",
+      detectedLanguage: language,
+      facts: db.profileFacts,
+      response: "Great — let's begin your application.\n\nWould you like to fetch documents from linked Government systems, or provide them manually?",
+      suggestions: ["Fetch Automatically", "Manual Entry"],
+      canApply: false,
+    });
+  }
+
+  // Phase 5 — "Fetch Automatically" → auto-fill application fields from persona seeds + demo defaults → go straight to Review
+  if (userMsg === "fetch automatically" && db.profileFacts.eligibility_confirmed === true) {
+    const activeItemId = String(db.profileFacts.active_scheme_id || "");
+    const activeItem = activeItemId ? getKnowledgeItem(activeItemId) : undefined;
+    if (activeItem) {
+      const demoDefaults: Record<string, string | number | boolean> = {
+        aadhaar_number: "999900001234",
+        mobile_number: "9000000000",
+        bank_account_number: "SBIN0009876543",
+        ifsc_code: "SBIN0001234",
+        village: "—",
+        mandal: "—",
+        land_ownership_details: "Verified via demo integration",
+        land_survey_number: "SY 000/0",
+        ekyc: true,
+      };
+      const filled: ProfileFacts = { ...db.profileFacts };
+      const fetchedItems: string[] = [];
+      const missingItems: string[] = [];
+      for (const q of activeItem.applicationQuestions || []) {
+        if (filled[q.key] === undefined || filled[q.key] === "") {
+          if (demoDefaults[q.key] !== undefined) {
+            filled[q.key] = demoDefaults[q.key];
+            fetchedItems.push(q.question.replace(/Please enter your\s+/i, "").replace(/\?$/, ""));
+          } else {
+            missingItems.push(q.question.replace(/Please enter your\s+/i, "").replace(/\?$/, ""));
+          }
+        } else {
+          fetchedItems.push(q.question.replace(/Please enter your\s+/i, "").replace(/\?$/, ""));
+        }
+      }
+      filled.agreed_to_apply = true;
+      filled.application_mode = "fetch";
+      filled.application_ready = true;
+      db.profileFacts = filled;
+
+      const lines: string[] = [];
+      lines.push("Documents auto-fetched from linked Government systems (Aadhaar, Bank NPCI, Land Records, etc.).");
+      lines.push("");
+      lines.push("Fetched:");
+      fetchedItems.forEach((n) => lines.push(`✔ ${n}`));
+      if (missingItems.length > 0) {
+        lines.push("");
+        lines.push("Pending (please review):");
+        missingItems.forEach((n) => lines.push(`☐ ${n}`));
+      }
+      lines.push("");
+      lines.push("Please review the details and confirm to submit.");
+
+      const response = lines.join("\n");
+      db.history.unshift({ id: crypto.randomUUID(), input: "Fetch Automatically", response, at: new Date().toISOString() });
+      await writeDb(db);
+      return NextResponse.json({
+        intent: "application_ready",
+        detectedLanguage: language,
+        item: activeItem,
+        facts: filled,
+        response,
+        suggestions: ["Confirm & Submit", "Edit"],
+        canApply: true,
+      });
+    }
+  }
+
+  // Phase 5 — "Manual Entry" → set mode & proceed with one-at-a-time question flow
+  if (userMsg === "manual entry" && db.profileFacts.eligibility_confirmed === true) {
+    db.profileFacts.application_mode = "manual";
+    db.profileFacts.agreed_to_apply = true;
+    await writeDb(db);
+    // fall through to standard engine flow — it will pick up next unanswered applicationQuestion
+  }
+
+  // Phase 6 — "Confirm & Submit" click → trigger apply
+  if (userMsg === "confirm & submit" || userMsg === "confirm and submit" || userMsg === "confirm submit") {
+    const activeItemId = String(db.profileFacts.active_scheme_id || "");
+    const item = activeItemId ? getKnowledgeItem(activeItemId) : undefined;
+    if (item) {
+      const app = createApplication(item, db.profileFacts);
+      db.applications.unshift(app);
+      db.notifications.unshift({
+        id: crypto.randomUUID(),
+        title: "Reference ID generated",
+        body: `${app.referenceId} created for ${app.itemName}.`,
+        at: new Date().toISOString(),
+        read: false,
+      });
+      db.auditLogs.unshift({ id: crypto.randomUUID(), action: "application_submitted", at: new Date().toISOString(), metadata: { referenceId: app.referenceId } });
+      // Reset workflow flags so citizen can start a new one
+      db.profileFacts.eligibility_confirmed = false;
+      db.profileFacts.checking_eligibility = false;
+      db.profileFacts.agreed_to_apply = false;
+      db.profileFacts.application_mode = "";
+      db.profileFacts.application_mode_prompted = false;
+      db.profileFacts.application_ready = false;
+      db.profileFacts.active_scheme_id = "";
+      db.profileFacts.selectedScheme = "";
+      db.profileFacts.phase1_completed = false;
+      const responseText = `✔ Application submitted successfully.\n\nSAMANVAI Reference ID: ${app.referenceId}\n\nStatus: ${app.status}\n\nYou can track this application anytime by asking "Track my application" or entering the Reference ID.`;
+      db.history.unshift({ id: crypto.randomUUID(), input: "Confirm & Submit", response: responseText, at: new Date().toISOString() });
+      await writeDb(db);
+      return NextResponse.json({
+        intent: "application_submitted",
+        detectedLanguage: language,
+        item,
+        facts: db.profileFacts,
+        application: app,
+        response: responseText,
+        suggestions: ["Track Application", "Search Another Scheme"],
+        canApply: false,
+      });
+    }
+  }
+
   if (userMsg === "continue application") {
     db.profileFacts.agreed_to_apply = true;
     await writeDb(db);
@@ -668,11 +873,20 @@ export async function POST(request: NextRequest) {
         state: "Telangana",
         district: "Hyderabad",
         address: "H.No. 12-4-32, Malakpet, Hyderabad",
+        village: "Malakpet",
+        mandal: "Amberpet",
         has_white_ration_card: true,
         has_white_card: true,
+        has_bpl_card: true,
         is_female: true,
         social_category: "BC",
         family_income: 90000,
+        aadhaar_number: "999912345678",
+        mobile_number: "9876500011",
+        bank_account_number: "SBIN0001234567",
+        ifsc_code: "SBIN0002345",
+        has_sadarem_cert: true,
+        disability_percentage: 45,
       },
       suresh: {
         __persona: "Suresh",
@@ -684,6 +898,8 @@ export async function POST(request: NextRequest) {
         state: "Andhra Pradesh",
         district: "Guntur",
         address: "D.No. 3-45, Chebrolu Village, Guntur",
+        village: "Chebrolu",
+        mandal: "Chebrolu",
         owns_cultivable_land: true,
         is_farmer: true,
         owns_or_cultivates_land: true,
@@ -693,6 +909,16 @@ export async function POST(request: NextRequest) {
         primary_income_source: "Agriculture",
         social_category: "BC",
         family_income: 120000,
+        aadhaar_number: "999987654321",
+        mobile_number: "9988776655",
+        bank_account_number: "APGB0000123456",
+        ifsc_code: "APGB0004567",
+        land_ownership_details: "Own — Pattadar Passbook No. GNT-2018-4521",
+        land_survey_number: "SY 214/2A",
+        paid_income_tax: false,
+        is_govt_employee: false,
+        is_institutional_land: false,
+        ekyc: true,
       },
       ramana: {
         __persona: "Ramana",
@@ -704,8 +930,15 @@ export async function POST(request: NextRequest) {
         state: "Andhra Pradesh",
         district: "Krishna",
         address: "CSC Centre, Main Road, Vijayawada",
+        village: "Vijayawada",
+        mandal: "Vijayawada Urban",
         __role: "csc_operator",
         social_category: "OC",
+        aadhaar_number: "999955443322",
+        mobile_number: "9000012345",
+        bank_account_number: "HDFC0006789012",
+        ifsc_code: "HDFC0001122",
+        family_income: 180000,
       },
       live: {
         __persona: "Live Citizen",
@@ -936,7 +1169,32 @@ export async function POST(request: NextRequest) {
 
   // Save updated facts and history
   db.profileFacts = { ...db.profileFacts, ...finalRuleResult.facts };
-  db.history.unshift({ id: crypto.randomUUID(), input: String(body.message || ""), response: responseText, at: new Date().toISOString() });
+
+  // Phase 4 Gate — Eligibility passed → prepend Prerequisites Checklist to the response
+  let phase4Response = responseText;
+  let phase4Suggestions: string[] | undefined = undefined;
+  if (hasCheckingOrApply && finalRuleResult.eligible === true &&
+      !db.profileFacts.application_mode && !db.profileFacts.application_mode_prompted) {
+    db.profileFacts.eligibility_confirmed = true;
+    const item = finalRuleResult.item;
+    if (item) {
+      const checklistLines: string[] = [];
+      checklistLines.push("✅ Eligible");
+      checklistLines.push("");
+      checklistLines.push(`Congratulations! You are eligible for ${item.name}.`);
+      checklistLines.push("");
+      checklistLines.push("Prerequisites Checklist:");
+      for (const doc of item.documents) {
+        checklistLines.push(`☐ ${doc.name}`);
+      }
+      checklistLines.push("");
+      checklistLines.push("Click Apply Now to begin the application.");
+      phase4Response = checklistLines.join("\n");
+      phase4Suggestions = ["Apply Now", "Cancel"];
+    }
+  }
+
+  db.history.unshift({ id: crypto.randomUUID(), input: String(body.message || ""), response: phase4Response, at: new Date().toISOString() });
   db.auditLogs.unshift({ id: crypto.randomUUID(), action: "assistant_message", at: new Date().toISOString(), metadata: { intent: finalRuleResult.intent, itemId: matchedId || "unknown" } });
   await writeDb(db);
 
@@ -1039,9 +1297,9 @@ export async function POST(request: NextRequest) {
     facts: returnFacts,
     eligible: returnEligible,
     nextQuestion: returnNextQ,
-    response: responseText,
+    response: phase4Response,
     recommendations: finalRuleResult.recommendations,
     canApply: returnCanApply,
-    suggestions: returnSuggestions,
+    suggestions: phase4Suggestions || returnSuggestions,
   });
 }

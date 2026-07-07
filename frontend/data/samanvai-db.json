@@ -13,8 +13,101 @@
       "consent": true
     }
   },
-  "applications": [],
+  "applications": [
+    {
+      "referenceId": "SMV-PMKISAN-20260707-22Y7GN",
+      "itemId": "pmkisan",
+      "itemName": "PM-KISAN",
+      "status": "Submitted",
+      "internalStatus": "Submitted",
+      "governmentSyncedStatus": "Submitted",
+      "createdAt": "2026-07-07T17:31:30.412Z",
+      "updatedAt": "2026-07-07T17:31:30.412Z",
+      "facts": {
+        "__persona": "Suresh",
+        "__persona_role": "Farmer — Guided Demo",
+        "__persona_scripted": true,
+        "name": "Suresh Reddy",
+        "gender": "Male",
+        "date_of_birth": "1978-03-22",
+        "state": "Andhra Pradesh",
+        "district": "Guntur",
+        "address": "D.No. 3-45, Chebrolu Village, Guntur",
+        "village": "Chebrolu",
+        "mandal": "Chebrolu",
+        "owns_cultivable_land": true,
+        "is_farmer": true,
+        "owns_or_cultivates_land": true,
+        "has_pattadar_passbook": true,
+        "cultivated_crops": true,
+        "is_notified_crop": true,
+        "primary_income_source": "Agriculture",
+        "social_category": "BC",
+        "family_income": 120000,
+        "aadhaar_number": "masked",
+        "mobile_number": "9988776655",
+        "bank_account_number": "masked",
+        "ifsc_code": "APGB0004567",
+        "land_ownership_details": "Own — Pattadar Passbook No. GNT-2018-4521",
+        "land_survey_number": "SY 214/2A",
+        "paid_income_tax": false,
+        "is_govt_employee": false,
+        "is_institutional_land": false,
+        "ekyc": true,
+        "selectedScheme": "PM-KISAN",
+        "selectedSituation": "Farmer / Agriculture",
+        "phase1_completed": true,
+        "checking_eligibility": true,
+        "active_scheme_id": "pmkisan",
+        "active_conv_lang": "en",
+        "eligibility_confirmed": true,
+        "application_mode_prompted": true,
+        "agreed_to_apply": true,
+        "application_mode": "fetch",
+        "application_ready": true
+      },
+      "statusHistory": [
+        {
+          "status": "Draft",
+          "at": "2026-07-07T17:31:30.412Z",
+          "note": "SAMANVAI draft created after citizen confirmation."
+        },
+        {
+          "status": "Submitted",
+          "at": "2026-07-07T17:31:30.412Z",
+          "note": "Submitted through SAMANVAI after citizen review."
+        }
+      ],
+      "documents": [
+        {
+          "name": "Aadhaar Card",
+          "status": "API verification ready",
+          "source": "eKYC / UIDAI verification",
+          "manualUpload": "No"
+        },
+        {
+          "name": "Landholding Papers (Khasra/Khatauni)",
+          "status": "Manual upload fallback ready",
+          "source": "State Land Records",
+          "manualUpload": "Yes, if API fails"
+        },
+        {
+          "name": "Aadhaar-linked Bank Account",
+          "status": "API verification ready",
+          "source": "NPCI Mapper",
+          "manualUpload": "No"
+        }
+      ]
+    }
+  ],
   "notifications": [
+    {
+      "id": "1e1282a8-1d3d-41f0-986d-6b18988794a9",
+      "title": "Reference ID generated",
+      "body": "SMV-PMKISAN-20260707-22Y7GN created for PM-KISAN.",
+      "at": "2026-07-07T17:31:30.412Z",
+      "read": false
+    },
     {
       "id": "notice-001",
       "title": "Government Portal session verified",
@@ -34,6 +127,8 @@
     "state": "Andhra Pradesh",
     "district": "Guntur",
     "address": "D.No. 3-45, Chebrolu Village, Guntur",
+    "village": "Chebrolu",
+    "mandal": "Chebrolu",
     "owns_cultivable_land": true,
     "is_farmer": true,
     "owns_or_cultivates_land": true,
@@ -42,9 +137,54 @@
     "is_notified_crop": true,
     "primary_income_source": "Agriculture",
     "social_category": "BC",
-    "family_income": 120000
+    "family_income": 120000,
+    "aadhaar_number": "999987654321",
+    "mobile_number": "9988776655",
+    "bank_account_number": "APGB0000123456",
+    "ifsc_code": "APGB0004567",
+    "land_ownership_details": "Own — Pattadar Passbook No. GNT-2018-4521",
+    "land_survey_number": "SY 214/2A",
+    "paid_income_tax": false,
+    "is_govt_employee": false,
+    "is_institutional_land": false,
+    "ekyc": true
   },
   "auditLogs": [
+    {
+      "id": "f7721d80-0cea-4db5-bf17-72f7b07712d2",
+      "action": "assistant_message",
+      "at": "2026-07-07T17:31:45.953Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmfby"
+      }
+    },
+    {
+      "id": "ad8fbf25-adf5-48ad-ba98-f314db7db5ea",
+      "action": "application_submitted",
+      "at": "2026-07-07T17:31:30.412Z",
+      "metadata": {
+        "referenceId": "SMV-PMKISAN-20260707-22Y7GN"
+      }
+    },
+    {
+      "id": "c5aca956-9708-436d-a8e2-470f3ecaea60",
+      "action": "assistant_message",
+      "at": "2026-07-07T17:31:20.844Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
+    {
+      "id": "2c34ea90-7fcc-4c5e-bec2-7a9739f5d924",
+      "action": "assistant_message",
+      "at": "2026-07-07T17:31:20.813Z",
+      "metadata": {
+        "intent": "scheme",
+        "itemId": "pmkisan"
+      }
+    },
     {
       "id": "7596f296-8057-4e40-a57e-1dcc9f9a0c16",
       "action": "assistant_message",
