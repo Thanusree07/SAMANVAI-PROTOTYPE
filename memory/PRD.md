@@ -1,83 +1,70 @@
 # SAMANVAI — Product Requirements (living doc)
 
-## Original problem statement
-SAMANVAI is an AI Integration Layer on top of an EXISTING Next.js Government Portal.
-Vision: "From Need to Service". Citizens describe their situation; SAMANVAI recommends
-the right scheme, checks eligibility, guides through application. UI, routing, layout,
-colours, typography, spacing are PRESERVED. Only ONE new screen allowed: Profile
-Selection.
+## Original problem statement (condensed)
+SAMANVAI is an AI Integration Layer inside an EXISTING Next.js Government Portal.
+Vision: "From Need to Service". Preserve UI, routing, layout, colours, typography,
+spacing. Only ONE new screen allowed: Profile Selection. Support ONLY 20 pre-defined
+schemes. Four profiles (Lakshmi/Suresh/Ramana/Live Citizen) use ONE common engine —
+only starting persona seed differs.
 
 ## Architecture
 - Next.js 16 App Router at `/app/frontend`.
 - Portal home: `/app/frontend/app/page.tsx`
-- SAMANVAI dashboard: `/app/frontend/app/dashboard/page.tsx` → `components/samanvai/SamanvaiApp.tsx`
+- SAMANVAI: `/app/frontend/app/dashboard/page.tsx` → `components/samanvai/SamanvaiApp.tsx`
 - Engine: `lib/samanvai/{engine,knowledge,llm,store}.ts`
 - Backend: `app/api/samanvai/route.ts`
-- Store: JSON DB at `frontend/data/samanvai-db.json`
+- Store: JSON DB `frontend/data/samanvai-db.json` — per-profile buckets in `profilesData`.
 
 ## Flow
 Portal → SAMANVAI → Login → PIN (2026) → **Profile Selection** → Language → Dashboard.
 
-## Profiles
-- **Lakshmi** — Homemaker (Widow), scripted seed (welfare/pension)
-- **Suresh** — Farmer, scripted seed (PM-KISAN / farm)
-- **Ramana** — CSC Operator, scripted seed
-- **Live Citizen** — natural conversation, no seed, limited to 20 supported schemes
+## Profiles (all same engine, only seed differs)
+- **Lakshmi** — scripted homemaker/widow (welfare, pension, ration card, scholarships)
+- **Suresh** — scripted farmer (PM-KISAN, crop insurance, agriculture)
+- **Ramana** — scripted CSC operator (facilitator flow)
+- **Live Citizen** — natural conversation, limited to 20 supported schemes.
 
-All four profiles use the SAME engine — only `profileFacts` seed differs.
-Persona seeds preserved across assistant `reset`.
+## Seven-phase workflow (all implemented)
+1. Situation Detection / Direct Search (natural language → up to 3 supported schemes)
+2. Scheme Brief + FAQ (overview, benefits, eligibility, docs, last date, apply, status)
+3. Eligibility — one question at a time, remembers previous answers, voice+text share state
+4. Prerequisites Checklist + `Apply Now` / `Cancel`
+5. Fetch Automatically vs Manual Entry
+   - Fetch: auto-fills from persona seeds + demo integration defaults, ticks each item
+   - Manual: collects fields one at a time (text/voice/upload/OCR-ready)
+6. Review + `Confirm & Submit` → generates `SMV-{SCHEME}-YYYYMMDD-XXXXXX` reference ID
+7. Tracking — `Track Application` returns latest status + full history
 
-## Phases (all implemented)
-1. **Situation Detection / Direct Search** — natural language ("my husband passed away",
-   "my crops failed", "I need treatment", "I need a scholarship", "I need a house", etc.)
-   maps to supported schemes; max 3 recommendations; no forcing.
-2. **Scheme Brief + FAQ** — overview, benefits, amount, eligibility, documents, last date,
-   apply, status.
-3. **Eligibility** — one question at a time, remembers previous answers, voice+text share
-   the same state, final result Eligible/Not Eligible.
-4. **Prerequisites Checklist** — after eligibility passes, shows document checklist and
-   `Apply Now` / `Cancel` buttons.
-5. **Application Preparation** — on `Apply Now` asks
-   `Fetch Automatically` vs `Manual Entry`.
-   - **Fetch Automatically**: auto-fills all application questions from persona seeds +
-     demo integration defaults; ticks completed items; missing items marked pending;
-     jumps directly to Review.
-   - **Manual Entry**: collects fields one at a time via text/voice with validation.
-6. **Review & Submission** — user clicks `Confirm & Submit` → generates
-   `SMV-{SCHEME}-YYYYMMDD-XXXXXX` reference ID; status flow Submitted → Under
-   Verification → Approved seeded.
-7. **Tracking** — "Track my application" or "Check Status" returns latest status +
-   full history.
+## Navigation, per-profile data, and continuity
+- **Per-profile data isolation** via `db.profilesData[profileId] = {facts, applications, history}`.
+  Swapping profiles saves the outgoing bucket, loads the incoming one. Verified end-to-end.
+- **Back to Government Portal** button in sidebar (`data-testid=back-to-portal-btn`).
+  Confirms if application in progress. Navigates to `/`.
+- **Switch Profile** button in sidebar (`data-testid=switch-profile-btn`) shows active
+  persona badge. Confirms if application in progress. Returns to Profile Selection screen.
+- **Application continuity**: server-side facts and history persist across sessions
+  (JSON DB); reopening SAMANVAI resumes prior state automatically.
+- **Voice/text state parity**: both share `assistant.facts`. Voice input goes through the
+  same `sendAssistantMessage` pipeline. Frontend also intercepts spoken navigation
+  commands: "switch to lakshmi/suresh/ramana/live", "back to government portal".
+- **Out-of-scope handling**: unsupported requests reply "This demo currently supports
+  only the selected government schemes." with category chips — never hallucinates.
 
-## Out-of-scope handling
-Unsupported requests return: "This demo currently supports only the selected
-government schemes." plus supported category chips. Never invents schemes.
-
-## What was implemented this session
-- Profile Selection screen (matches existing design language exactly).
-- Persona seed handler `type:"profile"` in `/api/samanvai` seeds full identity + eligibility
-  + application-question fields for Lakshmi/Suresh/Ramana.
-- `type:"reset"` preserves persona seed keys.
-- Phase 4 checklist: engine's eligible-passed response overridden in route.ts to include
-  Prerequisites Checklist with document names + `Apply Now`/`Cancel` chips.
-- Phase 5 gates: `Apply Now` → asks Fetch/Manual; `Fetch Automatically` auto-fills all
-  application questions; `Manual Entry` continues one-question flow.
-- Phase 6: `Confirm & Submit` intercept → creates application record with reference ID,
-  resets workflow flags so citizen can start a new application.
-- Phase 7: `Track Application` intercept → returns latest status + history.
-- Life-situation regex patterns expanded (widow, crop failure, treatment, scholarship,
-  house, etc.).
-- Live Citizen out-of-scope message refined per PRD.
-- data-testids added on all 4 profile buttons.
-
-## Verified end-to-end (Suresh)
-`Farmer` → `PM-KISAN` → `Check Eligibility` → `Andhra Pradesh` →
-`✅ Eligible` + Prerequisites Checklist → `Apply Now` → `Fetch Automatically` →
-Review with 10 auto-filled fields → `Confirm & Submit` → Reference
-`SMV-PMKISAN-YYYYMMDD-XXXXXX` → `Track Application` → status history.
+## Verified this session
+- Full Suresh journey (situation → PM-KISAN → eligibility → checklist → Apply Now →
+  Fetch Automatically → 10 auto-filled fields → Confirm & Submit → `SMV-PMKISAN-…`
+  → Track Application) via curl + testing subagent.
+- Per-profile isolation: Suresh submits app → switch to Lakshmi (0 apps) → switch
+  back to Suresh (app still there).
+- Live Citizen natural-language patterns: "my husband passed away", "my crops failed",
+  "I need treatment", "I need a scholarship", "I need a house", "I need passport help"
+  (out-of-scope) all handled correctly.
+- Testing subagent iteration 1: 15/15 backend pytest passing, 100% core flow success.
 
 ## Backlog / Next
-- P2: Deterministic scripted transcripts (exact dialog) per persona for demos.
-- P2: OCR endpoint for uploaded documents (`type:"ocr"`) with field extraction.
+- P2: Deterministic scripted transcripts per persona for demo playback.
+- P2: True OCR endpoint (`type:"ocr"`) — currently document upload works via `type:"upload"`.
 - P2: Localise Profile Selection copy into te/hi/kn.
-- P2: Small "Demo Mode" badge on assistant header when scripted persona active.
+- P2: Auto-progress application status (Submitted → Under Verification → Approved) on
+  each Track call for demo storytelling.
+- P3: File-lock or in-memory queue for concurrent writes to `samanvai-db.json`.

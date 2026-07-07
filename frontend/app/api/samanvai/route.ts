@@ -958,12 +958,19 @@ export async function POST(request: NextRequest) {
     }
     // Load incoming profile's bucket, or initialize with persona seeds if new
     const incoming = db.profilesData[profile];
+    const seed = personaSeeds[profile] || personaSeeds.live;
     if (incoming) {
-      db.profileFacts = incoming.facts;
+      // Ensure persona metadata is always present (even for pre-existing empty buckets)
+      db.profileFacts = {
+        __persona: seed.__persona,
+        __persona_role: seed.__persona_role,
+        __persona_scripted: seed.__persona_scripted,
+        ...incoming.facts,
+      };
       db.applications = incoming.applications;
       db.history = incoming.history;
     } else {
-      db.profileFacts = personaSeeds[profile] || personaSeeds.live;
+      db.profileFacts = seed;
       db.applications = [];
       db.history = [];
     }
