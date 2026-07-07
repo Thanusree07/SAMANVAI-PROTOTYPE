@@ -2,6 +2,12 @@ import { promises as fs } from "fs";
 import path from "path";
 import { ApplicationRecord, ProfileFacts } from "./engine";
 
+export type ProfileBucket = {
+  facts: ProfileFacts;
+  applications: ApplicationRecord[];
+  history: Array<{ id: string; input: string; response: string; at: string }>;
+};
+
 type Database = {
   users: Array<{ id: string; name: string; authenticated: boolean; portalLanguage: string }>;
   preferences: Record<string, { samanvaiLanguage: string; consent: boolean }>;
@@ -10,6 +16,8 @@ type Database = {
   history: Array<{ id: string; input: string; response: string; at: string }>;
   profileFacts: ProfileFacts;
   auditLogs: Array<{ id: string; action: string; at: string; metadata: Record<string, string> }>;
+  currentProfile: string;
+  profilesData: Record<string, ProfileBucket>;
 };
 
 const dbPath = path.join(process.cwd(), "data", "samanvai-db.json");
@@ -30,6 +38,8 @@ const defaultDb: Database = {
   history: [],
   profileFacts: {},
   auditLogs: [],
+  currentProfile: "live",
+  profilesData: {},
 };
 
 async function ensureDb() {
@@ -44,7 +54,11 @@ async function ensureDb() {
 export async function readDb(): Promise<Database> {
   await ensureDb();
   const raw = await fs.readFile(dbPath, "utf8");
-  return JSON.parse(raw) as Database;
+  const parsed = JSON.parse(raw) as Database;
+  // Migration: back-fill new fields on older DBs
+  if (!parsed.currentProfile) parsed.currentProfile = "live";
+  if (!parsed.profilesData) parsed.profilesData = {};
+  return parsed;
 }
 
 export async function writeDb(db: Database) {

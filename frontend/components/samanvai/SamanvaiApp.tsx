@@ -2,6 +2,7 @@
 
 import {
   Accessibility,
+  ArrowLeft,
   Bell,
   CalendarCheck,
   ChevronRight,
@@ -20,6 +21,7 @@ import {
   Settings,
   ShieldCheck,
   User,
+  UserCog,
   X,
 } from "lucide-react";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
@@ -371,6 +373,33 @@ export default function SamanvaiApp() {
     setStep("language");
   }
 
+  function hasWorkInProgress(): boolean {
+    const f = assistant?.facts || {};
+    return Boolean(
+      (f.checking_eligibility === true || String(f.checking_eligibility) === "true") ||
+      (f.agreed_to_apply === true || String(f.agreed_to_apply) === "true") ||
+      (f.application_mode_prompted === true || String(f.application_mode_prompted) === "true")
+    );
+  }
+
+  function goBackToPortal() {
+    if (hasWorkInProgress()) {
+      const ok = window.confirm("Your application progress will be saved. Do you want to return to the Government Portal?");
+      if (!ok) return;
+    }
+    window.location.href = "/";
+  }
+
+  function switchProfile() {
+    if (hasWorkInProgress()) {
+      const ok = window.confirm("Your application progress will be saved for the current profile. Switch to a different profile now?");
+      if (!ok) return;
+    }
+    window.sessionStorage.removeItem("samanvai-profile");
+    setSelectedProfile(null);
+    setStep("profile");
+  }
+
   async function chooseLanguage(language: LanguageCode) {
     window.localStorage.setItem("samanvai-language", language);
     setSelectedLanguage(language);
@@ -424,6 +453,33 @@ export default function SamanvaiApp() {
   async function sendAssistantMessage(seed?: string) {
     const text = (seed || message).trim();
     if (!text) return;
+    // Voice/text navigation intercepts
+    const norm = text.toLowerCase();
+    const switchTargets: Array<[RegExp, ProfileId]> = [
+      [/switch (to |profile to )?lakshmi/i, "lakshmi"],
+      [/switch (to |profile to )?suresh/i, "suresh"],
+      [/switch (to |profile to )?ramana/i, "ramana"],
+      [/switch (to |profile to )?live/i, "live"],
+    ];
+    for (const [pattern, target] of switchTargets) {
+      if (pattern.test(norm)) {
+        setMessage("");
+        setConversation((items) => [...items, { role: "citizen", text }, { role: "assistant", text: `Switching profile to ${target === "live" ? "Live Citizen" : target.charAt(0).toUpperCase() + target.slice(1)}...` }]);
+        window.sessionStorage.setItem("samanvai-profile", target);
+        setSelectedProfile(target);
+        await fetch("/api/samanvai", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "profile", profile: target }) });
+        await refreshData();
+        setConversation([]);
+        setAssistant(null);
+        return;
+      }
+    }
+    if (/(back to|go to|return to) (government )?portal|exit samanvai/i.test(norm)) {
+      setMessage("");
+      setConversation((items) => [...items, { role: "citizen", text }, { role: "assistant", text: "Returning to Government Portal..." }]);
+      setTimeout(() => { window.location.href = "/"; }, 500);
+      return;
+    }
     setMessage("");
     setAssistant((prev) => prev ? { ...prev, suggestions: [] } : null);
     setConversation((items) => [...items, { role: "citizen", text }]);
@@ -703,6 +759,31 @@ export default function SamanvaiApp() {
                 );
               })}
             </nav>
+            <div className="mt-8 space-y-2 border-t border-white/60 pt-5">
+              <button
+                type="button"
+                data-testid="switch-profile-btn"
+                onClick={switchProfile}
+                className="flex w-full items-center gap-3 rounded-[1.15rem] px-4 py-3 text-left text-sm font-semibold text-slate-700 transition duration-300 hover:-translate-y-0.5 hover:bg-white/60 hover:text-[#08245d]"
+              >
+                <UserCog size={18} className="text-slate-600" />
+                Switch Profile
+                {selectedProfile ? (
+                  <span className="ml-auto rounded-full border border-sky-200 bg-sky-50 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-sky-700">
+                    {profileOptions.find((p) => p.id === selectedProfile)?.name}
+                  </span>
+                ) : null}
+              </button>
+              <button
+                type="button"
+                data-testid="back-to-portal-btn"
+                onClick={goBackToPortal}
+                className="flex w-full items-center gap-3 rounded-[1.15rem] px-4 py-3 text-left text-sm font-semibold text-slate-700 transition duration-300 hover:-translate-y-0.5 hover:bg-white/60 hover:text-[#08245d]"
+              >
+                <ArrowLeft size={18} className="text-slate-600" />
+                Back to Government Portal
+              </button>
+            </div>
           </aside>
 
           {sidebarOpen ? <button type="button" aria-label="Close sidebar overlay" onClick={() => setSidebarOpen(false)} className="fixed inset-0 z-20 bg-slate-950/24 backdrop-blur-sm lg:hidden" /> : null}

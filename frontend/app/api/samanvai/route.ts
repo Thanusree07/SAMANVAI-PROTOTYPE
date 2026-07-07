@@ -946,10 +946,30 @@ export async function POST(request: NextRequest) {
         __persona_scripted: false,
       },
     };
-    db.profileFacts = personaSeeds[profile] || personaSeeds.live;
-    db.history = [];
+
+    // Save the outgoing profile's data into its bucket
+    const outgoing = db.currentProfile || "live";
+    if (outgoing) {
+      db.profilesData[outgoing] = {
+        facts: db.profileFacts,
+        applications: db.applications,
+        history: db.history,
+      };
+    }
+    // Load incoming profile's bucket, or initialize with persona seeds if new
+    const incoming = db.profilesData[profile];
+    if (incoming) {
+      db.profileFacts = incoming.facts;
+      db.applications = incoming.applications;
+      db.history = incoming.history;
+    } else {
+      db.profileFacts = personaSeeds[profile] || personaSeeds.live;
+      db.applications = [];
+      db.history = [];
+    }
+    db.currentProfile = profile;
     await writeDb(db);
-    return NextResponse.json({ ok: true, profile, facts: db.profileFacts });
+    return NextResponse.json({ ok: true, profile, facts: db.profileFacts, applications: db.applications, history: db.history });
   }
 
   if (body.type === "preference") {
