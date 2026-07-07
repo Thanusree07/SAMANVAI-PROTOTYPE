@@ -644,10 +644,79 @@ export async function POST(request: NextRequest) {
   }
 
   if (body.type === "reset") {
-    db.profileFacts = {};
+    const preserveKeys = ["__persona", "__persona_role", "__persona_scripted", "__role", "name", "gender", "date_of_birth", "state", "district", "address", "social_category", "family_income", "primary_income_source", "has_white_ration_card", "has_white_card", "is_female", "owns_cultivable_land", "is_farmer", "owns_or_cultivates_land", "has_pattadar_passbook", "cultivated_crops", "is_notified_crop"];
+    const preserved: ProfileFacts = {};
+    for (const key of preserveKeys) {
+      if (db.profileFacts[key] !== undefined) preserved[key] = db.profileFacts[key];
+    }
+    db.profileFacts = preserved;
     db.history = [];
     await writeDb(db);
     return NextResponse.json({ ok: true });
+  }
+
+  if (body.type === "profile") {
+    const profile = String(body.profile || "live");
+    const personaSeeds: Record<string, ProfileFacts> = {
+      lakshmi: {
+        __persona: "Lakshmi",
+        __persona_role: "Homemaker (Widow) — Guided Demo",
+        __persona_scripted: true,
+        name: "Lakshmi Devi",
+        gender: "Female",
+        date_of_birth: "1968-06-12",
+        state: "Telangana",
+        district: "Hyderabad",
+        address: "H.No. 12-4-32, Malakpet, Hyderabad",
+        has_white_ration_card: true,
+        has_white_card: true,
+        is_female: true,
+        social_category: "BC",
+        family_income: 90000,
+      },
+      suresh: {
+        __persona: "Suresh",
+        __persona_role: "Farmer — Guided Demo",
+        __persona_scripted: true,
+        name: "Suresh Reddy",
+        gender: "Male",
+        date_of_birth: "1978-03-22",
+        state: "Andhra Pradesh",
+        district: "Guntur",
+        address: "D.No. 3-45, Chebrolu Village, Guntur",
+        owns_cultivable_land: true,
+        is_farmer: true,
+        owns_or_cultivates_land: true,
+        has_pattadar_passbook: true,
+        cultivated_crops: true,
+        is_notified_crop: true,
+        primary_income_source: "Agriculture",
+        social_category: "BC",
+        family_income: 120000,
+      },
+      ramana: {
+        __persona: "Ramana",
+        __persona_role: "CSC Operator — Guided Demo",
+        __persona_scripted: true,
+        name: "Ramana Kumar",
+        gender: "Male",
+        date_of_birth: "1990-11-05",
+        state: "Andhra Pradesh",
+        district: "Krishna",
+        address: "CSC Centre, Main Road, Vijayawada",
+        __role: "csc_operator",
+        social_category: "OC",
+      },
+      live: {
+        __persona: "Live Citizen",
+        __persona_role: "Natural Conversation",
+        __persona_scripted: false,
+      },
+    };
+    db.profileFacts = personaSeeds[profile] || personaSeeds.live;
+    db.history = [];
+    await writeDb(db);
+    return NextResponse.json({ ok: true, profile, facts: db.profileFacts });
   }
 
   if (body.type === "preference") {

@@ -25,7 +25,15 @@ import {
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 
 type LanguageCode = "en" | "te" | "hi" | "kn";
-type FlowStep = "login" | "pin" | "language" | "dashboard";
+type FlowStep = "login" | "pin" | "profile" | "language" | "dashboard";
+type ProfileId = "lakshmi" | "suresh" | "ramana" | "live";
+
+const profileOptions: Array<{ id: ProfileId; name: string; role: string; description: string; scripted: boolean }> = [
+  { id: "lakshmi", name: "Lakshmi", role: "Homemaker (Widow) — Guided Demo", description: "Pre-scripted journey for welfare & pension schemes.", scripted: true },
+  { id: "suresh", name: "Suresh", role: "Farmer — Guided Demo", description: "Pre-scripted journey for PM-KISAN and farm schemes.", scripted: true },
+  { id: "ramana", name: "Ramana", role: "CSC Operator — Guided Demo", description: "Pre-scripted journey demonstrating a CSC operator flow.", scripted: true },
+  { id: "live", name: "Live Citizen", role: "Natural Conversation", description: "Talk freely — limited to 20 supported schemes.", scripted: false },
+];
 type ViewKey = "home" | "history" | "applications" | "documents" | "notifications" | "support" | "settings" | "profile";
 type BrowserSpeechRecognition = {
   lang: string;
@@ -264,10 +272,16 @@ export default function SamanvaiApp() {
     if (typeof window === "undefined") return "login";
     const loggedIn = window.sessionStorage.getItem("gov-portal-authenticated") === "true";
     const verified = window.sessionStorage.getItem("samanvai-pin-verified") === "true";
+    const savedProfile = window.sessionStorage.getItem("samanvai-profile") as ProfileId | null;
     const savedLanguage = window.localStorage.getItem("samanvai-language") as LanguageCode | null;
     if (!loggedIn) return "login";
     if (!verified) return "pin";
+    if (!savedProfile) return "profile";
     return savedLanguage && copy[savedLanguage] ? "dashboard" : "language";
+  });
+  const [selectedProfile, setSelectedProfile] = useState<ProfileId | null>(() => {
+    if (typeof window === "undefined") return null;
+    return (window.sessionStorage.getItem("samanvai-profile") as ProfileId | null) || null;
   });
   const [portalLanguage, setPortalLanguage] = useState<LanguageCode>("en");
   const [selectedLanguage, setSelectedLanguage] = useState<LanguageCode>(() => {
@@ -340,10 +354,21 @@ export default function SamanvaiApp() {
     if (pin === accessPin) {
       window.sessionStorage.setItem("samanvai-pin-verified", "true");
       setError("");
-      setStep("language");
+      setStep("profile");
       return;
     }
     setError(portalCopy.invalidPin);
+  }
+
+  async function chooseProfile(profile: ProfileId) {
+    window.sessionStorage.setItem("samanvai-profile", profile);
+    setSelectedProfile(profile);
+    await fetch("/api/samanvai", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "profile", profile }),
+    });
+    setStep("language");
   }
 
   async function chooseLanguage(language: LanguageCode) {
@@ -584,6 +609,47 @@ export default function SamanvaiApp() {
             </button>
             <p className="mt-5 text-center text-xs font-semibold text-slate-500">{portalCopy.pinHint}</p>
           </form>
+        </section>
+      )}
+
+      {step === "profile" && (
+        <section className="relative flex min-h-screen items-center justify-center px-4 py-10">
+          <div className="w-full max-w-4xl rounded-[1.75rem] border border-white/70 bg-white/64 p-6 shadow-[0_30px_90px_rgba(15,76,129,.18)] backdrop-blur-2xl sm:p-8">
+            <div className="text-center">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#0a2a6e] text-white shadow-[0_18px_40px_rgba(10,42,110,.28)]">
+                <User size={30} />
+              </div>
+              <p className="mt-6 text-xs font-bold uppercase tracking-[.28em] text-sky-700">{portalCopy.secureAccess}</p>
+              <h1 className="mt-3 text-3xl font-black tracking-normal text-slate-950">Choose a Profile</h1>
+              <p className="mt-3 text-sm leading-6 text-slate-600">Pick a persona to demonstrate SAMANVAI, or continue as a Live Citizen for natural conversation.</p>
+            </div>
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              {profileOptions.map((profile) => (
+                <button
+                  key={profile.id}
+                  data-testid={`profile-${profile.id}-btn`}
+                  type="button"
+                  onClick={() => chooseProfile(profile.id)}
+                  className="group rounded-2xl border border-white/80 bg-white/70 p-5 text-left shadow-[0_14px_38px_rgba(15,76,129,.08)] transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-[0_22px_54px_rgba(15,76,129,.14)]"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <span className="block text-xl font-black text-slate-950">{profile.name}</span>
+                      <span className="mt-1 block text-xs font-black uppercase tracking-wide text-sky-700">{profile.role}</span>
+                    </div>
+                    <span className={`inline-flex shrink-0 items-center rounded-full border px-2.5 py-1 text-[10px] font-black uppercase tracking-wide ${profile.scripted ? "border-sky-200 bg-sky-50 text-sky-700" : "border-emerald-200 bg-emerald-50 text-emerald-700"}`}>
+                      {profile.scripted ? "Scripted" : "Live"}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-sm font-semibold leading-6 text-slate-600">{profile.description}</p>
+                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-black text-sky-700">
+                    Continue
+                    <ChevronRight size={16} className="transition group-hover:translate-x-1" />
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
         </section>
       )}
 

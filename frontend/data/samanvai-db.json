@@ -23,56 +23,26 @@
       "read": false
     }
   ],
-  "history": [
-    {
-      "id": "bb9f32bd-6d0f-483e-a81d-532d81a7bba6",
-      "input": "No",
-      "response": "❌ Not Eligible\n\nUnfortunately, based on the information provided, you are not eligible for this scheme.",
-      "at": "2026-07-07T15:53:27.887Z"
-    },
-    {
-      "id": "a6fc8a1d-fa40-4ff8-8f2a-efceb6e11304",
-      "input": "No",
-      "response": "Sure. I'll help you with your PM-KISAN application.\n\nIncome support to landholding farmers for agricultural inputs and related needs.\n\nI need one required detail to continue: Is any member of your family a government employee?",
-      "at": "2026-07-07T15:53:26.500Z"
-    },
-    {
-      "id": "ec2329bf-d44d-47ff-8acd-e8545ea1e82e",
-      "input": "Guntur",
-      "response": "Sure. I'll help you with your PM-KISAN application.\n\nIncome support to landholding farmers for agricultural inputs and related needs.\n\nI need one required detail to continue: Do you own cultivable agricultural land?",
-      "at": "2026-07-07T15:53:23.992Z"
-    },
-    {
-      "id": "171275ce-510a-4797-8d7b-bf3375565bf4",
-      "input": "Andhra Pradesh",
-      "response": "Sure. I'll help you with your PM-KISAN application.\n\nIncome support to landholding farmers for agricultural inputs and related needs.\n\nI need one required detail to continue: Do you own cultivable agricultural land?",
-      "at": "2026-07-07T15:53:21.940Z"
-    },
-    {
-      "id": "704c5b9b-8518-4a70-9251-24c82cd629da",
-      "input": "Check Eligibility",
-      "response": "Understood. Let's verify your eligibility for PM-KISAN.\n\nState",
-      "at": "2026-07-07T15:53:19.677Z"
-    },
-    {
-      "id": "87ead36a-c97f-4523-987b-0d0d8b6b57aa",
-      "input": "PM-KISAN",
-      "response": "PM-KISAN\n\nPM-KISAN provides financial assistance to eligible farmer families to support agricultural activities.\n\nWhat would you like to know about this scheme?",
-      "at": "2026-07-07T15:53:18.065Z"
-    }
-  ],
+  "history": [],
   "profileFacts": {
-    "selectedScheme": "PM-KISAN",
-    "selectedSituation": "Farmer / Agriculture",
-    "phase1_completed": true,
-    "checking_eligibility": true,
-    "active_scheme_id": "pmkisan",
-    "active_conv_lang": "en",
+    "__persona": "Suresh",
+    "__persona_role": "Farmer — Guided Demo",
+    "__persona_scripted": true,
+    "name": "Suresh Reddy",
+    "gender": "Male",
+    "date_of_birth": "1978-03-22",
     "state": "Andhra Pradesh",
     "district": "Guntur",
-    "owns_cultivable_land": false,
-    "paid_income_tax": false,
-    "is_govt_employee": false
+    "address": "D.No. 3-45, Chebrolu Village, Guntur",
+    "owns_cultivable_land": true,
+    "is_farmer": true,
+    "owns_or_cultivates_land": true,
+    "has_pattadar_passbook": true,
+    "cultivated_crops": true,
+    "is_notified_crop": true,
+    "primary_income_source": "Agriculture",
+    "social_category": "BC",
+    "family_income": 120000
   },
   "auditLogs": [
     {
